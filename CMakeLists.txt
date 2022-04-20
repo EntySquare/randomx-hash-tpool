@@ -5,7 +5,7 @@ LINK_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 
 INCLUDE_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 
-add_executable(demo hash_pool.c)
+add_executable(demo hash_pool.cpp)
 
 target_link_libraries(demo librandomx.a)
 
