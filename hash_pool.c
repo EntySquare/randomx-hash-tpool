@@ -2,7 +2,7 @@
 // Created by terrill on 2022/4/20.
 //
 
-#include "lib/RandomX/src/randomx.h"
+#include "randomx.h"
 #include <stdio.h>
 
 int main() {
