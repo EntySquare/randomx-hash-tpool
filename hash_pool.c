@@ -5,6 +5,8 @@
 #include "randomx.h"
 #include <stdio.h>
 
+#define _GLIBCXX_USE_CXX11_ABI 0/1
+
 int main() {
     const char myKey[] = "RandomX example key";
     const char myInput[] = "RandomX example input";
