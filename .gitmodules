@@ -1,0 +1,3 @@
+[submodule "lib/RandomX"]
+	path = lib/RandomX
+	url = https://github.com/ArweaveTeam/RandomX.git
