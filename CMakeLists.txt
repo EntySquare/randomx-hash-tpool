@@ -8,3 +8,5 @@ INCLUDE_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 add_executable(demo hash_pool.c)
 
 target_link_libraries(demo librandomx.a)
+
+set_property(TARGET tgt PROPERTY CXX_STANDARD 11)
