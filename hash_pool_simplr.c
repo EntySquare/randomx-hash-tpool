@@ -39,7 +39,6 @@ int main()
             const unsigned char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
             const unsigned char entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
             unsigned char myInput[] = {0};
-
             char hash[RANDOMX_HASH_SIZE];
 
             const int length_h0 = sizeof(h0)/sizeof(const unsigned char);
@@ -72,6 +71,8 @@ int main()
                 }
 
             }
+
+            printf("input ready ==\n");
 
             randomx_flags flags = randomx_get_flags();
             randomx_cache *myCache = randomx_alloc_cache(flags);
