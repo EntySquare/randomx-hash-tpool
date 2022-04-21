@@ -67,10 +67,10 @@ int main()
                 {
                     myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
                 }
-//                else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
-//                {
-//                    myInput[i] = entropy[i - len_h0 - len_prevh - len_time - len_chunk ];
-//                }
+                else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
+                {
+                    myInput[i] = entropy[i - len_h0 - len_prevh - len_time - len_chunk ];
+                }
 
             }
 
