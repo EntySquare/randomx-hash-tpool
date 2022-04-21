@@ -38,7 +38,7 @@ int main()
             const int timestampBinary[] = {0,0,0,0,0,0,0,0,98,93,21,92};
             const int chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
             const int entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
-             char myInput[] = {0};
+             int myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
 
             int len_h0 = sizeof(h0)/sizeof(int);
@@ -75,7 +75,12 @@ int main()
             }
 
 
-            randomx_flags flags = randomx_get_flags();
+//            randomx_flags flags = randomx_get_flags();
+            randomx_flags flags= RANDOMX_FLAG_FULL_MEM;
+            flags |= RANDOMX_FLAG_HARD_AES;
+            flags |= RANDOMX_FLAG_JIT;
+            flags |= RANDOMX_FLAG_LARGE_PAGES;
+
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
             randomx_vm *myMachine = randomx_create_vm(flags, myCache, NULL);
