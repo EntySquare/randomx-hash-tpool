@@ -63,10 +63,10 @@ int main()
                 {
                     myInput[i] = timestampBinary[i - len_h0 - len_prevh];
                 }
-//                else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
-//                {
-//                    myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
-//                }
+                else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
+                {
+                    myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
+                }
 //                else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
 //                {
 //                    myInput[i] = entropy[i - len_h0 - len_prevh - len_time - len_chunk ];
@@ -88,7 +88,7 @@ int main()
             for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
                 printf("%02x", hash[i] & 0xff);
 
-            printf("test done\n");
+            printf("\ntest done\n");
 
             return hash[1];
 
