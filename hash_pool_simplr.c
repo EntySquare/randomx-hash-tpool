@@ -55,10 +55,10 @@ int main()
                 {
                 myInput[i] = h0[i];
                 }
-//                else if (i< len_h0 + len_prevh && i >= len_h0)
-//                {
-//                    myInput[i] = prevh[i - len_h0];
-//                }
+                else if (i< len_h0 + len_prevh && i >= len_h0)
+                {
+                    myInput[i] = prevh[i - len_h0];
+                }
 //                else if (i< len_h0 + len_prevh + len_time && i >= len_h0 + len_prevh)
 //                {
 //                    myInput[i] = timestampBinary[i - len_h0 - len_prevh];
