@@ -55,19 +55,19 @@ int main()
                 {
                 myInput[i] = h0[i];
                 }
-                else if (i< length_h0 + length_prevh)
+                else if (i< length_h0 + length_prevh && i >= length_h0)
                 {
                     myInput[i] = prevh[i - length_h0];
                 }
-                else if (i< length_h0 + length_prevh + length_time)
+                else if (i< length_h0 + length_prevh + length_time && i >= length_h0 + length_prevh)
                 {
                     myInput[i] = prevh[i - length_h0 - length_prevh];
                 }
-                else if (i< length_h0 + length_prevh + length_time + length_chunk)
+                else if (i< length_h0 + length_prevh + length_time + length_chunk && i >= length_h0 + length_prevh + length_time)
                 {
                     myInput[i] = prevh[i - length_h0 - length_time - length_chunk];
                 }
-                else if (i< length_h0 + length_prevh + length_time + length_chunk + length_entropy)
+                else if (i< length_h0 + length_prevh + length_time + length_chunk + length_entropy && i >= length_h0 + length_prevh + length_time + length_chunk )
                 {
                     myInput[i] = prevh[i - length_h0 - length_time - length_chunk - length_entropy];
                 }
