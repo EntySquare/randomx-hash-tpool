@@ -49,7 +49,7 @@ int main()
             int len_chunk = sizeof(chunk)/sizeof(int);
             int len_entropy = sizeof(entropy)/sizeof(int);
 
-    printf("%d\n", retbin(66051));
+    printf("%d\n", erjinzhi(66051));
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
@@ -103,7 +103,7 @@ int main()
 }
 
 
-int retbin(int e)
+int erjinzhi(int e)
 
 {
     if(e / 2== 0)
@@ -112,6 +112,6 @@ int retbin(int e)
 
      else
 
- return e%2 + ret(e/2)*10;
+ return e%2 + erjinzhi(e/2)*10;
 
 }
