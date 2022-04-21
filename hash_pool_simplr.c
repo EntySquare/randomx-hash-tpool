@@ -43,11 +43,11 @@ int main()
 
     printf("input ready ==\n");
 
-            const int length_h0 = sizeof(h0)/sizeof(unsigned char);
-            const int length_prevh = sizeof(prevh)/sizeof(unsigned char);
-            const int length_time = sizeof(timestampBinary)/sizeof(unsigned char);
-            const int length_chunk = sizeof(chunk)/sizeof(unsigned char);
-            const int length_entropy = sizeof(entropy)/sizeof(unsigned char);
+            const int length_h0 = sizeof(h0);
+            const int length_prevh = sizeof(prevh);
+            const int length_time = sizeof(timestampBinary);
+            const int length_chunk = sizeof(chunk);
+            const int length_entropy = sizeof(entropy);
 
             printf("input ready ==, length is %n\n", length_chunk);
 
