@@ -55,7 +55,7 @@ int main()
     int len_chunk = 10;
     int len_entropy = 10;
 
-            printf("input ready ==, length is %n\n", len_chunk);
+            printf("input ready ==, length is \n");
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
