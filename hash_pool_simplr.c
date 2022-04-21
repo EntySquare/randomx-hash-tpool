@@ -41,15 +41,14 @@ int main2()
             unsigned char myInput[] = {0};
 
             char hash[RANDOMX_HASH_SIZE];
-            int l1[RANDOMX_HASH_SIZE];
+
+            printf("input ready ==\n");
 
             const int length_h0 = sizeof(h0)/sizeof(const unsigned char);
             const int length_prevh = sizeof(prevh)/sizeof(const unsigned char);
             const int length_time = sizeof(timestampBinary)/sizeof(const unsigned char);
             const int length_chunk = sizeof(chunk)/sizeof(const unsigned char);
             const int length_entropy = sizeof(entropy)/sizeof(const unsigned char);
-
-            printf("input ready ==\n");
 
             for (int i = 0; i < length_h0 + length_prevh + length_time + length_chunk + length_entropy ; i++)
             {
