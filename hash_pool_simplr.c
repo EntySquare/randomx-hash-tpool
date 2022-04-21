@@ -38,7 +38,7 @@ int main()
             const int timestampBinary[] = {0,0,0,0,0,0,0,0,98,93,21,92};
             const int chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
             const int entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
-             int myInput[] = {0};
+             char myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
 
             int len_h0 = sizeof(h0)/sizeof(int);
