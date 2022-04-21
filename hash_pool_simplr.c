@@ -31,6 +31,23 @@
 ////    return 0;
 //}
 
+
+//void bitrans( int n)
+//{
+//    ret( n );
+//}
+//
+
+int ret(int e)
+{
+    if(e / 2== 0)
+        return e% 2;
+    else
+        return e%2 + ret(e/2)*10;
+}
+
+
+
 int main()
 {
             const int myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
@@ -49,7 +66,7 @@ int main()
             int len_chunk = sizeof(chunk)/sizeof(int);
             int len_entropy = sizeof(entropy)/sizeof(int);
 
-    printf("%d\n", erjinzhi(66051));
+    printf("%d\n", ret(66051));
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
@@ -102,16 +119,3 @@ int main()
 
 }
 
-
-int erjinzhi(int e)
-
-{
-    if(e / 2== 0)
-
-    return e% 2;
-
-     else
-
- return e%2 + erjinzhi(e/2)*10;
-
-}
