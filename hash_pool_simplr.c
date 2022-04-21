@@ -47,7 +47,7 @@ int main()
             int len_chunk = sizeof(chunk)/sizeof(int);
             int len_entropy = sizeof(entropy)/sizeof(int);
 
-    printf("%d\n", ret(10));
+    printf("%d\n", ret(66051));
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
