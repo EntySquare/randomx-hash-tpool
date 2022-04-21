@@ -59,10 +59,10 @@ int main()
                 {
                     myInput[i] = prevh[i - len_h0];
                 }
-//                else if (i< len_h0 + len_prevh + len_time && i >= len_h0 + len_prevh)
-//                {
-//                    myInput[i] = timestampBinary[i - len_h0 - len_prevh];
-//                }
+                else if (i< len_h0 + len_prevh + len_time && i >= len_h0 + len_prevh)
+                {
+                    myInput[i] = timestampBinary[i - len_h0 - len_prevh];
+                }
 //                else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
 //                {
 //                    myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
