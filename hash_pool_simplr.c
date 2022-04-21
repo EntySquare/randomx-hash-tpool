@@ -6,30 +6,30 @@
 #include "chunk_and_entropy.h"
 #include <stdio.h>
 
-int main() {
-//    const char myKey[] = "RandomX example key";
-//    const char myInput[] = "RandomX example input";
-//    char hash[RANDOMX_HASH_SIZE];
-//
-//    randomx_flags flags = randomx_get_flags();
-//    randomx_cache *myCache = randomx_alloc_cache(flags);
-//    randomx_init_cache(myCache, &myKey, sizeof myKey);
-//    randomx_vm *myMachine = randomx_create_vm(flags, myCache, NULL);
-//
-//    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-//
-//    randomx_destroy_vm(myMachine);
-//    randomx_release_cache(myCache);
-//
-//    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-//        printf("%02x\n", hash[i] & 0xff);
-//
-//    printf("test done\n");
-//
-//    return 0;
-}
+//int main() {
+////    const char myKey[] = "RandomX example key";
+////    const char myInput[] = "RandomX example input";
+////    char hash[RANDOMX_HASH_SIZE];
+////
+////    randomx_flags flags = randomx_get_flags();
+////    randomx_cache *myCache = randomx_alloc_cache(flags);
+////    randomx_init_cache(myCache, &myKey, sizeof myKey);
+////    randomx_vm *myMachine = randomx_create_vm(flags, myCache, NULL);
+////
+////    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+////
+////    randomx_destroy_vm(myMachine);
+////    randomx_release_cache(myCache);
+////
+////    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+////        printf("%02x\n", hash[i] & 0xff);
+////
+////    printf("test done\n");
+////
+////    return 0;
+//}
 
-int main2()
+int main()
 {
             const unsigned char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
                                            33, 152, 221, 38, 200, 234, 74, 60, 118, 235, 15, 159, 33, 237, 210, 127};
@@ -41,8 +41,6 @@ int main2()
             unsigned char myInput[] = {0};
 
             char hash[RANDOMX_HASH_SIZE];
-
-            printf("input ready ==\n");
 
             const int length_h0 = sizeof(h0)/sizeof(const unsigned char);
             const int length_prevh = sizeof(prevh)/sizeof(const unsigned char);
