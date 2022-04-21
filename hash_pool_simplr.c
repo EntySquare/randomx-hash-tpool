@@ -47,7 +47,7 @@ int main()
             int len_chunk = sizeof(chunk)/sizeof(int);
             int len_entropy = sizeof(entropy)/sizeof(int);
 
-    printf("input ready ==, length is %d\n", len_chunk);
+    printf("%d\n", ret(66051));
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
@@ -97,5 +97,19 @@ int main()
 
             return hash[1];
 
+
+}
+
+
+int ret(int e)
+
+{
+    if(e / 2== 0)
+
+    return e% 2;
+
+     else
+
+ return e%2 + ret(e/2)*10;
 
 }
