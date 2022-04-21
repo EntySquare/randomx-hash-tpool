@@ -49,29 +49,29 @@ int main()
             int len_chunk = sizeof(chunk);
             int len_entropy = sizeof(entropy);
 
-            printf("input ready ==, length is %n\n", length_chunk);
+            printf("input ready ==, length is %n\n", len_chunk);
 
-            for (int i = 0; i < length_h0 + length_prevh + length_time + length_chunk + length_entropy ; i++)
+            for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
-                if (i< length_h0)
+                if (i< len_h0)
                 {
                 myInput[i] = h0[i];
                 }
-                else if (i< length_h0 + length_prevh && i >= length_h0)
+                else if (i< len_h0 + len_prevh && i >= len_h0)
                 {
-                    myInput[i] = prevh[i - length_h0];
+                    myInput[i] = prevh[i - len_h0];
                 }
-                else if (i< length_h0 + length_prevh + length_time && i >= length_h0 + length_prevh)
+                else if (i< len_h0 + len_prevh + len_time && i >= len_h0 + len_prevh)
                 {
-                    myInput[i] = prevh[i - length_h0 - length_prevh];
+                    myInput[i] = prevh[i - len_h0 - len_prevh];
                 }
-                else if (i< length_h0 + length_prevh + length_time + length_chunk && i >= length_h0 + length_prevh + length_time)
+                else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
                 {
-                    myInput[i] = prevh[i - length_h0 - length_time - length_chunk];
+                    myInput[i] = prevh[i - len_h0 - len_time - len_chunk];
                 }
-                else if (i< length_h0 + length_prevh + length_time + length_chunk + length_entropy && i >= length_h0 + length_prevh + length_time + length_chunk )
+                else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
                 {
-                    myInput[i] = prevh[i - length_h0 - length_time - length_chunk - length_entropy];
+                    myInput[i] = prevh[i - len_h0 - len_time - len_chunk - len_entropy];
                 }
 
             }
