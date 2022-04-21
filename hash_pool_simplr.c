@@ -41,8 +41,6 @@ int main()
             unsigned char myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
 
-    printf("input ready ==\n");
-
             int len_h0 = sizeof(h0)/sizeof(int);
             int len_prevh = sizeof(prevh)/sizeof(int);
             int len_time = sizeof(timestampBinary)/sizeof(int);
@@ -57,22 +55,22 @@ int main()
                 {
                 myInput[i] = h0[i];
                 }
-                else if (i< len_h0 + len_prevh && i >= len_h0)
-                {
-                    myInput[i] = prevh[i - len_h0];
-                }
-                else if (i< len_h0 + len_prevh + len_time && i >= len_h0 + len_prevh)
-                {
-                    myInput[i] = timestampBinary[i - len_h0 - len_prevh];
-                }
-                else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
-                {
-                    myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
-                }
-                else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
-                {
-                    myInput[i] = entropy[i - len_h0 - len_prevh - len_time - len_chunk ];
-                }
+//                else if (i< len_h0 + len_prevh && i >= len_h0)
+//                {
+//                    myInput[i] = prevh[i - len_h0];
+//                }
+//                else if (i< len_h0 + len_prevh + len_time && i >= len_h0 + len_prevh)
+//                {
+//                    myInput[i] = timestampBinary[i - len_h0 - len_prevh];
+//                }
+//                else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
+//                {
+//                    myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
+//                }
+//                else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
+//                {
+//                    myInput[i] = entropy[i - len_h0 - len_prevh - len_time - len_chunk ];
+//                }
 
             }
 
