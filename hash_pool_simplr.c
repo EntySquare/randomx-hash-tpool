@@ -63,15 +63,15 @@ int main()
                 }
                 else if (i< len_h0 + len_prevh + len_time && i >= len_h0 + len_prevh)
                 {
-                    myInput[i] = prevh[i - len_h0 - len_prevh];
+                    myInput[i] = timestampBinary[i - len_h0 - len_prevh];
                 }
                 else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
                 {
-                    myInput[i] = prevh[i - len_h0 - len_time - len_chunk];
+                    myInput[i] = chunk[i - len_h0 - len_time - len_chunk];
                 }
                 else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
                 {
-                    myInput[i] = prevh[i - len_h0 - len_time - len_chunk - len_entropy];
+                    myInput[i] = entropy[i - len_h0 - len_time - len_chunk - len_entropy];
                 }
 
             }
