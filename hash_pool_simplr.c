@@ -23,7 +23,7 @@ int main() {
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
         printf("%02x", hash[i] & 0xff);
 
-    printf("\n");
+    printf("test done\n");
 
     return 0;
 }
