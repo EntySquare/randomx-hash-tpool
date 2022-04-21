@@ -49,6 +49,8 @@ int main2()
             const int length_chunk = sizeof(chunk)/sizeof(const unsigned char);
             const int length_entropy = sizeof(entropy)/sizeof(const unsigned char);
 
+            printf("input ready ==\n");
+
             for (int i = 0; i < length_h0 + length_prevh + length_time + length_chunk + length_entropy ; i++)
             {
                 if (i< length_h0)
@@ -73,8 +75,6 @@ int main2()
                 }
 
             }
-
-             printf("input ready ==\n");
 
             randomx_flags flags = randomx_get_flags();
             randomx_cache *myCache = randomx_alloc_cache(flags);
