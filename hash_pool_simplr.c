@@ -74,6 +74,7 @@ int main2()
 
             }
 
+             printf("input ready ==\n");
 
             randomx_flags flags = randomx_get_flags();
             randomx_cache *myCache = randomx_alloc_cache(flags);
