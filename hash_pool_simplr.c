@@ -5,6 +5,8 @@
 #include "randomx.h"
 #include "chunk_and_entropy.h"
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 //int main() {
 ////    const char myKey[] = "RandomX example key";
@@ -47,7 +49,7 @@ int main()
             int len_chunk = sizeof(chunk)/sizeof(int);
             int len_entropy = sizeof(entropy)/sizeof(int);
 
-    printf("%d\n", ret(66051));
+    printf("%d\n", retbin(66051));
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
@@ -101,7 +103,7 @@ int main()
 }
 
 
-int ret(int e)
+int retbin(int e)
 
 {
     if(e / 2== 0)
