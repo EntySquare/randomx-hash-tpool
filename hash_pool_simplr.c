@@ -43,11 +43,17 @@ int main()
 
     printf("input ready ==\n");
 
-            int len_h0 = sizeof(h0);
-            int len_prevh = sizeof(prevh);
-            int len_time = sizeof(timestampBinary);
-            int len_chunk = sizeof(chunk);
-            int len_entropy = sizeof(entropy);
+//            int len_h0 = sizeof(h0);
+//            int len_prevh = sizeof(prevh);
+//            int len_time = sizeof(timestampBinary);
+//            int len_chunk = sizeof(chunk);
+//            int len_entropy = sizeof(entropy);
+
+    int len_h0 = 10;
+    int len_prevh = 10;
+    int len_time = 10;
+    int len_chunk = 10;
+    int len_entropy = 10;
 
             printf("input ready ==, length is %n\n", len_chunk);
 
