@@ -43,17 +43,11 @@ int main()
 
     printf("input ready ==\n");
 
-//            int len_h0 = sizeof(h0);
-//            int len_prevh = sizeof(prevh);
-//            int len_time = sizeof(timestampBinary);
-//            int len_chunk = sizeof(chunk);
-//            int len_entropy = sizeof(entropy);
-
-    int len_h0 = 10;
-    int len_prevh = 10;
-    int len_time = 10;
-    int len_chunk = 10;
-    int len_entropy = 10;
+            int len_h0 = sizeof(h0);
+            int len_prevh = sizeof(prevh);
+            int len_time = sizeof(timestampBinary);
+            int len_chunk = sizeof(chunk);
+            int len_entropy = sizeof(entropy);
 
             printf("input ready ==, length is \n");
 
@@ -93,7 +87,7 @@ int main()
             randomx_release_cache(myCache);
 
             for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-                printf("%02x\n", hash[i] & 0xff);
+                printf("%02x", hash[i] & 0xff);
 
             printf("test done\n");
 
