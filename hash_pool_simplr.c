@@ -41,6 +41,8 @@ int main()
             unsigned char myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
 
+    printf("input ready ==\n");
+
             const int length_h0 = sizeof(h0)/sizeof(const unsigned char);
             const int length_prevh = sizeof(prevh)/sizeof(const unsigned char);
             const int length_time = sizeof(timestampBinary)/sizeof(const unsigned char);
@@ -71,8 +73,6 @@ int main()
                 }
 
             }
-
-            printf("input ready ==\n");
 
             randomx_flags flags = randomx_get_flags();
             randomx_cache *myCache = randomx_alloc_cache(flags);
