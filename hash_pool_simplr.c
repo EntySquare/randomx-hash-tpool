@@ -21,7 +21,7 @@ int main() {
     randomx_release_cache(myCache);
 
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-        printf("%02x", hash[i] & 0xff);
+        printf("%02x\n", hash[i] & 0xff);
 
     printf("test done\n");
 
