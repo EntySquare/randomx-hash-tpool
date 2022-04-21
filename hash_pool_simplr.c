@@ -75,11 +75,11 @@ int main()
             }
 
 
-//            randomx_flags flags = randomx_get_flags();
-            randomx_flags flags= RANDOMX_FLAG_FULL_MEM;
-            flags |= RANDOMX_FLAG_HARD_AES;
-            flags |= RANDOMX_FLAG_JIT;
-            flags |= RANDOMX_FLAG_LARGE_PAGES;
+            randomx_flags flags = randomx_get_flags();
+//            randomx_flags flags= RANDOMX_FLAG_FULL_MEM;
+//            flags |= RANDOMX_FLAG_HARD_AES;
+//            flags |= RANDOMX_FLAG_JIT;
+//            flags |= RANDOMX_FLAG_LARGE_PAGES;
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
