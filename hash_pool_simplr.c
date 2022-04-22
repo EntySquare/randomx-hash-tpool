@@ -126,7 +126,7 @@ int main()
 
             int lem = sizeof(myInput);
             printf("myinput data size is %d\n", lem);
-            printf("the flags is %d\n", flag)
+            printf("the flags is %d\n", flags);
             printf("%d\n", myInput[32]);
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
