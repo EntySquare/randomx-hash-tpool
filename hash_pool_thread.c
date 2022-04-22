@@ -79,7 +79,7 @@ int main()
             randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
         if (k >0 && (k+1) % 10 == 0)
         { end = time(NULL);
-        printf("calc rate is %f h/s", difftime(end,start));
+        printf("calc rate is %f h/s\n", difftime(end,start));
             start = time(NULL);
         }
     }
