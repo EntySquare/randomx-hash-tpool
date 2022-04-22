@@ -42,7 +42,7 @@ int ret(int e)
 
 int getbinary(  int len_list, const int object[] )
 {
-    int result;
+    int result = 0;
     for (int k=0; k<len_list; k++)
     {
         result = result + ret(object[k]);
