@@ -40,7 +40,7 @@
 //    else
 //        return e%2 + ret(e/2)*10;
 //}
-void ret(int e)
+int ret(int e)
 {   char arr[8] = {0, 0, 0 ,0 ,0, 0, 0, 0};
     int i = 0;
     int k = 0;
@@ -56,6 +56,7 @@ void ret(int e)
     {
         printf("%c", arr[k]);//从数组右边开始向左输出
     }
+    return 0;
 }
 //int getbinary(  int len_list, const char object[] )
 //{
