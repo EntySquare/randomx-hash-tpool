@@ -33,14 +33,14 @@
 //}
 
 
-//int ret(int e)
-//{
-//    if(e / 2== 0)
-//        return e% 2;
-//    else
-//        return e%2 + ret(e/2)*10;
-//}
-void ret(int e)
+int ret1(int e)
+{
+    if(e / 2== 0)
+        return e% 2;
+    else
+        return e%2 + ret1(e/2)*10;
+}
+void ret2(int e)
 {   char arr[8] = {0, 0, 0 ,0 ,0, 0, 0, 0};
     int result;
     int i = 0;

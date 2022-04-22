@@ -8,6 +8,13 @@
 #include <string.h>
 #include <stdlib.h>
 
+static int validate_hash(
+        unsigned char hash[RANDOMX_HASH_SIZE],
+        unsigned char difficulty[RANDOMX_HASH_SIZE])
+{
+    return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
+}
+
 
 int main()
 {
@@ -19,9 +26,10 @@ int main()
     const char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
     const char entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
     unsigned char hash[RANDOMX_HASH_SIZE];
+    unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
+
     randomx_flags flags;
     int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
-
     int len_h0 = sizeof(h0)/sizeof(char);
     int len_prevh = sizeof(prevh)/sizeof(char);
     int len_time = sizeof(timestampBinary)/sizeof(char);
@@ -29,8 +37,6 @@ int main()
     int len_entropy = sizeof(entropy)/sizeof(char);
 
     unsigned char myInput[len_h0 + len_prevh + len_time + len_chunk + len_entropy];
-
-    printf("length is %d\n", len_chunk );
 
     for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
     {
@@ -62,12 +68,13 @@ int main()
     int lem = sizeof(myInput);
     printf("myinput data size is %d\n", lem);
 
-
     randomx_cache *myCache = randomx_alloc_cache(flags);
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
     randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+
+    validate_hash(hash, difficulty);
 
     randomx_destroy_vm(myMachine);
     randomx_release_cache(myCache);
@@ -78,7 +85,6 @@ int main()
     printf("\ntest done\n");
 
     return hash[1];
-
 
 }
 
