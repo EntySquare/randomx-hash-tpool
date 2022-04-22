@@ -79,7 +79,7 @@ int main()
             int len_chunk = sizeof(chunk)/sizeof(char);
             int len_entropy = sizeof(entropy)/sizeof(char);
 
-            unsigned char myInput[]={};
+            unsigned char myInput[len_h0 + len_prevh + len_time + len_chunk + len_entropy];
 
             printf("length is %d\n", len_chunk );
             ret(120);
