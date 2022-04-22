@@ -70,7 +70,7 @@ int main()
             const char timestampBinary[] = {0,0,0,0,0,0,0,0,98,93,21,92};
             const char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
             const char entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
-            char myInput[] = {0};
+            unsigned char myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
             randomx_flags flags;
             int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
@@ -123,7 +123,7 @@ int main()
               flags |= RANDOMX_FLAG_LARGE_PAGES;
           }
 
-          printf("%d", myInput[0]);
+          printf("%d\n", myInput[0]);
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
