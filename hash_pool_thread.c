@@ -7,6 +7,7 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
@@ -72,15 +73,26 @@ int main()
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
-    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+    time_t start = time(NULL);
+    time_t end = time(NULL);
+    for (int k=0; k<50*10000; k++) {
+            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+        if (k >0 && (k+1) % 10000 == 0)
+        { end = time(NULL);
+        printf("calc rate is %f h/s", 10000/difftime(end,start));
+            start = time(NULL);
+        }
+    }
+
 
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
         printf("%02x", hash[i] & 0xff);
 
+
     if(validate_hash(hash, difficulty)>0)
-    { printf("solution found");}
+    { printf("\nsolution found");}
     else
-    { printf("solution unfound");}
+    { printf("\nsolution unfound");}
 
     randomx_destroy_vm(myMachine);
     randomx_release_cache(myCache);
