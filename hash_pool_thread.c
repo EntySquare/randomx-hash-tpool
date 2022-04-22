@@ -74,13 +74,17 @@ int main()
 
     randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
-    validate_hash(hash, difficulty);
+    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+        printf("%02x", hash[i] & 0xff);
+
+    if(validate_hash(hash, difficulty)>0)
+    { printf("solution found");}
+    else
+    { printf("solution unfound");}
 
     randomx_destroy_vm(myMachine);
     randomx_release_cache(myCache);
 
-    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-        printf("%02x", hash[i] & 0xff);
 
     printf("\ntest done\n");
 
