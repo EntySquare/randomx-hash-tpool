@@ -40,22 +40,22 @@
 //    else
 //        return e%2 + ret(e/2)*10;
 //}
-char ret(int e)
+void ret(int e)
 {   char arr[8] = {0, 0, 0 ,0 ,0, 0, 0, 0};
     int i = 0;
+    int k = 0;
 
     while(e!=0) {
         if (e >= pow(2.0, 7 - i)) {
-            arr[i] = 1;//把字符0+y%c的值存入数组中
+            arr[i] = 1;
             e = e - pow(2.0, 7 - i);
             i++;
         } else { i++; }
     }
-    for (i = 0; i <8 ; i++)
+    for (k = 0; k <8 ; k++)
     {
-        printf("%c", arr[i]);//从数组右边开始向左输出
+        printf("%c", arr[k]);//从数组右边开始向左输出
     }
-    return 0;
 }
 //int getbinary(  int len_list, const char object[] )
 //{
