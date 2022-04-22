@@ -55,7 +55,7 @@ void ret(int e)
     {
         printf("%d", arr[k]);//从数组右边开始向左输出
     }
-    printf("%n");
+    printf("\n");
 }
 //int getbinary(  int len_list, const char object[] )
 //{
