@@ -76,7 +76,7 @@ int main()
             int len_h0 = sizeof(h0)/sizeof(int);
             int len_prevh = sizeof(prevh)/sizeof(int);
             int len_time = sizeof(timestampBinary)/sizeof(int);
-            int len_chunk = sizeof(chunk)/sizeof(int);
+            int len_chunk = sizeof(chunk)/sizeof(char);
             int len_entropy = sizeof(entropy)/sizeof(int);
 
     const int testSample[] = {10};
