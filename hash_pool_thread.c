@@ -74,7 +74,7 @@ int main()
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
     time_t start = time(NULL);
-    time_t end = time(NULL);
+    time_t end ;
     for (int k=0; k<50*100; k++) {
             randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
         if (k >0 && (k+1) % 10 == 0)
