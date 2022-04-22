@@ -44,13 +44,7 @@ int ret(int e)
 {   char arr[8] = {0, 0, 0 ,0 ,0, 0, 0, 0};
     int i = 0;
     int k ;
-    while(e!=0) {
-        if (e >= pow(2.0, 7 - i)) {
-            arr[i] = 1;
-            e = e - pow(2.0, 7 - i);
-            i++;
-        } else { i++; }
-    }
+
     for (k = 0; k <8 ; k++)
     {
         printf("%c", arr[k]);//从数组右边开始向左输出
