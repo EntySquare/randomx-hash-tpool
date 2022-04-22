@@ -75,11 +75,12 @@ int main()
 
     time_t start = time(NULL);
     time_t end ;
-    for (int k=0; k<50*100; k++) {
+    int times = 100;
+    for (int k=0; k<50*times; k++) {
             randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-        if ((k+1) >100 && (k+1) % 100 == 0)
+        if ((k+1) >=times && (k+1) % times == 0)
         { end = time(NULL);
-        printf("calc rate is %f h/s\n", difftime(end,start));
+        printf("calc rate is %f h/s\n", times/difftime(end,start));
             start = time(NULL);
         }
     }
