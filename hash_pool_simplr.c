@@ -82,7 +82,6 @@ int main()
             unsigned char myInput[len_h0 + len_prevh + len_time + len_chunk + len_entropy];
 
             printf("length is %d\n", len_chunk );
-            ret(120);
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
@@ -122,12 +121,11 @@ int main()
 //              flags |= RANDOMX_FLAG_LARGE_PAGES;
 //          }
 
-
-
             int lem = sizeof(myInput);
             printf("myinput data size is %d\n", lem);
             printf("the flags is %d\n", flags);
             printf("%d\n", myInput[32]);
+
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
