@@ -72,8 +72,10 @@ int main()
             const int entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
              int myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
+           randomx_flags flags;
+           int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
 
-            int len_h0 = sizeof(h0)/sizeof(int);
+           int len_h0 = sizeof(h0)/sizeof(int);
             int len_prevh = sizeof(prevh)/sizeof(int);
             int len_time = sizeof(timestampBinary)/sizeof(int);
             int len_chunk = sizeof(chunk)/sizeof(int);
@@ -82,6 +84,7 @@ int main()
     const int testSample[] = {10};
         printf("length is %d\n", len_chunk );
    ret(222);
+
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
                 if (i< len_h0)
@@ -109,10 +112,17 @@ int main()
 
 
            // randomx_flags flags = randomx_get_flags();
-            randomx_flags flags = RANDOMX_FLAG_FULL_MEM ;
-            flags |= RANDOMX_FLAG_HARD_AES;
-            flags |= RANDOMX_FLAG_JIT;
-            flags |= RANDOMX_FLAG_LARGE_PAGES;
+
+           flags = RANDOMX_FLAG_FULL_MEM;
+           if (hardwareAESEnabled) {
+               flags |= RANDOMX_FLAG_HARD_AES;
+           }
+          if (jitEnabled) {
+              flags |= RANDOMX_FLAG_JIT;
+          }
+          if (largePagesEnabled) {
+              flags |= RANDOMX_FLAG_LARGE_PAGES;
+          }
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
