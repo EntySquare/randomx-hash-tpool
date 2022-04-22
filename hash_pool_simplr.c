@@ -5,6 +5,7 @@
 #include "randomx.h"
 #include "chunk_and_entropy.h"
 #include <stdio.h>
+#include <math.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -32,24 +33,40 @@
 //}
 
 
-int ret(int e)
-{
-    if(e / 2== 0)
-        return e% 2;
-    else
-        return e%2 + ret(e/2)*10;
-}
+//int ret(int e)
+//{
+//    if(e / 2== 0)
+//        return e% 2;
+//    else
+//        return e%2 + ret(e/2)*10;
+//}
+char ret(int e)
+{   char arr[8] = {0, 0, 0 ,0 ,0, 0, 0, 0};
+    int i = 0;
 
-int getbinary(  int len_list, const int object[] )
-{
-    int result = 0;
-    for (int k=0; k<len_list; k++)
-    {
-        result = result + ret(object[k]);
+    while(e!=0) {
+        if (e >= pow(2.0, 7 - i)) {
+            arr[i] = 1;//把字符0+y%c的值存入数组中
+            e = e - pow(2.0, 7 - i);
+            i++;
+        } else { i++; }
     }
-
-  return result;
+    for (i = 0; i <8 ; i++)
+    {
+        printf("%c", arr[i]);//从数组右边开始向左输出
+    }
+    return 0;
 }
+//int getbinary(  int len_list, const char object[] )
+//{
+//    char result[] = "0";
+//    for (int k=0; k<len_list; k++)
+//    {
+//        strcat(result, ret(object[k]));
+//    }
+//
+//  return result;
+//}
 
 
 
@@ -73,8 +90,8 @@ int main()
             int len_entropy = sizeof(entropy)/sizeof(int);
 
     const int testSample[] = {10};
-    printf("binary is %d\n", getbinary( 1, testSample ) );
-
+//    printf("binary is %d\n", ret(10) );
+   ret(10);
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
                 if (i< len_h0)
