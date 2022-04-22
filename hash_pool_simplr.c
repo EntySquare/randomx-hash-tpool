@@ -72,8 +72,8 @@ int main()
             const int entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
              int myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
-           randomx_flags flags;
-           int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
+            randomx_flags flags;
+            int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
 
            int len_h0 = sizeof(h0)/sizeof(int);
             int len_prevh = sizeof(prevh)/sizeof(int);
@@ -81,9 +81,9 @@ int main()
             int len_chunk = sizeof(chunk)/sizeof(int);
             int len_entropy = sizeof(entropy)/sizeof(int);
 
-    const int testSample[] = {10};
-        printf("length is %d\n", len_chunk );
-   ret(222);
+            const int testSample[] = {10};
+            printf("length is %d\n", len_chunk );
+            ret(222);
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
