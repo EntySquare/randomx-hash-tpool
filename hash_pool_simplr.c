@@ -43,8 +43,7 @@
 int ret(int e)
 {   char arr[8] = {0, 0, 0 ,0 ,0, 0, 0, 0};
     int i = 0;
-    int k = 0;
-
+    int k ;
     while(e!=0) {
         if (e >= pow(2.0, 7 - i)) {
             arr[i] = 1;
