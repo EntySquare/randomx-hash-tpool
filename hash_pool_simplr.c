@@ -123,6 +123,8 @@ int main()
               flags |= RANDOMX_FLAG_LARGE_PAGES;
           }
 
+          int lem = sizeof(myInput);
+          printf("myinput data size is %d\n", lem);
           printf("%d\n", myInput[32]);
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
