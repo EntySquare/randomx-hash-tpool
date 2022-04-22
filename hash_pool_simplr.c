@@ -73,7 +73,7 @@ int main()
             int len_entropy = sizeof(entropy)/sizeof(int);
 
     const int testSample[] = {10};
-    printf("binary is %d\n", ret(10) );
+    printf("binary is %d\n", getbinary( 1, testSample ) );
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
