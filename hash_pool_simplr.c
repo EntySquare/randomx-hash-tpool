@@ -123,12 +123,13 @@ int main()
               flags |= RANDOMX_FLAG_LARGE_PAGES;
           }
 
-    printf("flag is %d\n", flags );
+          printf("flag is %d\n", flags );
+
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
             randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
-            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+            randomx_calculate_hash(myMachine, &myInput, sizeof myInput/sizeof(char), hash);
 
             randomx_destroy_vm(myMachine);
             randomx_release_cache(myCache);
