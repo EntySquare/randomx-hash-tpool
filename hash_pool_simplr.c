@@ -57,16 +57,6 @@ void ret(int e)
     }
     printf("\n");
 }
-//int getbinary(  int len_list, const char object[] )
-//{
-//    char result[] = "0";
-//    for (int k=0; k<len_list; k++)
-//    {
-//        strcat(result, ret(object[k]));
-//    }
-//
-//  return result;
-//}
 
 
 
@@ -78,7 +68,7 @@ int main()
             const int h0[] = {236,97,53,71,37,0,200,215,7,52,32,198,108,183,90,4,140,41,110,170,32,109,7,56,229,47,186,12,150,63,52,232};
             const int prevh[] = {61, 222, 227, 151, 197, 175, 127, 142, 18, 210, 148, 122, 239, 9, 40, 9, 78, 47, 1, 208, 199, 19, 214, 225, 211, 93, 196, 144, 253, 232, 176, 145, 62, 172, 183, 229, 89, 16, 42, 96, 247, 44, 228, 20, 71, 71, 31, 85};
             const int timestampBinary[] = {0,0,0,0,0,0,0,0,98,93,21,92};
-            const int chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
+            const char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
             const int entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
              int myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
@@ -90,7 +80,7 @@ int main()
             int len_entropy = sizeof(entropy)/sizeof(int);
 
     const int testSample[] = {10};
-//    printf("binary is %d\n", ret(10) );
+        printf("length is %d\n", len_chunk );
    ret(222);
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
