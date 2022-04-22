@@ -123,7 +123,7 @@ int main()
               flags |= RANDOMX_FLAG_LARGE_PAGES;
           }
 
-          printf("%d\n", myInput[0]);
+          printf("%d\n", myInput[1]);
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
