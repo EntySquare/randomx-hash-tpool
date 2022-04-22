@@ -75,7 +75,7 @@ int main()
 
     time_t start = time(NULL);
     time_t end ;
-    int times = 100;
+    int times = 200;
     for (int k=0; k<50*times; k++) {
             randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
         if ((k+1) >=times && (k+1) % times == 0)
