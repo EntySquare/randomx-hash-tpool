@@ -111,18 +111,18 @@ int main()
             }
 
 
-           flags = randomx_get_flags();
+//           flags = randomx_get_flags();
 
-//           flags = RANDOMX_FLAG_FULL_MEM;
-//           if (hardwareAESEnabled) {
-//               flags |= RANDOMX_FLAG_HARD_AES;
-//           }
-//          if (jitEnabled) {
-//              flags |= RANDOMX_FLAG_JIT;
-//          }
-//          if (largePagesEnabled) {
-//              flags |= RANDOMX_FLAG_LARGE_PAGES;
-//          }
+           flags = RANDOMX_FLAG_FULL_MEM;
+           if (hardwareAESEnabled) {
+               flags |= RANDOMX_FLAG_HARD_AES;
+           }
+          if (jitEnabled) {
+              flags |= RANDOMX_FLAG_JIT;
+          }
+          if (largePagesEnabled) {
+              flags |= RANDOMX_FLAG_LARGE_PAGES;
+          }
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
