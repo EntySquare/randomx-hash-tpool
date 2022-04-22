@@ -82,7 +82,7 @@ int main()
             int len_entropy = sizeof(entropy)/sizeof(char);
 
             printf("length is %d\n", len_chunk );
-            ret(222);
+            ret(120);
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
@@ -123,13 +123,13 @@ int main()
               flags |= RANDOMX_FLAG_LARGE_PAGES;
           }
 
-          printf("flag is %d\n", flags );
+          printf("%d", myInput[0]);
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
             randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
-            randomx_calculate_hash(myMachine, &myInput, sizeof myInput/sizeof(char), hash);
+            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
             randomx_destroy_vm(myMachine);
             randomx_release_cache(myCache);
