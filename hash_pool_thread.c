@@ -77,7 +77,7 @@ int main()
     time_t end ;
     for (int k=0; k<50*100; k++) {
             randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-        if (k >0 && (k+1) % 10 == 0)
+        if ((k+1) >100 && (k+1) % 100 == 0)
         { end = time(NULL);
         printf("calc rate is %f h/s\n", difftime(end,start));
             start = time(NULL);
