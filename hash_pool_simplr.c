@@ -73,7 +73,7 @@ int main()
              int myInput[] = {0};
             char hash[RANDOMX_HASH_SIZE];
             randomx_flags flags;
-            int jitEnabled=1, largePagesEnabled=0, hardwareAESEnabled=1;
+            int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
 
            int len_h0 = sizeof(h0)/sizeof(int);
             int len_prevh = sizeof(prevh)/sizeof(int);
@@ -111,24 +111,24 @@ int main()
             }
 
 
-           // randomx_flags flags = randomx_get_flags();
+           flags = randomx_get_flags();
 
-           flags = RANDOMX_FLAG_FULL_MEM;
-           if (hardwareAESEnabled) {
-               flags |= RANDOMX_FLAG_HARD_AES;
-           }
-          if (jitEnabled) {
-              flags |= RANDOMX_FLAG_JIT;
-          }
-          if (largePagesEnabled) {
-              flags |= RANDOMX_FLAG_LARGE_PAGES;
-          }
+//           flags = RANDOMX_FLAG_FULL_MEM;
+//           if (hardwareAESEnabled) {
+//               flags |= RANDOMX_FLAG_HARD_AES;
+//           }
+//          if (jitEnabled) {
+//              flags |= RANDOMX_FLAG_JIT;
+//          }
+//          if (largePagesEnabled) {
+//              flags |= RANDOMX_FLAG_LARGE_PAGES;
+//          }
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
             randomx_vm *myMachine = randomx_create_vm(flags, myCache, NULL);
 
-            randomx_calculate_hash(myMachine, &myInput, sizeof(myInput)/sizeof(int), hash);
+            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
             randomx_destroy_vm(myMachine);
             randomx_release_cache(myCache);
