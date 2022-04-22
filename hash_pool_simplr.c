@@ -42,6 +42,7 @@
 //}
 void ret(int e)
 {   char arr[8] = {0, 0, 0 ,0 ,0, 0, 0, 0};
+    int result;
     int i = 0;
     while(e!=0) {
         if (e >= pow(2.0, 7 - i)) {
@@ -54,6 +55,7 @@ void ret(int e)
     {
         printf("%d", arr[k]);//从数组右边开始向左输出
     }
+    printf("%n");
 }
 //int getbinary(  int len_list, const char object[] )
 //{
@@ -89,7 +91,7 @@ int main()
 
     const int testSample[] = {10};
 //    printf("binary is %d\n", ret(10) );
-   ret(10);
+   ret(222);
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
             {
                 if (i< len_h0)
