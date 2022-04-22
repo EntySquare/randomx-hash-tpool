@@ -126,7 +126,7 @@ int main()
 
             randomx_cache *myCache = randomx_alloc_cache(flags);
             randomx_init_cache(myCache, &myKey, sizeof myKey);
-            randomx_vm *myMachine = randomx_create_vm(flags, myCache, NULL);
+            randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
             randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
