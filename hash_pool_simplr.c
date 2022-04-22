@@ -60,7 +60,6 @@ void ret(int e)
 
 
 
-
 int main()
 {
             const char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
@@ -70,16 +69,17 @@ int main()
             const char timestampBinary[] = {0,0,0,0,0,0,0,0,98,93,21,92};
             const char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
             const char entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
-            unsigned char myInput[]={};
             unsigned char hash[RANDOMX_HASH_SIZE];
             randomx_flags flags;
             int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
 
-           int len_h0 = sizeof(h0)/sizeof(char);
+            int len_h0 = sizeof(h0)/sizeof(char);
             int len_prevh = sizeof(prevh)/sizeof(char);
             int len_time = sizeof(timestampBinary)/sizeof(char);
             int len_chunk = sizeof(chunk)/sizeof(char);
             int len_entropy = sizeof(entropy)/sizeof(char);
+
+            unsigned char myInput[len_h0 + len_prevh + len_time + len_chunk + len_entropy];
 
             printf("length is %d\n", len_chunk );
             ret(120);
@@ -108,7 +108,6 @@ int main()
                 }
 
             }
-
 
 //           flags = randomx_get_flags();
 
