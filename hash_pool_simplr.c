@@ -52,7 +52,7 @@ void ret(int e)
     }
     for ( int k = 0; k <8 ; k++)
     {
-        printf("%c", arr[k]);//从数组右边开始向左输出
+        printf("%d", arr[k]);//从数组右边开始向左输出
     }
 }
 //int getbinary(  int len_list, const char object[] )
