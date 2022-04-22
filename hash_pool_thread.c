@@ -77,17 +77,15 @@ int main()
     time_t end = time(NULL);
     for (int k=0; k<50*100; k++) {
             randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-        if (k >0 && (k+1) % 100 == 0)
+        if (k >0 && (k+1) % 10 == 0)
         { end = time(NULL);
-        printf("calc rate is %f h/s", 100/difftime(end,start));
+        printf("calc rate is %d h/s", difftime(end,start));
             start = time(NULL);
         }
     }
 
-
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
         printf("%02x", hash[i] & 0xff);
-
 
     if(validate_hash(hash, difficulty)>0)
     { printf("\nsolution found");}
