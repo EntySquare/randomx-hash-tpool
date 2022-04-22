@@ -72,7 +72,7 @@ int main()
             int len_chunk = sizeof(chunk)/sizeof(int);
             int len_entropy = sizeof(entropy)/sizeof(int);
 
-    const int testSample[] = {10, 20};
+    const int testSample[] = {10};
     printf("%d\n", getbinary( len_h0, testSample ) );
 
             for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
