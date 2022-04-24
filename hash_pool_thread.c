@@ -29,13 +29,26 @@ int main()
     unsigned char hash[RANDOMX_HASH_SIZE];
     unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
 
+    FILE *fp = NULL;
+    fp = fopen("bigdata.txt", "r");
+    fputs(chunk, fp);
+    fputs("\n", fp);
+    fclose(fp);
+
+    FILE *fq = NULL;
+    unsigned char buff[256*1024];
+    fq = fopen("bigdata.txt", "r");
+    fgets(buff, 256*1024, (FILE*)fq);
+    fclose(fq);
+
+
     randomx_flags flags;
     int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
     int len_h0 = sizeof(h0)/sizeof(char);
     int len_prevh = sizeof(prevh)/sizeof(char);
     int len_time = sizeof(timestampBinary)/sizeof(char);
-    int len_chunk = sizeof(chunk)/sizeof(char);
-    int len_entropy = sizeof(entropy)/sizeof(char);
+    int len_chunk = sizeof(buff)/sizeof(char);
+    int len_entropy = sizeof(buff)/sizeof(char);
 
     unsigned char myInput[len_h0 + len_prevh + len_time + len_chunk + len_entropy];
 
@@ -55,11 +68,11 @@ int main()
         }
         else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
         {
-            myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
+            myInput[i] = buff[i - len_h0 - len_prevh - len_time];
         }
         else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
         {
-            myInput[i] = entropy[i - len_h0 - len_prevh - len_time - len_chunk ];
+            myInput[i] = buff[i - len_h0 - len_prevh - len_time - len_chunk ];
         }
 
     }
