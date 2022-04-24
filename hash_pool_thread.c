@@ -39,16 +39,6 @@ void hash_cal(void)
     int len_entropy = sizeof(entropy)/sizeof(char);
     unsigned char myInput[len_h0 + len_prevh + len_time + len_chunk + len_entropy];
 
-    FILE *fp = NULL;
-    fp = fopen("bigdata.txt", "w+");
-    fprintf(fp, chunk);
-    fclose(fp);
-
-    FILE *fq = NULL;
-    char buff[256*1024];
-    fq = fopen("bigdata.txt", "r");
-    fgets(buff, 256*1024, (FILE*)fq);
-    fclose(fq);
 
     for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
     {
@@ -66,7 +56,7 @@ void hash_cal(void)
         }
         else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
         {
-            myInput[i] = buff[i - len_h0 - len_prevh - len_time];
+            myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
         }
         else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
         {
@@ -78,24 +68,14 @@ void hash_cal(void)
     flags = randomx_get_flags();
 
     int lem = sizeof(myInput);
-    printf("myinput data size is %d\n", lem);
+//    printf("myinput data size is %d\n", lem);
 
     randomx_cache *myCache = randomx_alloc_cache(flags);
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
     randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-//    time_t start = time(NULL);
-//    time_t end ;
-//    int times = 200;
-//    for (int k=0; k<50*times; k++) {
-//            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-//        if ((k+1) >=times && (k+1) % times == 0)
-//        { end = time(NULL);
-//        printf("calc rate is %f h/s\n", times/difftime(end,start));
-//            start = time(NULL);
-//        }
-//    }
+
 
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
         printf("%02x", hash[i] & 0xff);
@@ -108,15 +88,26 @@ void hash_cal(void)
     randomx_destroy_vm(myMachine);
     randomx_release_cache(myCache);
 
-    printf("\ntest done\n");
+//    printf("\ntest done\n");
 
 }
 
-
+//void hash_cal(void)
 
 int main()
 {
-    hash_cal();
+    time_t start = time(NULL);
+    time_t end ;
+    int times = 200;
+    for (int k=0; k<50*times; k++) {
+            hash_cal();
+        if ((k+1) >=times && (k+1) % times == 0)
+        { end = time(NULL);
+        printf("calc rate is %f h/s\n", times/difftime(end,start));
+            start = time(NULL);
+        }
+    }
+
 
 }
 
