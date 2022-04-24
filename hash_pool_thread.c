@@ -31,13 +31,14 @@ int main()
 
     FILE *fp = NULL;
     fp = fopen("bigdata.txt", "w");
-    fputs(h0, fp);
-    fputs("\n", fp);
+    fprintf(fp, chunk);
+    fputs(chunk, fp);
     fclose(fp);
 
     FILE *fq = NULL;
     unsigned char buff[256*1024];
     fq = fopen("bigdata.txt", "r");
+    fscanf(fq, "%s", buff);
     fgets(buff, 256*1024, (FILE*)fq);
     fclose(fq);
 
