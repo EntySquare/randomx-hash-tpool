@@ -17,8 +17,14 @@ static int validate_hash(
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
 
+void *hash_thread(int thread_num)
+{
+    for (int k; k < thread_num; k++)
+        printf(" this is thread %d", k);
+}
 
-void hash_cal(void)
+
+int main()
 {
     const char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
                           33, 152, 221, 38, 200, 234, 74, 60, 118, 235, 15, 159, 33, 237, 210, 127};
@@ -74,11 +80,19 @@ void hash_cal(void)
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
     //randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+    pthread_t thread_id;
+    printf("threads creation starts");
+    pthread_create(&thread_id, NULL, hash_thread, NULL);
+    pthread_join(thread_id, NULL);
+
+
     time_t start = time(NULL);
     time_t end ;
     int times = 100;
-    for (int k=0; k<10*times; k++) {
+    for (int k=0; k<10*times; k++)
+    {
             randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+
         if ((k+1) >=times && (k+1) % times == 0)
         { end = time(NULL);
         printf("calc rate is %f h/s\n", times/difftime(end,start));
@@ -101,13 +115,7 @@ void hash_cal(void)
 
 }
 
-void hash_thread(int num);
 
-int main()
-{
-    hash_cal();
-
-}
 
 
 //    FILE *fp = NULL;
