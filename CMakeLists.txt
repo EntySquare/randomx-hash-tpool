@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 LINK_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 LINK_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 
+TARGET_LINK_LIBRARIES(demo pthread)
+
 INCLUDE_DIRECTORIES(/usr/lib/x86_64-linux-gnu)
 
 add_executable(demo hash_pool.cpp hash_pool_thread.c)

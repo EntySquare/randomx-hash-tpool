@@ -97,7 +97,7 @@ int main()
 
     pthread_t thread_id;
     printf("threads creation starts");
-    pthread_create(&thread_id, NULL, (void*)hash_cal, NULL);
+    pthread_create(&thread_id, NULL, (void*)hash_cal(myMachine, &myInput, sizeof myInput, hash), NULL);
     pthread_join(thread_id, NULL);
 
     hash_cal(myMachine, &myInput, sizeof myInput, hash);
