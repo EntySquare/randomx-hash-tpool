@@ -17,12 +17,28 @@ static int validate_hash(
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
 
-void *hash_thread(int thread_num)
-{
-    for (int k; k < thread_num; k++)
-        printf(" this is thread %d", k);
-}
+//void *hash_thread(int thread_num)
+//{
+//    for (int k; k < thread_num; k++)
+//        printf(" this is thread %d", k);
+//}
 
+void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
+{
+    time_t start = time(NULL);
+    time_t end;
+    int times = 100;
+
+    for (int k = 0; k < 10 * times; k++) {
+        randomx_calculate_hash(machine, input, inputSize, output);
+
+        if ((k + 1) >= times && (k + 1) % times == 0) {
+            end = time(NULL);
+            printf("calc rate is %f h/s\n", times / difftime(end, start));
+            start = time(NULL);
+        }
+    }
+}
 
 int main()
 {
@@ -78,27 +94,14 @@ int main()
     randomx_cache *myCache = randomx_alloc_cache(flags);
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
+//    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
-    //randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-    pthread_t thread_id;
-    printf("threads creation starts");
-    pthread_create(&thread_id, NULL, hash_thread, NULL);
-    pthread_join(thread_id, NULL);
+//    pthread_t thread_id;
+//    printf("threads creation starts");
+//    pthread_create(&thread_id, NULL, hash_cal, NULL);
+//    pthread_join(thread_id, NULL);
 
-
-    time_t start = time(NULL);
-    time_t end ;
-    int times = 100;
-    for (int k=0; k<10*times; k++)
-    {
-            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-
-        if ((k+1) >=times && (k+1) % times == 0)
-        { end = time(NULL);
-        printf("calc rate is %f h/s\n", times/difftime(end,start));
-            start = time(NULL);
-        }
-    }
+     hash_cal(myMachine, &myInput, sizeof myInput, hash);
 
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
         printf("%02x", hash[i] & 0xff);
@@ -131,3 +134,21 @@ int main()
 //    fgets(buff, 256*1024, (FILE*)fq);
 //    printf("%s\n", buff);
 //    fclose(fq);
+
+
+//  example
+//#include<pthread.h>
+//#include<stdio.h>
+//void *workThreadEntry(void *args)
+//{
+//    char*str = (char*)args;
+//    printf("threadId:%lu,argv:%s\n",pthread_self(),str);
+//}
+//
+//int main(int argc, char *agrv[])
+//{   pthread_t thread_id;
+//    char*str = "hello world";
+//    pthread_create(&thread_id,NULL,workThreadEntry,str);
+//    printf("threadId=%lu\n",pthread_self());
+//    pthread_join(thread_id,NULL);
+//}
