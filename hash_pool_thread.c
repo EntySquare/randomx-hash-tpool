@@ -30,7 +30,7 @@ int main()
     unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
 
     FILE *fp = NULL;
-    char test[]={1,2,3};
+    char test[]={1,2,3,4,5,6,7,8,9,0};
     fp = fopen("bigdata.txt", "w+");
     fputs(test, fp);
 //    fwrite(chunk, sizeof(chunk), sizeof(chunk), fp);
