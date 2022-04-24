@@ -112,12 +112,12 @@ int main()
     parameters->inputSize = sizeof myInput;
     parameters->output = hash;
 
-    pthread_t thread_id;
-    printf("threads creation starts");
-    pthread_create(&thread_id, NULL, hash_cal, (void *)parameters);
-    pthread_join(thread_id, NULL);
+//    pthread_t thread_id;
+//    printf("threads creation starts");
+//    pthread_create(&thread_id, NULL, hash_cal, (void *)parameters);
+//    pthread_join(thread_id, NULL);
 
-//    hash_cal(myMachine, &myInput, sizeof myInput, hash);
+    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
         printf("%02x", hash[i] & 0xff);
