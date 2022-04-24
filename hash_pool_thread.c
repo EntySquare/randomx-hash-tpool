@@ -28,6 +28,7 @@ void hash_cal(void)
     const char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
     const char entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
     unsigned char hash[RANDOMX_HASH_SIZE];
+    randomx_flags flags;
     unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
 
     int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
@@ -64,7 +65,7 @@ void hash_cal(void)
 
     }
 
-    randomx_flags flags = randomx_get_flags();
+    flags = randomx_get_flags();
 
     int lem = sizeof(myInput);
     printf("myinput data size is %d\n", lem);
