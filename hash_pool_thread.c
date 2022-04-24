@@ -22,15 +22,26 @@ static int validate_hash(
 //    for (int k; k < thread_num; k++)
 //        printf(" this is thread %d", k);
 //}
+struct args {
+    randomx_vm *machine;
+    unsigned char* input;
+    int* inputSize;
+    unsigned char* output;
+};
 
-void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
+//void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
+void *hash_cal(void *params)
 {
+    randomx_vm *machine1 = ((struct args*)params)->machine ;
+    const void *input1 = ((struct args*)params)->input;
+    size_t inputSize1 = ((struct args*)params)->inputSize;
+    void *output1 = ((struct args*)params)->output;
     time_t start = time(NULL);
     time_t end;
     int times = 100;
 
     for (int k = 0; k < 10 * times; k++) {
-        randomx_calculate_hash(machine, input, inputSize, output);
+        randomx_calculate_hash(machine1, input1, inputSize1, output1);
 
         if ((k + 1) >= times && (k + 1) % times == 0) {
             end = time(NULL);
@@ -95,12 +106,18 @@ int main()
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
+    struct args *parameters;
+    parameters->machine = myMachine;
+    parameters->input = myInput;
+    parameters->inputSize = sizeof myInput;
+    parameters->output = hash;
+
     pthread_t thread_id;
     printf("threads creation starts");
-    pthread_create(&thread_id, NULL, (void*)hash_cal(myMachine, &myInput, sizeof myInput, hash), NULL);
+    pthread_create(&thread_id, NULL, hash_cal, (void *)parameters);
     pthread_join(thread_id, NULL);
 
-    hash_cal(myMachine, &myInput, sizeof myInput, hash);
+//    hash_cal(myMachine, &myInput, sizeof myInput, hash);
 
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
         printf("%02x", hash[i] & 0xff);
