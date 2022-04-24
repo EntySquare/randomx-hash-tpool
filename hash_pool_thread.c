@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <pthread.h>
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
@@ -17,7 +18,7 @@ static int validate_hash(
 }
 
 
-int main()
+void hash_cal(void)
 {
     const char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
                           33, 152, 221, 38, 200, 234, 74, 60, 118, 235, 15, 159, 33, 237, 210, 127};
@@ -29,30 +30,14 @@ int main()
     unsigned char hash[RANDOMX_HASH_SIZE];
     unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
 
-    FILE *fp = NULL;
-    char test[]={1,2,3,4,5,6,7,8,9,0};
-    fp = fopen("bigdata.txt", "w+");
-    fputs(test, fp);
-//    fwrite(chunk, sizeof(chunk), sizeof(chunk), fp);
-    fclose(fp);
-
-    FILE *fq = NULL;
-    char buff[10];
-    fq = fopen("bigdata.txt", "r");
-    fgets(buff, 256*1024, (FILE*)fq);
-    printf("%s\n",buff);
-    fclose(fq);
-
-
-    randomx_flags flags;
     int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
     int len_h0 = sizeof(h0)/sizeof(char);
     int len_prevh = sizeof(prevh)/sizeof(char);
     int len_time = sizeof(timestampBinary)/sizeof(char);
-    int len_chunk = sizeof(buff)/sizeof(char);
-    int len_entropy = sizeof(buff)/sizeof(char);
-
+    int len_chunk = sizeof(chunk)/sizeof(char);
+    int len_entropy = sizeof(entropy)/sizeof(char);
     unsigned char myInput[len_h0 + len_prevh + len_time + len_chunk + len_entropy];
+
 
     for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
     {
@@ -70,15 +55,16 @@ int main()
         }
         else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
         {
-            myInput[i] = buff[i - len_h0 - len_prevh - len_time];
+            myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
         }
         else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
         {
-            myInput[i] = buff[i - len_h0 - len_prevh - len_time - len_chunk ];
+            myInput[i] = entropy[i - len_h0 - len_prevh - len_time - len_chunk ];
         }
 
     }
 
+    randomx_flags flags;
     flags = randomx_get_flags();
 
     int lem = sizeof(myInput);
@@ -111,11 +97,29 @@ int main()
     randomx_destroy_vm(myMachine);
     randomx_release_cache(myCache);
 
-
     printf("\ntest done\n");
-
-    return hash[1];
 
 }
 
 
+
+int main()
+{
+    hash_cal;
+    return 0;
+}
+
+
+//    FILE *fp = NULL;
+//    char test[]={1,2,3,4,5,6,7,8,9,0};
+//    fp = fopen("bigdata.txt", "w+");
+//    fputs(test, fp);
+//    fwrite(chunk, sizeof(chunk), sizeof(chunk), fp);
+//    fclose(fp);
+//
+//    FILE *fq = NULL;
+//    char buff[10];
+//    fq = fopen("bigdata.txt", "r");
+//    fgets(buff, 256*1024, (FILE*)fq);
+//    printf("%s\n", buff);
+//    fclose(fq);
