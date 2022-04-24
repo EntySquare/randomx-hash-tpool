@@ -41,7 +41,7 @@ void hash_cal(void)
 
     FILE *fp = NULL;
     fp = fopen("bigdata.txt", "w+");
-    fputs(chunk, fp);
+    fprintf(fp, chunk);
     fclose(fp);
 
     FILE *fq = NULL;
