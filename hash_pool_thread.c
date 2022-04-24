@@ -101,7 +101,7 @@ void hash_cal(void)
 
 }
 
-void hash_cal(void)
+void hash_thread(int num);
 
 int main()
 {
