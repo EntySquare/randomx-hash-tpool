@@ -39,6 +39,16 @@ void hash_cal(void)
     int len_entropy = sizeof(entropy)/sizeof(char);
     unsigned char myInput[len_h0 + len_prevh + len_time + len_chunk + len_entropy];
 
+    FILE *fp = NULL;
+    fp = fopen("bigdata.txt", "w+");
+    fputs(chunk, fp);
+    fclose(fp);
+
+    FILE *fq = NULL;
+    char buff[256*1024];
+    fq = fopen("bigdata.txt", "r");
+    fgets(buff, 256*1024, (FILE*)fq);
+    fclose(fq);
 
     for (int i = 0; i < len_h0 + len_prevh + len_time + len_chunk + len_entropy ; i++)
     {
@@ -56,7 +66,7 @@ void hash_cal(void)
         }
         else if (i< len_h0 + len_prevh + len_time + len_chunk && i >= len_h0 + len_prevh + len_time)
         {
-            myInput[i] = chunk[i - len_h0 - len_prevh - len_time];
+            myInput[i] = buff[i - len_h0 - len_prevh - len_time];
         }
         else if (i< len_h0 + len_prevh + len_time + len_chunk + len_entropy && i >= len_h0 + len_prevh + len_time + len_chunk )
         {
