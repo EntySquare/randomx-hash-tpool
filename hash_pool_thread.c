@@ -106,7 +106,7 @@ void hash_cal(void)
 int main()
 {
     hash_cal();
-    return 0;
+
 }
 
 
