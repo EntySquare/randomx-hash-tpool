@@ -25,7 +25,7 @@ static int validate_hash(
 struct args {
     randomx_vm *machine;
     unsigned char* input;
-    int* inputSize;
+    int inputSize;
     unsigned char* output;
 };
 
