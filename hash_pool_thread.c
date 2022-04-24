@@ -64,8 +64,7 @@ void hash_cal(void)
 
     }
 
-    randomx_flags flags;
-    flags = randomx_get_flags();
+    randomx_flags flags = randomx_get_flags();
 
     int lem = sizeof(myInput);
     printf("myinput data size is %d\n", lem);
