@@ -32,7 +32,7 @@ int main()
     FILE *fp = NULL;
     fp = fopen("bigdata.txt", "w");
     fprintf(fp, chunk);
-    fputs(chunk, fp);
+//    fputs(chunk, fp);
     fclose(fp);
 
     FILE *fq = NULL;
