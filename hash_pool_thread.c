@@ -74,6 +74,7 @@ void hash_cal(void)
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
+    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    time_t start = time(NULL);
 //    time_t end ;
 //    int times = 200;
