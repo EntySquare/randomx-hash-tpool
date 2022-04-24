@@ -23,14 +23,6 @@ static int validate_hash(
 //        printf(" this is thread %d", k);
 //}
 
-static init_vm(unsigned char *myKey, int key_len)
-{
-    randomx_flags flags = randomx_get_flags();
-    randomx_cache *myCache = randomx_alloc_cache(flags);
-    randomx_init_cache(myCache, &myKey, key_len);
-    return randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
-}
-
 void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 {
     time_t start = time(NULL);
@@ -96,7 +88,11 @@ int main()
     int lem = sizeof(myInput);
     printf("myinput data size is %d\n", lem);
 
-    randomx_vm *myMachine = init_vm(&myKey, sizeof myKey);
+    randomx_flags flags = randomx_get_flags();
+    randomx_cache *myCache = randomx_alloc_cache(flags);
+    randomx_init_cache(myCache, &myKey, sizeof myKey);
+    randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
+
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
 //    pthread_t thread_id;
@@ -115,7 +111,7 @@ int main()
     { printf("\nsolution unfound\n");}
 
     randomx_destroy_vm(myMachine);
-//    randomx_release_cache(myCache);
+    randomx_release_cache(myCache);
 
     printf("\ntest done\n");
 
@@ -154,3 +150,4 @@ int main()
 //    pthread_create(&thread_id,NULL,workThreadEntry,str);
 //    printf("threadId=%lu\n",pthread_self());
 //    pthread_join(thread_id,NULL);
+//}
