@@ -24,7 +24,7 @@ int main()
     const char h0[] = {236,97,53,71,37,0,200,215,7,52,32,198,108,183,90,4,140,41,110,170,32,109,7,56,229,47,186,12,150,63,52,232};
     const char prevh[] = {61, 222, 227, 151, 197, 175, 127, 142, 18, 210, 148, 122, 239, 9, 40, 9, 78, 47, 1, 208, 199, 19, 214, 225, 211, 93, 196, 144, 253, 232, 176, 145, 62, 172, 183, 229, 89, 16, 42, 96, 247, 44, 228, 20, 71, 71, 31, 85};
     const char timestampBinary[] = {0,0,0,0,0,0,0,0,98,93,21,92};
-    const char *chunk = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
+    const char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
     const char entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
     unsigned char hash[RANDOMX_HASH_SIZE];
     unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
@@ -36,7 +36,7 @@ int main()
     fclose(fp);
 
     FILE *fq = NULL;
-    unsigned char buff[256*1024];
+    char buff[256*1024];
     fq = fopen("bigdata.txt", "r");
     fscanf(fq, "%s", buff);
     fgets(buff, 256*1024, (FILE*)fq);
