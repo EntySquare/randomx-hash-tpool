@@ -28,7 +28,6 @@ void hash_cal(void)
     const char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
     const char entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
     unsigned char hash[RANDOMX_HASH_SIZE];
-    randomx_flags flags;
     unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
 
     int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
@@ -65,42 +64,21 @@ void hash_cal(void)
 
     }
 
-    flags = randomx_get_flags();
+    randomx_flags flags = randomx_get_flags();
 
     int lem = sizeof(myInput);
-//    printf("myinput data size is %d\n", lem);
+    printf("myinput data size is %d\n", lem);
 
     randomx_cache *myCache = randomx_alloc_cache(flags);
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
-    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-
-
-    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-        printf("%02x", hash[i] & 0xff);
-
-    if(validate_hash(hash, difficulty)>0)
-    { printf("\nsolution found");}
-    else
-    { printf("\nsolution unfound");}
-
-    randomx_destroy_vm(myMachine);
-    randomx_release_cache(myCache);
-
-//    printf("\ntest done\n");
-
-}
-
-//void hash_cal(void)
-
-int main()
-{
+    //randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
     time_t start = time(NULL);
     time_t end ;
-    int times = 200;
-    for (int k=0; k<50*times; k++) {
-            hash_cal();
+    int times = 100;
+    for (int k=0; k<10*times; k++) {
+            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
         if ((k+1) >=times && (k+1) % times == 0)
         { end = time(NULL);
         printf("calc rate is %f h/s\n", times/difftime(end,start));
@@ -108,6 +86,26 @@ int main()
         }
     }
 
+    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+        printf("%02x", hash[i] & 0xff);
+
+    if(validate_hash(hash, difficulty)>0)
+    { printf("\nsolution found\n");}
+    else
+    { printf("\nsolution unfound\n");}
+
+    randomx_destroy_vm(myMachine);
+    randomx_release_cache(myCache);
+
+    printf("\ntest done\n");
+
+}
+
+void hash_cal(void)
+
+int main()
+{
+    hash_cal();
 
 }
 
