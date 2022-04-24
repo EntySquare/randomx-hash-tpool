@@ -17,17 +17,13 @@ static int validate_hash(
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
 
-//void *hash_thread(int thread_num)
-//{
-//    for (int k; k < thread_num; k++)
-//        printf(" this is thread %d", k);
-//}
-struct args {
-    randomx_vm *machine;
-    unsigned char* input;
-    int inputSize;
-    unsigned char* output;
-};
+
+//struct args {
+//    randomx_vm *machine;
+//    unsigned char* input;
+//    int inputSize;
+//    unsigned char* output;
+//};
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *params)
@@ -103,8 +99,6 @@ int main()
     randomx_cache *myCache = randomx_alloc_cache(flags);
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
-
-//    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
     struct args *parameters;
     parameters->machine = myMachine;
