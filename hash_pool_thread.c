@@ -31,8 +31,8 @@ int main()
 
     FILE *fp = NULL;
     fp = fopen("bigdata.txt", "w+");
-//   fprintf(fp, chunk);
-    fwrite(chunk, sizeof(chunk), sizeof(chunk), fp);
+    fputs(chunk, fp);
+//    fwrite(chunk, sizeof(chunk), sizeof(chunk), fp);
     fclose(fp);
 
     FILE *fq = NULL;
