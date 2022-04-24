@@ -37,11 +37,11 @@ int main()
     fclose(fp);
 
     FILE *fq = NULL;
-    char buff[256*1024];
-//    fq = fopen("bigdata.txt", "r");
-//    fscanf(fq, "%s", buff);
-//    fgets(buff, 256*1024, (FILE*)fq);
-//    fclose(fq);
+    char buff[10];
+    fq = fopen("bigdata.txt", "r");
+    fgets(buff, 256*1024, (FILE*)fq);
+    printf("%s\n",buff);
+    fclose(fq);
 
 
     randomx_flags flags;
