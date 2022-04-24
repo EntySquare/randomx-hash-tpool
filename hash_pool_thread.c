@@ -86,17 +86,17 @@ int main()
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
-    time_t start = time(NULL);
-    time_t end ;
-    int times = 200;
-    for (int k=0; k<50*times; k++) {
-            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-        if ((k+1) >=times && (k+1) % times == 0)
-        { end = time(NULL);
-        printf("calc rate is %f h/s\n", times/difftime(end,start));
-            start = time(NULL);
-        }
-    }
+//    time_t start = time(NULL);
+//    time_t end ;
+//    int times = 200;
+//    for (int k=0; k<50*times; k++) {
+//            randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+//        if ((k+1) >=times && (k+1) % times == 0)
+//        { end = time(NULL);
+//        printf("calc rate is %f h/s\n", times/difftime(end,start));
+//            start = time(NULL);
+//        }
+//    }
 
     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
         printf("%02x", hash[i] & 0xff);
