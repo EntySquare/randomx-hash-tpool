@@ -130,7 +130,7 @@ int main()
 
     for (int j = 0; j<thread_count ; j++){
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
-        pthread_join(thread_id[k], &status);
+        pthread_join(thread_id[j], &status);
 //        if (rc) {
 //            exit(-1);
 //        }
