@@ -105,10 +105,11 @@ int main()
 
     struct param *parameters;
     int input_len = sizeof myInput;
-    parameters->machine = myMachine;
+//    parameters->machine = myMachine;
     parameters->input = myInput;
     parameters->inputSize = input_len;
     parameters->output = hash;
+    rintf("structure ok");
 
     int thread_count = 5;
     pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
