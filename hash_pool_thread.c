@@ -33,8 +33,8 @@ struct param {
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
 {
-    int times = 5;
-    int list_len = 100;
+    int times = 100;
+    int list_len = 5;
     //long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread starting...\n");
 
