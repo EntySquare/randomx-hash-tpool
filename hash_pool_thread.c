@@ -40,14 +40,13 @@ void *hash_cal(void *paramsPtr)
     //long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread starting...\n");
 
-   randomx_flags flags_vm = RANDOMX_FLAG_DEFAULT;
-    flags_vm |= RANDOMX_FLAG_HARD_AES;
-    flags_vm |= RANDOMX_FLAG_JIT;
+//   randomx_flags flags_vm = RANDOMX_FLAG_DEFAULT;
+//    flags_vm |= RANDOMX_FLAG_HARD_AES;
+//    flags_vm |= RANDOMX_FLAG_JIT;
     randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
     flags_fast |= RANDOMX_FLAG_JIT;
-
+    randomx_flags flags_vm = 15;
     printf("flags is %d\n", flags_vm);
-
 
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
     randomx_init_cache(myCache, ((struct param*)paramsPtr)->key, ((struct param*)paramsPtr)->keySize);
