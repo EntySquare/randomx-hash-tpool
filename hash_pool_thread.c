@@ -30,25 +30,27 @@ struct param {
 
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
-void *hash_cal(void *paramsPtr)
+void *hash_cal(void *paramsPtr, void *t)
 {
-    time_t start = time(NULL);
-    time_t end;
     int times = 100;
     int list_len = 5;
+    tid = (long)t;
+    printf("Thread %ld starting...\n", tid);
+
     randomx_flags flags = randomx_get_flags();
     randomx_cache *myCache = randomx_alloc_cache(flags);
     char* initKey = ((struct param*)paramsPtr)->key;
     randomx_init_cache(myCache, &initKey, sizeof initKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
-    printf("Thread starting...\n");
 
+    time_t start = time(NULL);
+    time_t end;
     for (int k = 0; k < list_len * times; k++) {
         randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
         if ((k + 1) >= times && (k + 1) % times == 0) {
             end = time(NULL);
-            printf("calc rate is %f h/s\n", times / difftime(end, start));
+            printf("Thread %ld : calc rate is %f h/s\n", tid, times / difftime(end, start));
             start = time(NULL);
         }
 
