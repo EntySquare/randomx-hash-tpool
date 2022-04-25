@@ -51,6 +51,8 @@ void *hash_cal(void *paramsPtr)
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
     randomx_init_cache(myCache, ((struct param*)paramsPtr)->key, ((struct param*)paramsPtr)->keySize);
     randomx_dataset *myDataset = randomx_alloc_dataset(flags_fast);
+    randomx_release_cache(myCache);
+    myCache = NULL;
     randomx_vm *myMachine = randomx_create_vm(flags_vm, myCache, myDataset);
 //    printf("the flag is %d\n", flags);
 
