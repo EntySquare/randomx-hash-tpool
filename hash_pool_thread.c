@@ -44,11 +44,11 @@ void *hash_cal(void *paramsPtr)
     for (int k = 0; k < list_len * times; k++) {
         randomx_calculate_hash(((struct param*)paramsPtr)->machine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
-        if ((k + 1) >= times && (k + 1) % times == 0) {
-            end = time(NULL);
-            printf("calc rate is %f h/s\n", times / difftime(end, start));
-            start = time(NULL);
-        }
+//        if ((k + 1) >= times && (k + 1) % times == 0) {
+//            end = time(NULL);
+//            printf("calc rate is %f h/s\n", times / difftime(end, start));
+//            start = time(NULL);
+//        }
 
         if ((k + 1) == list_len * times ){
             unsigned char* hash = ((struct param*)paramsPtr)->output;
