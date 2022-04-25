@@ -127,8 +127,8 @@ int main()
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
 //        pthread_join(thread_id[j], NULL);
     }
-    for (int j = 0; j<thread_count ; j++)
-    {pthread_join(thread_id[j], NULL);}
+    for (int k = 0; k<thread_count ; k++)
+    {pthread_join(thread_id[k], NULL);}
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
