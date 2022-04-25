@@ -15,7 +15,7 @@
 #define TIMES_PER_LIST 200
 #define LIST_NUM 10
 
-#define numWorkers 100
+#define numWorkers 191
 
 
 static int validate_hash(
@@ -55,7 +55,8 @@ void *hash_cal(void *paramsPtr)
     randomx_dataset *myDataset = randomx_alloc_dataset(flags_fast);
     unsigned long datasetInitStartItem = 0 ;
     unsigned long itemsPerThread = randomx_dataset_item_count() / numWorkers;
-    unsigned long datasetInitItemCount = itemsPerThread;
+    unsigned long itemsRemainder = randomx_dataset_item_count() % numWorkers;
+    unsigned long datasetInitItemCount = itemsPerThread + itemsRemainder;
     randomx_init_dataset(myDataset,myCache,datasetInitStartItem,datasetInitItemCount);
     randomx_release_cache(myCache);
     myCache = NULL;
