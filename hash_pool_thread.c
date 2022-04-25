@@ -107,8 +107,8 @@ int main()
     int input_len = sizeof myInput;
 //    parameters->machine = myMachine;
     parameters->input = myInput;
-    parameters->inputSize = input_len;
-    parameters->output = hash;
+ //   parameters->inputSize = input_len;
+ //   parameters->output = hash;
     printf("structure ok");
 
     int thread_count = 5;
