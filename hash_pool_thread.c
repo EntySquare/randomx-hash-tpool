@@ -11,7 +11,7 @@
 #include <time.h>
 #include <pthread.h>
 
-#define THREADS_COUNT 100
+#define THREADS_COUNT 1
 #define TIMES_PER_LIST 100
 #define LIST_NUM 20
 
@@ -41,16 +41,20 @@ void *hash_cal(void *paramsPtr)
     printf("Thread starting...\n");
 
 //    randomx_flags flags = randomx_get_flags();
-    randomx_flags flags = RANDOMX_FLAG_FULL_MEM;
-        flags |= RANDOMX_FLAG_HARD_AES;
-        flags |= RANDOMX_FLAG_JIT;
+    randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
+    flags_vm |= RANDOMX_FLAG_HARD_AES;
+    flags_vm |= RANDOMX_FLAG_JIT;
+
+    randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
+    flags_fast |= RANDOMX_FLAG_JIT;
+
 //    if (largePagesEnabled) {
 //        flags |= RANDOMX_FLAG_LARGE_PAGES;
 //    }
 
-    randomx_cache *myCache = randomx_alloc_cache(flags);
+    randomx_cache *myCache = randomx_alloc_cache(flags_fast);
     randomx_init_cache(myCache, ((struct param*)paramsPtr)->key, ((struct param*)paramsPtr)->keySize);
-    randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
+    randomx_vm *myMachine = randomx_create_vm(flags_vm, myCache, randomx_alloc_dataset(flags_fast));
 //    printf("the flag is %d\n", flags);
 
     time_t start = time(NULL);
