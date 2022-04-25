@@ -15,7 +15,7 @@
 #define TIMES_PER_LIST 200
 #define LIST_NUM 10
 
-#define numWorkers 10
+#define numWorkers 191
 
 
 static int validate_hash(
