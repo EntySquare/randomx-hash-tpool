@@ -133,7 +133,7 @@ int main()
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     for (long j = 0; j<THREADS_COUNT ; j++){
-        parameters->threadnum = j;
+        parameters->threadnum = j+1;
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
     }
