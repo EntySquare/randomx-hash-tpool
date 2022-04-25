@@ -13,7 +13,7 @@
 
 #define THREADS_COUNT 5
 #define TIMES_PER_LIST 100
-#define LIST_NUM 20
+#define LIST_NUM 2
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
@@ -140,14 +140,15 @@ int main()
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
     }
-    time_t end_total = time(NULL);
-    printf("the parallel calc rate is %f h/s\n", TIMES_PER_LIST * LIST_NUM * THREADS_COUNT / difftime(end_total, start_total));
 
     pthread_attr_destroy(&attr);
     for (long k = 0; k<THREADS_COUNT ; k++){
         pthread_join(thread_id[k], &status);
         printf("threads %ld is done\n", k+1);
     }
+
+    time_t end_total = time(NULL);
+    printf("the parallel calc rate is %f h/s\n", TIMES_PER_LIST * LIST_NUM * THREADS_COUNT / difftime(end_total, start_total));
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
