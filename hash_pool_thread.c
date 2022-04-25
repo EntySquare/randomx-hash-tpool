@@ -35,7 +35,7 @@ void *hash_cal(void *paramsPtr)
     time_t start = time(NULL);
     time_t end;
     int times = 100;
-    int list_len = 5;
+    int list_len = 2;
 
     for (int k = 0; k < list_len * times; k++) {
         randomx_calculate_hash(((struct param*)paramsPtr)->machine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
@@ -125,7 +125,7 @@ int main()
     for (int j = 0; j<thread_count ; j++)
     {
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
-        pthread_join(thread_id[j], NULL);
+//        pthread_join(thread_id[j], NULL);
     }
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
