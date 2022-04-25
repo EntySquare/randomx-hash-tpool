@@ -54,7 +54,6 @@ void *hash_cal(void *paramsPtr)
     randomx_release_cache(myCache);
     myCache = NULL;
     randomx_vm *myMachine = randomx_create_vm(flags_vm, myCache, myDataset);
-//    printf("the flag is %d\n", flags);
 
     time_t start = time(NULL);
     time_t end;
