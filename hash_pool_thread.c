@@ -4,6 +4,7 @@
 #include "randomx.h"
 #include "chunk_and_entropy.h"
 #include <stdio.h>
+#include <unistd.h>
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -130,11 +131,12 @@ int main()
 
     for (int j = 0; j<thread_count ; j++){
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
-        pthread_join(thread_id[j], &status);
+
 //        if (rc) {
 //            exit(-1);
 //        }
         printf("threads %d is created\n", j+1);
+        sleep(1000);
     }
 
 //    pthread_attr_destroy(&attr);
