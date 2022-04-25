@@ -11,7 +11,7 @@
 #include <time.h>
 #include <pthread.h>
 
-#define THREADS_COUNT 5
+#define THREADS_COUNT 1
 
 
 static int validate_hash(
