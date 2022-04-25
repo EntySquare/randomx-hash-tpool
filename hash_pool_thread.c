@@ -35,7 +35,7 @@ void *hash_cal(void *paramsPtr)
 {
     int times = 100;
     int list_len = 5;
-    long tid = ((struct param*)paramsPtr)->threadnum;
+    long tid = (long)((struct param*)paramsPtr)->threadnum;
     printf("Thread %ld starting...\n", tid);
 
     randomx_flags flags = randomx_get_flags();
