@@ -34,7 +34,7 @@ void *hash_cal(void *paramsPtr, void *t)
 {
     int times = 100;
     int list_len = 5;
-    tid = (long)t;
+    long tid = (long)t;
     printf("Thread %ld starting...\n", tid);
 
     randomx_flags flags = randomx_get_flags();
