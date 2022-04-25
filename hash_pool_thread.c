@@ -2,7 +2,7 @@
 // Created by luo2 on 2022/4/22.
 //
 #include "randomx.h"
-#include "chunk_and_entropy.h"
+//#include "chunk_and_entropy.h"
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -36,7 +36,7 @@ void *hash_cal(void *paramsPtr)
     time_t end;
     int times = 100;
 
-    for (int k = 0; k < 10 * times; k++) {
+    for (int k = 0; k < 5 * times; k++) {
         randomx_calculate_hash(((struct param*)paramsPtr)->machine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
         if ((k + 1) >= times && (k + 1) % times == 0) {
