@@ -133,12 +133,13 @@ int main()
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
         printf("threads %d is created\n", j+1);
     }
-    //sleep(1000);
-    pthread_attr_destroy(&attr);
-    for (int k = 0; k<thread_count ; k++){
-        pthread_join(thread_id[k], &status);
-        printf("threads %d is joined\n", k+1);
-    }
+    unsigned int second = 1000;
+    sleep(second);
+//    pthread_attr_destroy(&attr);
+//    for (int k = 0; k<thread_count ; k++){
+//        pthread_join(thread_id[k], &status);
+//        printf("threads %d is joined\n", k+1);
+//    }
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
