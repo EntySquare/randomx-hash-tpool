@@ -13,7 +13,7 @@
 
 #define THREADS_COUNT 1
 #define TIMES_PER_LIST 200
-#define LIST_NUM 20
+#define LIST_NUM 10
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
