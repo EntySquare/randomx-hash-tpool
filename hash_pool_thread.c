@@ -22,7 +22,7 @@ static int validate_hash(
 }
 
 struct param {
-    long threadnum;
+    //long threadnum;
     char* key;
     unsigned char* input;
     int inputSize;
@@ -34,9 +34,9 @@ struct param {
 void *hash_cal(void *paramsPtr)
 {
     int times = 100;
-    int list_len = 5;
-    long tid = ((struct param*)paramsPtr)->threadnum;
-    printf("Thread %ld starting...\n", tid);
+    int list_len = 100;
+    //long tid = ((struct param*)paramsPtr)->threadnum;
+    printf("Thread starting...\n", tid);
 
     randomx_flags flags = randomx_get_flags();
     randomx_cache *myCache = randomx_alloc_cache(flags);
@@ -51,7 +51,7 @@ void *hash_cal(void *paramsPtr)
 
         if ((k + 1) >= times && (k + 1) % times == 0) {
             end = time(NULL);
-            printf("Thread %ld : calc rate is %f h/s\n", tid, times / difftime(end, start));
+            printf("Thread: calc rate is %f h/s\n", tid, times / difftime(end, start));
             start = time(NULL);
         }
 
@@ -133,10 +133,8 @@ int main()
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     for (long j = 0; j<THREADS_COUNT ; j++){
-        parameters->threadnum = j;
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
-        parameters->threadnum = NULL;
     }
 
     pthread_attr_destroy(&attr);
