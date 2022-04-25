@@ -123,8 +123,9 @@ int main()
     int thread_count = 5;
     int rc;
     pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
-    pthread_attr_t attr;
     void *status;
+    pthread_attr_t attr;
+    pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
     for (int j = 0; j<thread_count ; j++){
