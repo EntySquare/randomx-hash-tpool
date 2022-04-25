@@ -36,7 +36,7 @@ void *hash_cal(void *paramsPtr)
     int times = 100;
     int list_len = 100;
     //long tid = ((struct param*)paramsPtr)->threadnum;
-    printf("Thread starting...\n", tid);
+    printf("Thread starting...\n");
 
     randomx_flags flags = randomx_get_flags();
     randomx_cache *myCache = randomx_alloc_cache(flags);
