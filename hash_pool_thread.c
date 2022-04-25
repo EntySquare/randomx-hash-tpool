@@ -112,6 +112,7 @@ int main()
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
+
     struct param *parameters = (struct param *)malloc(sizeof(struct param));
     int input_len = sizeof myInput;
     parameters->machine = myMachine;
@@ -121,14 +122,20 @@ int main()
 
     int thread_count = 5;
     pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
-    printf("threads creation starts\n");
-    for (int j = 0; j<thread_count ; j++)
-    {
-        pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
-        pthread_join(thread_id[j], NULL);
+    pthread_attr_t attr;
+    void *status;
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+
+    for (int j = 0; j<thread_count ; j++){
+        pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
+        printf("threads %d is created\n", j+1);
     }
-//    for (int k = 0; k<thread_count ; k++)
-//    {pthread_join(thread_id[k], NULL);}
+
+    pthread_attr_destroy(&attr);
+    for (int k = 0; k<thread_count ; k++){
+        pthread_join(thread_id[k], &status);
+        printf("threads %d is joined\n", k+1);
+    }
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
