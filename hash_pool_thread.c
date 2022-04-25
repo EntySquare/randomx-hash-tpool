@@ -109,7 +109,7 @@ int main()
     parameters->input = myInput;
     parameters->inputSize = input_len;
     parameters->output = hash;
-    rintf("structure ok");
+    printf("structure ok");
 
     int thread_count = 5;
     pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
