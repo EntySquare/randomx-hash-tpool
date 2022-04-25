@@ -41,11 +41,11 @@ void *hash_cal(void *paramsPtr)
     printf("Thread starting...\n");
 
 //    randomx_flags flags_vm = randomx_get_flags();
-    randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
+    randomx_flags flags_vm = RANDOMX_FLAG_DEFAULT;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
     flags_vm |= RANDOMX_FLAG_JIT;
-    flags_vm |= RANDOMX_FLAG_ARGON2_AVX2;
-    flags_vm |= RANDOMX_FLAG_ARGON2_SSSE3;
+//    flags_vm |= RANDOMX_FLAG_ARGON2_AVX2;
+//    flags_vm |= RANDOMX_FLAG_ARGON2_SSSE3;
     randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
     flags_fast |= RANDOMX_FLAG_JIT;
 
