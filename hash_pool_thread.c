@@ -131,16 +131,16 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
 
-    for (long j = 0; j<thread_count ; j++){
+    for (long j = 0; j<THREADS_COUNT ; j++){
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
-        printf("threads %d is created\n", j+1);
+        printf("threads %ld is created\n", j+1);
 //        sleep(10);
     }
 
     pthread_attr_destroy(&attr);
-    for (long k = 0; k<thread_count ; k++){
+    for (long k = 0; k<THREADS_COUNT ; k++){
         pthread_join(thread_id[k], &status);
-        printf("threads %d is joined\n", k+1);
+        printf("threads %ld is joined\n", k+1);
     }
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
