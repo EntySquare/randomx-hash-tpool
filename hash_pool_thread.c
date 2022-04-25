@@ -24,7 +24,7 @@ static int validate_hash(
 
 struct param {
     //long threadnum;
-    const char* key;
+    const unsigned char* key;
     int keySize;
     unsigned char* input;
     int inputSize;
@@ -45,7 +45,7 @@ void *hash_cal(void *paramsPtr)
 //    flags_vm |= RANDOMX_FLAG_JIT;
     randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
     flags_fast |= RANDOMX_FLAG_JIT;
-    randomx_flags flags_vm = 10;
+    randomx_flags flags_vm = 15;
     printf("flags is %d\n", flags_vm);
 
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
@@ -85,7 +85,7 @@ void *hash_cal(void *paramsPtr)
 
 int main()
 {
-    const char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
+    const unsigned char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
                           33, 152, 221, 38, 200, 234, 74, 60, 118, 235, 15, 159, 33, 237, 210, 127};
     const char h0[] = {236,97,53,71,37,0,200,215,7,52,32,198,108,183,90,4,140,41,110,170,32,109,7,56,229,47,186,12,150,63,52,232};
     const char prevh[] = {61, 222, 227, 151, 197, 175, 127, 142, 18, 210, 148, 122, 239, 9, 40, 9, 78, 47, 1, 208, 199, 19, 214, 225, 211, 93, 196, 144, 253, 232, 176, 145, 62, 172, 183, 229, 89, 16, 42, 96, 247, 44, 228, 20, 71, 71, 31, 85};
