@@ -41,8 +41,8 @@ void *hash_cal(void *paramsPtr)
     printf("Thread starting...\n");
 
    randomx_flags flags = randomx_get_flags();
-    flags |= RANDOMX_FLAG_HARD_AES;
-    flags |= RANDOMX_FLAG_JIT;
+//    flags |= RANDOMX_FLAG_HARD_AES;
+//    flags |= RANDOMX_FLAG_JIT;
 
 //    randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
 //    flags_fast |= RANDOMX_FLAG_JIT;
