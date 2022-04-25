@@ -21,7 +21,7 @@ static int validate_hash(
 struct param {
     randomx_vm* machine;
     unsigned char* input;
-    int* inputSize;
+    int inputSize;
     unsigned char* output;
 };
 
@@ -103,12 +103,12 @@ int main()
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
-    struct param *parameters;
+    struct param *parameters = (struct param *)malloc(sizeof(struct param));
     int input_len = sizeof myInput;
-//    parameters->machine = myMachine;
+    parameters->machine = myMachine;
     parameters->input = myInput;
- //   parameters->inputSize = input_len;
- //   parameters->output = hash;
+    parameters->inputSize = input_len;
+    parameters->output = hash;
     printf("structure ok");
 
     int thread_count = 5;
