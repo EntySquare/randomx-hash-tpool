@@ -24,6 +24,7 @@ static int validate_hash(
 struct param {
     //long threadnum;
     const char* key;
+    int keySize;
     unsigned char* input;
     int inputSize;
     unsigned char* output;
@@ -40,8 +41,7 @@ void *hash_cal(void *paramsPtr)
 
     randomx_flags flags = randomx_get_flags();
     randomx_cache *myCache = randomx_alloc_cache(flags);
-    const char* initKey = ((struct param*)paramsPtr)->key;
-    randomx_init_cache(myCache, &initKey, sizeof initKey);
+    randomx_init_cache(myCache, ((struct param*)paramsPtr)->key, ((struct param*)paramsPtr)->keySize);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
     time_t start = time(NULL);
@@ -120,10 +120,10 @@ int main()
     printf("myinput data size is %d\n", lem);
 
     struct param *parameters = (struct param *)malloc(sizeof(struct param));
-    int input_len = sizeof myInput;
     parameters->key = myKey;
+    parameters->keySize = sizeof myKey;
     parameters->input = myInput;
-    parameters->inputSize = input_len;
+    parameters->inputSize = sizeof myInput;
     parameters->output = hash;
 
 //    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
