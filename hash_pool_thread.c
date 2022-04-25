@@ -56,7 +56,7 @@ void *hash_cal(void *paramsPtr)
         }
     }
     return 0 ;
-
+    pthread_exit( void* paramsPtr);
 }
 
 
