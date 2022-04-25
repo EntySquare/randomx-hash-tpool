@@ -41,8 +41,7 @@ void *hash_cal(void *paramsPtr)
     printf("Thread starting...\n");
 
 //    randomx_flags flags = randomx_get_flags();
-    randomx_flags flags_vm = RANDOMX_FLAG_DEFAULT;
-    flags_vm |= RANDOMX_FLAG_FULL_MEM;
+    randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
     flags_vm |= RANDOMX_FLAG_JIT;
 
@@ -56,6 +55,7 @@ void *hash_cal(void *paramsPtr)
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
     randomx_init_cache(myCache, ((struct param*)paramsPtr)->key, ((struct param*)paramsPtr)->keySize);
     randomx_release_cache(myCache);
+    myCache = NULL;
     randomx_vm *myMachine = randomx_create_vm(flags_vm, myCache, randomx_alloc_dataset(flags_fast));
 //    printf("the flag is %d\n", flags);
 
