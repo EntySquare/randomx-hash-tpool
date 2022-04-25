@@ -34,7 +34,7 @@ struct param {
 void *hash_cal(void *paramsPtr)
 {
     int times = 100;
-    int list_len = 5;
+    int list_len = 2;
     //long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread starting...\n");
 
