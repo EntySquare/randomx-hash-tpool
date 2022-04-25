@@ -37,7 +37,7 @@ void *hash_cal(void *paramsPtr)
 //    void *output1 = ((struct param*)params)->output;
     time_t start = time(NULL);
     time_t end;
-    int times = 100;
+    int times = 1;
     int list_len = 2;
     printf("Thread starting...\n");
 
