@@ -40,8 +40,8 @@ void *hash_cal(void *paramsPtr)
 
     randomx_flags flags = randomx_get_flags();
     randomx_cache *myCache = randomx_alloc_cache(flags);
-    char initKey[] = ((struct param*)paramsPtr)->key;
-    randomx_init_cache(myCache, &initKey, sizeof initKey);
+    char* initKey = ((struct param*)paramsPtr)->key;
+    randomx_init_cache(myCache, initKey, sizeof initKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
     time_t start = time(NULL);
