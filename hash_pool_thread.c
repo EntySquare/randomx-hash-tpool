@@ -40,7 +40,7 @@ void *hash_cal(void *paramsPtr)
     //long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread starting...\n");
 
-   randomx_flags flags = randomx_get_flags();
+   randomx_flags flags = RANDOMX_FLAG_FULL_MEM;
     flags |= RANDOMX_FLAG_HARD_AES;
     flags |= RANDOMX_FLAG_JIT;
 
