@@ -40,14 +40,12 @@ void *hash_cal(void *paramsPtr)
     //long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread starting...\n");
 
-//   randomx_flags flags_vm = randomx_get_flags();
-//    randomx_flags flags_fast = randomx_get_flags();
-
+    randomx_flags flags_fast = randomx_get_flags();
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
     flags_vm |= RANDOMX_FLAG_JIT;
-    randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
-    flags_fast |= RANDOMX_FLAG_JIT;
+//    randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
+//    flags_fast |= RANDOMX_FLAG_JIT;
 
 //    if (largePagesEnabled) {
 //        flags |= RANDOMX_FLAG_LARGE_PAGES;
