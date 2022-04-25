@@ -35,7 +35,7 @@ void *hash_cal(void *paramsPtr)
 {
     int times = 100;
     int list_len = 5;
-    long tid = (long)((struct param*)paramsPtr)->threadnum;
+    long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread %ld starting...\n", tid);
 
     randomx_flags flags = randomx_get_flags();
@@ -136,6 +136,7 @@ int main()
         parameters->threadnum = j;
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
+        parameters->threadnum = NULL;
     }
 
     pthread_attr_destroy(&attr);
