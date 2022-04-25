@@ -12,7 +12,8 @@
 #include <pthread.h>
 
 #define THREADS_COUNT 5
-
+#define TIMES_PER_LIST 100
+#define LIST_NUM 20
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
@@ -34,8 +35,8 @@ struct param {
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
 {
-    int times = 100;
-    int list_len = 2;
+    int times = TIMES_PER_LIST;
+    int list_len = LIST_NUM;
     //long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread starting...\n");
 
@@ -133,10 +134,14 @@ int main()
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    time_t start_total = time(NULL);
+    time_t end;
     for (long j = 0; j<THREADS_COUNT ; j++){
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
     }
+    time_t end_total = time(NULL);
+    printf("the parallel calc rate is %f h/s\n", TIMES_PER_LIST * LIST_NUM * THREADS_COUNT / difftime(end_total, start_total));
 
     pthread_attr_destroy(&attr);
     for (long k = 0; k<THREADS_COUNT ; k++){
