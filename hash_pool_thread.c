@@ -22,7 +22,7 @@ static int validate_hash(
 
 
 struct param {
-    randomx_vm* machine;
+    char* key;
     unsigned char* input;
     int inputSize;
     unsigned char* output;
@@ -37,18 +37,23 @@ void *hash_cal(void *paramsPtr)
 //    void *output1 = ((struct param*)params)->output;
     time_t start = time(NULL);
     time_t end;
-    int times = 1;
+    int times = 100;
     int list_len = 2;
+    randomx_flags flags = randomx_get_flags();
+    randomx_cache *myCache = randomx_alloc_cache(flags);
+    char* myKey = ((struct param*)paramsPtr)->key;
+    randomx_init_cache(myCache, &myKey, sizeof myKey);
+    randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
     printf("Thread starting...\n");
 
     for (int k = 0; k < list_len * times; k++) {
-        randomx_calculate_hash(((struct param*)paramsPtr)->machine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
+        randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
-//        if ((k + 1) >= times && (k + 1) % times == 0) {
-//            end = time(NULL);
-//            printf("calc rate is %f h/s\n", times / difftime(end, start));
-//            start = time(NULL);
-//        }
+        if ((k + 1) >= times && (k + 1) % times == 0) {
+            end = time(NULL);
+            printf("calc rate is %f h/s\n", times / difftime(end, start));
+            start = time(NULL);
+        }
 
         if ((k + 1) == list_len * times ){
             unsigned char* hash = ((struct param*)paramsPtr)->output;
@@ -57,6 +62,8 @@ void *hash_cal(void *paramsPtr)
             printf("\n");
         }
     }
+    randomx_destroy_vm(myMachine);
+    randomx_release_cache(myCache);
     pthread_exit( (void*) paramsPtr);
 }
 
@@ -64,7 +71,7 @@ void *hash_cal(void *paramsPtr)
 
 int main()
 {
-    const char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
+    char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
                           33, 152, 221, 38, 200, 234, 74, 60, 118, 235, 15, 159, 33, 237, 210, 127};
     const char h0[] = {236,97,53,71,37,0,200,215,7,52,32,198,108,183,90,4,140,41,110,170,32,109,7,56,229,47,186,12,150,63,52,232};
     const char prevh[] = {61, 222, 227, 151, 197, 175, 127, 142, 18, 210, 148, 122, 239, 9, 40, 9, 78, 47, 1, 208, 199, 19, 214, 225, 211, 93, 196, 144, 253, 232, 176, 145, 62, 172, 183, 229, 89, 16, 42, 96, 247, 44, 228, 20, 71, 71, 31, 85};
@@ -110,15 +117,10 @@ int main()
     int lem = sizeof(myInput);
     printf("myinput data size is %d\n", lem);
 
-    randomx_flags flags = randomx_get_flags();
-    randomx_cache *myCache = randomx_alloc_cache(flags);
-    randomx_init_cache(myCache, &myKey, sizeof myKey);
-    randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
-
 
     struct param *parameters = (struct param *)malloc(sizeof(struct param));
     int input_len = sizeof myInput;
-    parameters->machine = myMachine;
+    parameters->key = myKey;
     parameters->input = myInput;
     parameters->inputSize = input_len;
     parameters->output = hash;
@@ -151,9 +153,6 @@ int main()
     { printf("\nsolution found\n");}
     else
     { printf("\nsolution unfound\n");}
-
-    randomx_destroy_vm(myMachine);
-    randomx_release_cache(myCache);
 
     printf("\ntest done\n");
 
