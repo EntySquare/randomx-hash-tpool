@@ -54,7 +54,7 @@ void *hash_cal(void *paramsPtr)
 
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
     randomx_init_cache(myCache, ((struct param*)paramsPtr)->key, ((struct param*)paramsPtr)->keySize);
-    randomx_cache *myDataset = randomx_alloc_dataset(flags_fast);
+    randomx_dataset *myDataset = randomx_alloc_dataset(flags_fast);
     init_dataset(myDataset, myCache, 64);
     randomx_release_cache(myCache);
     myCache = NULL;
