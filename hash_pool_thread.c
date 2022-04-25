@@ -11,7 +11,7 @@
 #include <time.h>
 #include <pthread.h>
 
-#define THREADS_COUNT 1
+#define THREADS_COUNT 5
 
 
 static int validate_hash(
@@ -62,6 +62,7 @@ void *hash_cal(void *paramsPtr)
             printf("\n");
         }
     }
+
     randomx_destroy_vm(myMachine);
     randomx_release_cache(myCache);
 
