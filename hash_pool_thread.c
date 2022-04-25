@@ -136,9 +136,8 @@ int main()
 //            exit(-1);
 //        }
         printf("threads %d is created\n", j+1);
-        sleep(1000);
     }
-
+    sleep(1000);
 //    pthread_attr_destroy(&attr);
 //    for (int k = 0; k<thread_count ; k++){
 //        rc = pthread_join(thread_id[k], &status);
