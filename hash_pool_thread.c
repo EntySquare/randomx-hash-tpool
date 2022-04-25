@@ -130,7 +130,7 @@ int main()
 //    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
     for (int j = 0; j<thread_count ; j++){
-        pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
+        pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
 
 //        if (rc) {
 //            exit(-1);
