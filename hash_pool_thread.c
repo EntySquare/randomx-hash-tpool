@@ -12,7 +12,7 @@
 #include <pthread.h>
 
 #define THREADS_COUNT 1
-#define TIMES_PER_LIST 100
+#define TIMES_PER_LIST 200
 #define LIST_NUM 20
 
 static int validate_hash(
