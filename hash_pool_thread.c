@@ -56,7 +56,7 @@ void *hash_cal(void *paramsPtr)
 
     unsigned long datasetInitStartItem = 0 ;
     unsigned long itemsPerThread = randomx_dataset_item_count() / numWorkers;
-    unsigned long datasetInitItemCount = itemsPerThread;
+    unsigned long datasetInitItemCount = 0;
 
     randomx_init_dataset(myDataset,myCache,datasetInitStartItem,datasetInitItemCount);
     randomx_release_cache(myCache);
