@@ -121,19 +121,26 @@ int main()
     parameters->output = hash;
 
     int thread_count = 5;
+    int rc;
     pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
     pthread_attr_t attr;
     void *status;
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
     for (int j = 0; j<thread_count ; j++){
-        pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
+        rc = pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
+        if (rc) {
+            exit(-1);
+        }
         printf("threads %d is created\n", j+1);
     }
 
     pthread_attr_destroy(&attr);
     for (int k = 0; k<thread_count ; k++){
-        pthread_join(thread_id[k], &status);
+        rc = pthread_join(thread_id[k], &status);
+        if (rc) {
+            exit(-1);
+        }
         printf("threads %d is joined\n", k+1);
     }
 
