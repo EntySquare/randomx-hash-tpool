@@ -43,8 +43,9 @@ void *hash_cal(void *paramsPtr)
 //   randomx_flags flags_vm = RANDOMX_FLAG_DEFAULT;
 //    flags_vm |= RANDOMX_FLAG_HARD_AES;
 //    flags_vm |= RANDOMX_FLAG_JIT;
-    randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
-    flags_fast |= RANDOMX_FLAG_JIT;
+//    randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
+//    flags_fast |= RANDOMX_FLAG_JIT;
+    randomx_flags flags_vm = 8;
     randomx_flags flags_vm = 15;
     printf("flags is %d\n", flags_vm);
 
