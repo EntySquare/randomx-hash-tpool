@@ -2,7 +2,7 @@
 // Created by luo2 on 2022/4/22.
 //
 #include "randomx.h"
-//#include "chunk_and_entropy.h"
+#include "chunk_and_entropy.h"
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
