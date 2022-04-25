@@ -61,11 +61,11 @@ void *hash_cal(void *paramsPtr)
     for (int i = 0; i < numWorkers; i++) {
         datasetInitStartItem = startItem;
         if (i + 1 == numWorkers) {
-            workerPtr->datasetInitItemCount = itemsPerThread + itemsRemainder;
+            datasetInitItemCount = itemsPerThread + itemsRemainder;
         } else {
-            workerPtr->datasetInitItemCount = itemsPerThread;
+            datasetInitItemCount = itemsPerThread;
         }
-        startItem += workerPtr->datasetInitItemCount;
+        startItem += datasetInitItemCount;
         randomx_init_dataset(myDataset,myCache,datasetInitStartItem,datasetInitItemCount);
     }
     randomx_release_cache(myCache);
