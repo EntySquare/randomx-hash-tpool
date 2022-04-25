@@ -132,8 +132,7 @@ int main()
     for (int j = 0; j<thread_count ; j++){
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
         printf("threads %d is created\n", j+1);
-        unsigned int second = 1;
-        sleep(second);
+        sleep(10);
     }
     unsigned int second = 1000;
     sleep(second);
