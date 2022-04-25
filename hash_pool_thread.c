@@ -35,8 +35,9 @@ void *hash_cal(void *paramsPtr)
     time_t start = time(NULL);
     time_t end;
     int times = 100;
+    int list_len = 5;
 
-    for (int k = 0; k < 5 * times; k++) {
+    for (int k = 0; k < list_len * times; k++) {
         randomx_calculate_hash(((struct param*)paramsPtr)->machine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
         if ((k + 1) >= times && (k + 1) % times == 0) {
@@ -44,8 +45,16 @@ void *hash_cal(void *paramsPtr)
             printf("calc rate is %f h/s\n", times / difftime(end, start));
             start = time(NULL);
         }
+
+        if ((k + 1) == times ){
+            unsigned char* hash = ((struct param*)paramsPtr)->output;
+            for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+                printf("%02x", hash[i] & 0xff);
+        }
+
     }
     return 0 ;
+
 }
 
 
@@ -109,21 +118,19 @@ int main()
     parameters->input = myInput;
     parameters->inputSize = input_len;
     parameters->output = hash;
-    printf("structure ok");
 
     int thread_count = 5;
     pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
-    printf("threads creation starts");
+    printf("threads creation starts\n");
     for (int j = 0; j<thread_count ; j++)
     {
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
         pthread_join(thread_id[j], NULL);
     }
 
-    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
-
-    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-        printf("%02x", hash[i] & 0xff);
+//    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
+//    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+//        printf("%02x", hash[i] & 0xff);
 
     if(validate_hash(hash, difficulty)>0)
     { printf("\nsolution found\n");}
