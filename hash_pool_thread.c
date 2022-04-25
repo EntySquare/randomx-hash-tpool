@@ -11,6 +11,8 @@
 #include <time.h>
 #include <pthread.h>
 
+#define THREADS_COUNT 5
+
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
         unsigned char difficulty[RANDOMX_HASH_SIZE])
@@ -121,23 +123,22 @@ int main()
     parameters->inputSize = input_len;
     parameters->output = hash;
 
-    int thread_count = 5;
-    int rc;
 //    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
-    pthread_t thread_id[thread_count];
+    pthread_t thread_id[THREADS_COUNT];
     void *status;
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-    for (int j = 0; j<thread_count ; j++){
+
+    for (long j = 0; j<thread_count ; j++){
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %d is created\n", j+1);
 //        sleep(10);
     }
 
     pthread_attr_destroy(&attr);
-    for (int k = 0; k<thread_count ; k++){
+    for (long k = 0; k<thread_count ; k++){
         pthread_join(thread_id[k], &status);
         printf("threads %d is joined\n", k+1);
     }
