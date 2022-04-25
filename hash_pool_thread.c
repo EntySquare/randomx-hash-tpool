@@ -15,6 +15,9 @@
 #define TIMES_PER_LIST 200
 #define LIST_NUM 10
 
+#define numWorkers 100
+
+
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
         unsigned char difficulty[RANDOMX_HASH_SIZE])
@@ -40,17 +43,22 @@ void *hash_cal(void *paramsPtr)
     //long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread starting...\n");
 
-//   randomx_flags flags_vm = RANDOMX_FLAG_DEFAULT;
-//    flags_vm |= RANDOMX_FLAG_HARD_AES;
-//    flags_vm |= RANDOMX_FLAG_JIT;
+   randomx_flags flags_vm = RANDOMX_FLAG_DEFAULT;
+    flags_vm |= RANDOMX_FLAG_HARD_AES;
+    flags_vm |= RANDOMX_FLAG_JIT;
     randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
     flags_fast |= RANDOMX_FLAG_JIT;
-    randomx_flags flags_vm = 15;
-    printf("flags is %d\n", flags_vm);
+//    printf("flags is %d\n", flags_vm);
 
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
     randomx_init_cache(myCache, ((struct param*)paramsPtr)->key, ((struct param*)paramsPtr)->keySize);
     randomx_dataset *myDataset = randomx_alloc_dataset(flags_fast);
+
+    unsigned long datasetInitStartItem = 0 ;
+    unsigned long itemsPerThread = randomx_dataset_item_count() / numWorkers;
+    unsigned long datasetInitItemCount = itemsPerThread;
+
+    randomx_init_dataset(myDataset,myCache,datasetInitStartItem,datasetInitItemCount);
     randomx_release_cache(myCache);
     myCache = NULL;
     randomx_vm *myMachine = randomx_create_vm(flags_vm, myCache, myDataset);
