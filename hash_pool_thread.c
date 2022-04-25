@@ -43,7 +43,7 @@ void *hash_cal(void *paramsPtr)
    randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
     flags_vm |= RANDOMX_FLAG_JIT;
-    randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
+    randomx_flags flags_fast = RANDOMX_FLAG_FULL_MEM;
     flags_fast |= RANDOMX_FLAG_JIT;
 
 
