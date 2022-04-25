@@ -13,13 +13,13 @@
 
 #define THREADS_COUNT 5
 
+
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
         unsigned char difficulty[RANDOMX_HASH_SIZE])
 {
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
-
 
 struct param {
     char* key;
@@ -28,21 +28,18 @@ struct param {
     unsigned char* output;
 };
 
+
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
 {
-//    randomx_vm *machine1 = ((struct param*)params)->machine ;
-//    const void *input1 = ((struct param*)params)->input;
-//    size_t inputSize1 = ((struct param*)params)->inputSize;
-//    void *output1 = ((struct param*)params)->output;
     time_t start = time(NULL);
     time_t end;
     int times = 100;
-    int list_len = 2;
+    int list_len = 5;
     randomx_flags flags = randomx_get_flags();
     randomx_cache *myCache = randomx_alloc_cache(flags);
-    char* myKey = ((struct param*)paramsPtr)->key;
-    randomx_init_cache(myCache, &myKey, sizeof myKey);
+    char* initKey = ((struct param*)paramsPtr)->key;
+    randomx_init_cache(myCache, &initKey, sizeof initKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
     printf("Thread starting...\n");
 
@@ -64,7 +61,9 @@ void *hash_cal(void *paramsPtr)
     }
     randomx_destroy_vm(myMachine);
     randomx_release_cache(myCache);
+
     pthread_exit( (void*) paramsPtr);
+
 }
 
 
@@ -117,7 +116,6 @@ int main()
     int lem = sizeof(myInput);
     printf("myinput data size is %d\n", lem);
 
-
     struct param *parameters = (struct param *)malloc(sizeof(struct param));
     int input_len = sizeof myInput;
     parameters->key = myKey;
@@ -131,18 +129,15 @@ int main()
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-
-
     for (long j = 0; j<THREADS_COUNT ; j++){
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
-//        sleep(10);
     }
 
     pthread_attr_destroy(&attr);
     for (long k = 0; k<THREADS_COUNT ; k++){
         pthread_join(thread_id[k], &status);
-        printf("threads %ld is joined\n", k+1);
+        printf("threads %ld is done\n", k+1);
     }
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
