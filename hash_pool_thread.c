@@ -37,6 +37,7 @@ void *hash_cal(void *paramsPtr)
     time_t end;
     int times = 100;
     int list_len = 2;
+    printf("Thread starting...\n");
 
     for (int k = 0; k < list_len * times; k++) {
         randomx_calculate_hash(((struct param*)paramsPtr)->machine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
