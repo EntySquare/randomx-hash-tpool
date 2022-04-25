@@ -51,7 +51,7 @@ void *hash_cal(void *paramsPtr)
 
         if ((k + 1) >= times && (k + 1) % times == 0) {
             end = time(NULL);
-            printf("Thread: calc rate is %f h/s\n", tid, times / difftime(end, start));
+            printf("Thread: calc rate is %f h/s\n", times / difftime(end, start));
             start = time(NULL);
         }
 
