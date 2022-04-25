@@ -46,12 +46,12 @@ void *hash_cal(void *paramsPtr)
             start = time(NULL);
         }
 
-        if ((k + 1) == times ){
+        if ((k + 1) == list_len * times ){
             unsigned char* hash = ((struct param*)paramsPtr)->output;
             for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
                 printf("%02x", hash[i] & 0xff);
         }
-
+        printf("\n");
     }
     return 0 ;
 
