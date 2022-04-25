@@ -2,7 +2,7 @@
 // Created by luo2 on 2022/4/22.
 //
 #include "randomx.h"
-#include "chunk_and_entropy.h"
+//#include "chunk_and_entropy.h"
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -17,13 +17,8 @@ static int validate_hash(
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
 
-//void *hash_thread(int thread_num)
-//{
-//    for (int k; k < thread_num; k++)
-//        printf(" this is thread %d", k);
-//}
 
-struct args {
+struct param {
     randomx_vm *machine;
     unsigned char* input;
     int inputSize;
@@ -31,18 +26,18 @@ struct args {
 };
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
-void *hash_cal(void *params)
+void *hash_cal(void *paramsPtr)
 {
-    randomx_vm *machine1 = ((struct args*)params)->machine ;
-    const void *input1 = ((struct args*)params)->input;
-    size_t inputSize1 = ((struct args*)params)->inputSize;
-    void *output1 = ((struct args*)params)->output;
+//    randomx_vm *machine1 = ((struct param*)params)->machine ;
+//    const void *input1 = ((struct param*)params)->input;
+//    size_t inputSize1 = ((struct param*)params)->inputSize;
+//    void *output1 = ((struct param*)params)->output;
     time_t start = time(NULL);
     time_t end;
     int times = 100;
 
     for (int k = 0; k < 10 * times; k++) {
-        randomx_calculate_hash(machine1, input1, inputSize1, output1);
+        randomx_calculate_hash(((struct param*)paramsPtr)->machine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
         if ((k + 1) >= times && (k + 1) % times == 0) {
             end = time(NULL);
@@ -50,6 +45,7 @@ void *hash_cal(void *params)
             start = time(NULL);
         }
     }
+    return 0 ;
 }
 
 
@@ -107,17 +103,21 @@ int main()
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_vm *myMachine = randomx_create_vm(flags, myCache, randomx_alloc_dataset(flags));
 
-    struct args *parameters;
+    struct param *parameters;
     int input_len = sizeof myInput;
     parameters->machine = myMachine;
     parameters->input = myInput;
     parameters->inputSize = input_len;
     parameters->output = hash;
 
-//    pthread_t thread_id;
-//    printf("threads creation starts");
-//    pthread_create(&thread_id, NULL, hash_cal, (void *)parameters);
-//    pthread_join(thread_id, NULL);
+    int thread_count = 5;
+    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
+    printf("threads creation starts");
+    for (int j = 0; j<thread_count ; j++)
+    {
+        pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
+        pthread_join(thread_id[j], NULL);
+    }
 
     randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 
