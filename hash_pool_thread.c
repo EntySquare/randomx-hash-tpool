@@ -43,8 +43,10 @@ void *hash_cal(void *paramsPtr)
    randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
     flags_vm |= RANDOMX_FLAG_JIT;
-    randomx_flags flags_fast = RANDOMX_FLAG_FULL_MEM;
+    randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
     flags_fast |= RANDOMX_FLAG_JIT;
+
+    printf("flags is %d\n", flags_vm);
 
 
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
