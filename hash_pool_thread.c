@@ -123,30 +123,23 @@ int main()
 
     int thread_count = 5;
     int rc;
-    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
+//    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
+    pthread_t thread_id[thread_count];
     void *status;
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
     for (int j = 0; j<thread_count ; j++){
-        rc= pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
+        pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %d is created\n", j+1);
-        if (rc) {
-            printf("ERROR; return code from pthread_create() is %d\n", rc);
-            exit(-1);
-        }
 //        sleep(10);
     }
 
     pthread_attr_destroy(&attr);
     for (int k = 0; k<thread_count ; k++){
-        rc = pthread_join(thread_id[k], &status);
+        pthread_join(thread_id[k], &status);
         printf("threads %d is joined\n", k+1);
-        if (rc) {
-            printf("ERROR; return code from pthread_create() is %d\n", rc);
-            exit(-1);
-        }
     }
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
