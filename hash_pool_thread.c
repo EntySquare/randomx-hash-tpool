@@ -57,8 +57,8 @@ void *hash_cal(void *paramsPtr)
     unsigned long itemsPerThread = randomx_dataset_item_count() / numWorkers;
     unsigned long datasetInitItemCount = itemsPerThread;
     randomx_init_dataset(myDataset,myCache,datasetInitStartItem,datasetInitItemCount);
-//    randomx_release_cache(myCache);
-//    myCache = NULL;
+    randomx_release_cache(myCache);
+    myCache = NULL;
     randomx_vm *myMachine = randomx_create_vm(flags_vm, myCache, myDataset);
 
     time_t start = time(NULL);
