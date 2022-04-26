@@ -3,7 +3,6 @@
 //
 
 #include "randomx.h"
-#include "chunk_and_entropy.h"
 #include "./cpu.h"
 #include <stdio.h>
 #include <unistd.h>
@@ -76,13 +75,28 @@ void *hash_cal(void *paramsPtr)
 
 int main()
 {
+    FILE *fp;
+    unsigned char wbuf[256*1024];
+    u_int8_t c;
+    fp = fopen("chunk.data","r");
+    for(long i=0;i<256*1024;i++) {
+        c = fgetc(fp);
+        if (feof(fp)) {
+            break;
+        }
+        wbuf[i]=c;
+    }
+    fclose(fp);
+
     const unsigned char myKey[] = {255, 255,255, 254, 219, 155, 62, 29, 172, 210, 122, 149, 253, 169, 34, 24,
                                    33, 152, 221, 38, 200, 234, 74, 60, 118, 235, 15, 159, 33, 237, 210, 127};
     const char h0[] = {236,97,53,71,37,0,200,215,7,52,32,198,108,183,90,4,140,41,110,170,32,109,7,56,229,47,186,12,150,63,52,232};
     const char prevh[] = {61, 222, 227, 151, 197, 175, 127, 142, 18, 210, 148, 122, 239, 9, 40, 9, 78, 47, 1, 208, 199, 19, 214, 225, 211, 93, 196, 144, 253, 232, 176, 145, 62, 172, 183, 229, 89, 16, 42, 96, 247, 44, 228, 20, 71, 71, 31, 85};
     const char timestampBinary[] = {0,0,0,0,0,0,0,0,98,93,21,92};
-    const char chunk[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
-    const char entropy[] = RANDOMX_HASH_TPOOL_CHUNK_AND_ENTROPY;
+    const char entropy[1024*256] ;
+    const char chunk[1024*256] ;
+    memcpy(chunk,wbuf,sizeof(wbuf));
+    memcpy(entropy,wbuf,sizeof(wbuf));
     unsigned char hash[RANDOMX_HASH_SIZE];
     unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
 
@@ -169,7 +183,7 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     time_t start_total = time(NULL);
     for (long j = 0; j<THREADS_COUNT ; j++){
-        frank_pthread_single_cpu_affinity_set(64-1-j, thread_id[j]); //绑核
+        //frank_pthread_single_cpu_affinity_set(64-1-j, thread_id[j]); //绑核
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
     }
