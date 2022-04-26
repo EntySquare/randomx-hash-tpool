@@ -3,7 +3,6 @@
 //
 #define _GNU_SOURCE
 #include <sched.h>
-#include "cpu.h"
 #include "randomx.h"
 
 #include <stdio.h>
