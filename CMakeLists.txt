@@ -8,6 +8,9 @@ LINK_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 
 INCLUDE_DIRECTORIES(/usr/lib/x86_64-linux-gnu)
 
+#zby config
+INCLUDE_DIRECTORIES(/Users/terrill/clang/headers)
+
 add_executable(demo hash_pool.cpp hash_pool_thread.c)
 TARGET_LINK_LIBRARIES(demo pthread)
 target_link_libraries(demo librandomx.a)
