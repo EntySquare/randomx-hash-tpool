@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
+#include <sched.h>
 
 #define THREADS_COUNT 200
 #define TIMES_PER_LIST 200
@@ -183,7 +184,7 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     time_t start_total = time(NULL);
     for (long j = 0; j<THREADS_COUNT ; j++){
-        //frank_pthread_single_cpu_affinity_set(64-1-j, thread_id[j]); //绑核
+        frank_pthread_single_cpu_affinity_set(64-1-j, thread_id[j]); //绑核
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
     }
