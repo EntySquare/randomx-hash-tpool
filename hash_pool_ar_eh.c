@@ -15,7 +15,7 @@
 
 #define THREADS_COUNT 64
 #define TIMES_PER_LIST 200
-#define LIST_NUM 10
+#define LIST_NUM 10000
 
 #define numWorkers 191
 
@@ -40,13 +40,18 @@ struct param {
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
 {
+    cpu_set_t cpu_set;
+    CPU_ZERO(&cpu_set);
+    CPU_SET(44, &cpu_set);
+
+    if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set),&cpu_set) < 0)
+        perror("pthread_setaffinity_np");
+
     int times = TIMES_PER_LIST;
     int list_len = LIST_NUM;
     //long tid = ((struct param*)paramsPtr)->threadnum;
     printf("Thread starting...\n");
-
     randomx_vm *myMachine = randomx_create_vm(((struct param*)paramsPtr)->flags, ((struct param*)paramsPtr)->cache, ((struct param*)paramsPtr)->dataset);
-
     time_t start = time(NULL);
     time_t end;
     for (int k = 0; k < list_len * times; k++) {
@@ -202,7 +207,6 @@ int main()
     for (long j = 0; j<THREADS_COUNT ; j++){
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
-        frank_pthread_single_cpu_affinity_set(THREADS_COUNT-1-j, thread_id[j]); //绑核
     }
 
     pthread_attr_destroy(&attr);
