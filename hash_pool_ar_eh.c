@@ -1,9 +1,11 @@
 //
 // Created by luo2 on 2022/4/25.
 //
-
+#define _GNU_SOURCE
+#include <sched.h>
+#include "cpu.h"
 #include "randomx.h"
-#include "./cpu.h"
+
 #include <stdio.h>
 #include <unistd.h>
 #include <math.h>
@@ -11,7 +13,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
-#include <sched.h>
+
 
 #define THREADS_COUNT 200
 #define TIMES_PER_LIST 200

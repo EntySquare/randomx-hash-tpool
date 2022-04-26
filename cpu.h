@@ -13,8 +13,8 @@ extern "C"
 #endif
 
 #define _GNU_SOURCE
-#include <pthread.h>
 #include <sched.h>
+#include <pthread.h>
 
 void print_cpu_affinity_id(int core_nums, pthread_t tid, cpu_set_t* cpu_set);
 int frank_phtread_cpu_affinity_get(pthread_t tid, cpu_set_t* cpu_set);
