@@ -43,7 +43,7 @@ void *hash_cal(void *paramsPtr)
 {
     cpu_set_t cpu_set;
     CPU_ZERO(&cpu_set);
-    CPU_SET((struct param*)paramsPtr)->threads_id, &cpu_set);
+    CPU_SET(((struct param*)paramsPtr)->threads_id, &cpu_set);
 
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set),&cpu_set) < 0)
         perror("pthread_setaffinity_np");
