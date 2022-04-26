@@ -15,7 +15,7 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 200
+#define THREADS_COUNT 64
 #define TIMES_PER_LIST 200
 #define LIST_NUM 10
 
