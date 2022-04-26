@@ -202,7 +202,7 @@ int main()
     for (long j = 0; j<THREADS_COUNT ; j++){
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
-        frank_pthread_single_cpu_affinity_set(THREADS_COUNT-1-j, thread_id[j]); //绑核
+        //frank_pthread_single_cpu_affinity_set(THREADS_COUNT-1-j, thread_id[j]); //绑核
     }
 
     pthread_attr_destroy(&attr);
