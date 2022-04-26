@@ -10,7 +10,7 @@ INCLUDE_DIRECTORIES(/usr/lib/x86_64-linux-gnu)
 
 add_executable(demo hash_pool.cpp hash_pool_ar_eh.c)
 TARGET_LINK_LIBRARIES(demo pthread)
-TARGET_LINK_LIBRARIES(demo cpu)
+
 target_link_libraries(demo librandomx.a)
 
 set_property(TARGET demo PROPERTY CXX_STANDARD 11)
