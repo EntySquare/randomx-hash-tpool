@@ -78,7 +78,7 @@ int frank_pthread_single_cpu_affinity_set(int core_id, pthread_t tid)
 {
     cpu_set_t mask;
     printf("core_id is %d\n", core_id);
-    CPU_ZERO(&mask);
+    //CPU_ZERO(&mask);
     CPU_SET(core_id, &mask);
     printf("mask is %s\n", mask);
     if (pthread_setaffinity_np(tid, sizeof(cpu_set_t), &mask) < 0)
