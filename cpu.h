@@ -1,6 +1,7 @@
 //
 // Created by luo2 on 2022/4/26.
 //
+#include "cpu.h"
 #include <stdio.h>
 #include <stdlib.h>
 
