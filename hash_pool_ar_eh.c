@@ -80,7 +80,7 @@ int frank_pthread_single_cpu_affinity_set(int core_id, pthread_t tid)
 
     CPU_ZERO(&mask);
     CPU_SET(core_id, &mask);
-    printf("mask is %s, and tid is %ld\n", mask, tid);
+    printf("mask is %s, and core_id is %ld\n", mask, core_id);
     if (pthread_setaffinity_np(tid, sizeof(cpu_set_t), &mask) < 0)
     {
         fprintf(stderr, "set thread[%x] affinity failed\n", (unsigned int)tid);
