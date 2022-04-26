@@ -28,7 +28,7 @@ static int validate_hash(
 }
 
 struct param {
-    int threads_id
+    int threads_id;
     randomx_flags flags;
     randomx_cache *cache;
     randomx_dataset *dataset;
