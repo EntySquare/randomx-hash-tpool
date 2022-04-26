@@ -19,6 +19,7 @@
 
 #define numWorkers 191
 
+int timing=0;
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
@@ -54,7 +55,8 @@ void *hash_cal(void *paramsPtr)
     printf("Thread starting...\n");
     randomx_vm *myMachine = randomx_create_vm(((struct param*)paramsPtr)->flags, ((struct param*)paramsPtr)->cache, ((struct param*)paramsPtr)->dataset);
     time_t start = time(NULL);
-    time_t end;
+    time_t start_total = time(NULL);
+    time_t end end_total;
     for (int k = 0; k < list_len * times; k++) {
         randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
@@ -71,6 +73,8 @@ void *hash_cal(void *paramsPtr)
             printf("\n");
         }
     }
+    end_total = time(NULL);
+    timing = timing + difftime(end_total, start_total);
 
     randomx_destroy_vm(myMachine);
 
@@ -204,7 +208,6 @@ int main()
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-    time_t start_total = time(NULL);
     for (long j = 0; j<THREADS_COUNT ; j++){
         parameters->threads_id = j ;
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
@@ -214,11 +217,10 @@ int main()
     pthread_attr_destroy(&attr);
     for (long k = 0; k<THREADS_COUNT ; k++){
         pthread_join(thread_id[k], &status);
-        printf("threads %ld is done\n", k+1);
+        //printf("threads %ld is done\n", k+1);
     }
 
-    time_t end_total = time(NULL);
-    printf("the parallel calc rate is %f h/s\n", TIMES_PER_LIST * LIST_NUM * THREADS_COUNT / difftime(end_total, start_total));
+    printf("the parallel calc rate is %d h/s\n", (TIMES_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
