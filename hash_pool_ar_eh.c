@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
+#include <cpu.h>
 
 #define THREADS_COUNT 200
 #define TIMES_PER_LIST 200
@@ -159,8 +160,6 @@ int main()
     parameters->inputSize = sizeof myInput;
     parameters->output = hash;
 
-    // 绑核
-    //int pthread_setaffinity_np(pthread_t thread_id[THREADS_COUNT], size_t cpusetsize,const cpu_set_t *cpuset);
 
 //    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
     pthread_t thread_id[THREADS_COUNT];
@@ -170,6 +169,7 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     time_t start_total = time(NULL);
     for (long j = 0; j<THREADS_COUNT ; j++){
+        frank_pthread_single_cpu_affinity_set(64-1-j, thread_id[j]); //绑核
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
     }
@@ -195,6 +195,4 @@ int main()
     printf("\ntest done\n");
 
 }
-
-
 
