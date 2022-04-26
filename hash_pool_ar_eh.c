@@ -13,7 +13,7 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 3
+#define THREADS_COUNT 64
 #define TIMES_PER_LIST 200
 #define LIST_NUM 10000
 
@@ -28,6 +28,7 @@ static int validate_hash(
 }
 
 struct param {
+    int threads_id
     randomx_flags flags;
     randomx_cache *cache;
     randomx_dataset *dataset;
@@ -42,7 +43,7 @@ void *hash_cal(void *paramsPtr)
 {
     cpu_set_t cpu_set;
     CPU_ZERO(&cpu_set);
-    CPU_SET(44, &cpu_set);
+    CPU_SET((struct param*)paramsPtr)->threads_id, &cpu_set);
 
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set),&cpu_set) < 0)
         perror("pthread_setaffinity_np");
@@ -205,6 +206,7 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     time_t start_total = time(NULL);
     for (long j = 0; j<THREADS_COUNT ; j++){
+        parameters->threads_id = j ;
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
     }
