@@ -78,15 +78,15 @@ int frank_pthread_single_cpu_affinity_set(int core_id, pthread_t tid)
 {
     cpu_set_t mask;
     printf("core_id is %d\n", core_id);
-    //CPU_ZERO(&mask);
+    CPU_ZERO(&mask);
     CPU_SET(core_id, &mask);
     printf("mask is %s\n", mask);
-    if (pthread_setaffinity_np(tid, sizeof(cpu_set_t), &mask) < 0)
+    if (pthread_setaffinity_np(tid, sizeof(mask), &mask) < 0)
     {
         fprintf(stderr, "set thread[%x] affinity failed\n", (unsigned int)tid);
         return 1;
     }
-    printf("done\n");
+
     return 0;
 }
 
@@ -200,11 +200,9 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     time_t start_total = time(NULL);
     for (long j = 0; j<THREADS_COUNT ; j++){
-        printf("prepare to lock the core\n");
-        frank_pthread_single_cpu_affinity_set(THREADS_COUNT-1-j, thread_id[j]); //绑核
-        printf("prepare to create thread");
-        pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
+        pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
+        frank_pthread_single_cpu_affinity_set(THREADS_COUNT-1-j, thread_id[j]); //绑核
     }
 
     pthread_attr_destroy(&attr);
