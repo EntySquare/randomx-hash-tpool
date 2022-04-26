@@ -12,7 +12,7 @@
 #include <time.h>
 #include <pthread.h>
 
-#define THREADS_COUNT 100
+#define THREADS_COUNT 200
 #define TIMES_PER_LIST 200
 #define LIST_NUM 10
 
