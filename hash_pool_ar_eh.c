@@ -4,7 +4,7 @@
 
 #include "randomx.h"
 #include "chunk_and_entropy.h"
-#include "cpu.h"
+#include "cpu.c"
 #include <stdio.h>
 #include <unistd.h>
 #include <math.h>
