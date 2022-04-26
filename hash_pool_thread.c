@@ -3,13 +3,10 @@
 //
 #include "randomx.h"
 #include <stdio.h>
-#include <unistd.h>
-#include <math.h>
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
-#include <_stdio.h>
 
 #define THREADS_COUNT 100
 #define TIMES_PER_LIST 200
