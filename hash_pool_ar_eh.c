@@ -4,6 +4,7 @@
 
 #include "randomx.h"
 #include "chunk_and_entropy.h"
+#include "cpu.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <math.h>
@@ -11,7 +12,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <pthread.h>
-#include <cpu.h>
 
 #define THREADS_COUNT 200
 #define TIMES_PER_LIST 200
