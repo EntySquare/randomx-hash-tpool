@@ -123,6 +123,8 @@ int main()
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
     flags_vm |= RANDOMX_FLAG_JIT;
+    flags_vm |= RANDOMX_FLAG_LARGE_PAGES;
+    flags_vm |= RANDOMX_FLAG_ARGON2_SSSE3;
     randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
     flags_fast |= RANDOMX_FLAG_JIT;
 //    printf("flags is %d\n", flags_vm);
@@ -156,6 +158,9 @@ int main()
     parameters->input = myInput;
     parameters->inputSize = sizeof myInput;
     parameters->output = hash;
+
+    // 绑核
+    //int pthread_setaffinity_np(pthread_t thread_id[THREADS_COUNT], size_t cpusetsize,const cpu_set_t *cpuset);
 
 //    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
     pthread_t thread_id[THREADS_COUNT];
