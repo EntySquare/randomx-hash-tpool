@@ -176,15 +176,6 @@ int main()
     randomx_release_cache(myCache);
     myCache = NULL;
 
-    struct param *parameters = (struct param *)malloc(sizeof(struct param));
-    parameters->flags = flags_vm;
-    parameters->cache = myCache;
-    parameters->dataset = myDataset;
-    parameters->input = myInput;
-    parameters->inputSize = sizeof myInput;
-    parameters->output = hash;
-
-
 //    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
     pthread_t thread_id[THREADS_COUNT];
     void *status;
@@ -192,6 +183,13 @@ int main()
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     for (long j = 0; j<THREADS_COUNT ; j++){
+        struct param *parameters = (struct param *)malloc(sizeof(struct param));
+        parameters->flags = flags_vm;
+        parameters->cache = myCache;
+        parameters->dataset = myDataset;
+        parameters->input = myInput;
+        parameters->inputSize = sizeof myInput;
+        parameters->output = hash;
         parameters->threads_id = j ;
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
         //printf("threads %ld is created\n", j+1);
