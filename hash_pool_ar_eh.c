@@ -181,7 +181,6 @@ int main()
 
     randomx_release_cache(myCache);
     myCache = NULL;
-    printf("dataset is ready\n");
 
     struct param *parameters = (struct param *)malloc(sizeof(struct param));
     parameters->flags = flags_vm;
