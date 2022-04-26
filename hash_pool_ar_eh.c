@@ -60,18 +60,18 @@ void *hash_cal(void *paramsPtr)
     for (int k = 0; k < list_len * times; k++) {
         randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
-        if ((k + 1) >= times && (k + 1) % times == 0) {
-            end = time(NULL);
-            printf("k + 1 is %d, calc rate is %f h/s\n", k + 1, times / difftime(end, start));
-            start = time(NULL);
-        }
+//        if ((k + 1) >= times && (k + 1) % times == 0) {
+//            end = time(NULL);
+//            printf("k + 1 is %d, calc rate is %f h/s\n", k + 1, times / difftime(end, start));
+//            start = time(NULL);
+//        }
 
-        if ((k + 1) == list_len * times ){
-            unsigned char* hash = ((struct param*)paramsPtr)->output;
-            for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-            { printf("%02x", hash[i] & 0xff); }
-            printf("\n");
-        }
+//        if ((k + 1) == list_len * times ){
+//            unsigned char* hash = ((struct param*)paramsPtr)->output;
+//            for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+//            { printf("%02x", hash[i] & 0xff); }
+//            printf("\n");
+//        }
     }
     end_total = time(NULL);
     timing = timing + difftime(end_total, start_total);
@@ -82,23 +82,6 @@ void *hash_cal(void *paramsPtr)
 
 }
 
-
-// 指定线程绑核
-int frank_pthread_single_cpu_affinity_set(int core_id, pthread_t tid)
-{
-    cpu_set_t mask;
-    printf("core_id is %d\n", core_id);
-    CPU_ZERO(&mask);
-    CPU_SET(core_id, &mask);
-    printf("mask is %s\n", mask);
-    if (pthread_setaffinity_np(tid, sizeof(cpu_set_t), &mask) < 0)
-    {
-        fprintf(stderr, "set thread[%x] affinity failed\n", (unsigned int)tid);
-        return 1;
-    }
-
-    return 0;
-}
 
 int main()
 {
