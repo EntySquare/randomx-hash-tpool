@@ -74,8 +74,3 @@ int main(int argc, char *argv[])
 
     pthread_exit(NULL);
 }
-著作权归作者所有。
-商业转载请联系作者获得授权，非商业转载请注明出处。
-作者：Ailson Jack
-链接：http://www.only2fire.com/archives/55.html
-来源：www.only2fire.com
