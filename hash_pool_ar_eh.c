@@ -13,7 +13,7 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 64
+#define THREADS_COUNT 3
 #define TIMES_PER_LIST 200
 #define LIST_NUM 10000
 
@@ -59,7 +59,8 @@ void *hash_cal(void *paramsPtr)
 
         if ((k + 1) >= times && (k + 1) % times == 0) {
             end = time(NULL);
-            printf("Thread: calc rate is %f h/s\n", times / difftime(end, start));
+            //printf("Thread: calc rate is %f h/s\n", times / difftime(end, start));
+            printf("k + 1 is %d h/s\n", k + 1);
             start = time(NULL);
         }
 
