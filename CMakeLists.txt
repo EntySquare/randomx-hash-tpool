@@ -7,6 +7,8 @@ LINK_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 
 
 INCLUDE_DIRECTORIES(/usr/lib/x86_64-linux-gnu)
+INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR})
+aux_source_directory(${PROJECT_SOURCE_DIR} dir_srcs)
 
 #zby config
 INCLUDE_DIRECTORIES(/Users/terrill/clang/headers)
