@@ -83,7 +83,7 @@ int frank_pthread_single_cpu_affinity_set(int core_id, pthread_t tid)
     printf("cpu\n");
     if (pthread_setaffinity_np(tid, sizeof(cpu_set_t), &mask) < 0)
     {
-        fprintf(stderr, "set thread[%x] affinity failed\n", (unsigned int)tid);
+        //fprintf(stderr, "set thread[%x] affinity failed\n", (unsigned int)tid);
         return 1;
     }
     printf("done\n");
