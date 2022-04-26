@@ -97,23 +97,6 @@ void *hash_cal(void *paramsPtr)
 }
 
 
-// 指定线程绑核
-int frank_pthread_single_cpu_affinity_set(int core_id, pthread_t tid)
-{
-    cpu_set_t mask;
-
-    CPU_ZERO(&mask);
-    CPU_SET(core_id, &mask);
-    if (pthread_setaffinity_np(tid, sizeof(cpu_set_t), &mask) < 0)
-    {
-        fprintf(stderr, "set thread[%x] affinity failed\n", (unsigned int)tid);
-        return 1;
-    }
-
-    return 0;
-}
-
-
 int main()
 {
     FILE *fp;
