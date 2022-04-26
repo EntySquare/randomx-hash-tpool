@@ -158,7 +158,7 @@ int main()
     flags_vm |= RANDOMX_FLAG_ARGON2_SSSE3;
     randomx_flags flags_fast = RANDOMX_FLAG_DEFAULT;
     flags_fast |= RANDOMX_FLAG_JIT;
-//    printf("flags is %d\n", flags_vm);
+    printf("flags is %d\n", flags_vm);
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_dataset *myDataset = randomx_alloc_dataset(flags_fast);
@@ -181,6 +181,7 @@ int main()
 
     randomx_release_cache(myCache);
     myCache = NULL;
+    printf("dataset is ready\n");
 
     struct param *parameters = (struct param *)malloc(sizeof(struct param));
     parameters->flags = flags_vm;
@@ -199,7 +200,7 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     time_t start_total = time(NULL);
     for (long j = 0; j<THREADS_COUNT ; j++){
-        printf("prepare to lock the core");
+        printf("prepare to lock the core\n");
         frank_pthread_single_cpu_affinity_set(64-1-j, thread_id[j]); //绑核
         printf("prepare to create thread");
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
