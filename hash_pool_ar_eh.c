@@ -56,7 +56,7 @@ void *hash_cal(void *paramsPtr)
     randomx_vm *myMachine = randomx_create_vm(((struct param*)paramsPtr)->flags, ((struct param*)paramsPtr)->cache, ((struct param*)paramsPtr)->dataset);
     time_t start = time(NULL);
     time_t start_total = time(NULL);
-    time_t end end_total;
+    time_t end, end_total;
     for (int k = 0; k < list_len * times; k++) {
         randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
