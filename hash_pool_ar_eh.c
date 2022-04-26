@@ -4,7 +4,6 @@
 #define _GNU_SOURCE
 #include <sched.h>
 #include "randomx.h"
-
 #include <stdio.h>
 #include <unistd.h>
 #include <math.h>
@@ -200,7 +199,9 @@ int main()
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
     time_t start_total = time(NULL);
     for (long j = 0; j<THREADS_COUNT ; j++){
+        printf("prepare to lock the core");
         frank_pthread_single_cpu_affinity_set(64-1-j, thread_id[j]); //绑核
+        printf("prepare to create thread");
         pthread_create(&thread_id[j], &attr, hash_cal, (void *) parameters);
         printf("threads %ld is created\n", j+1);
     }
