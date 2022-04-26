@@ -52,7 +52,7 @@ void *hash_cal(void *paramsPtr)
     int times = TIMES_PER_LIST;
     int list_len = LIST_NUM;
     //long tid = ((struct param*)paramsPtr)->threadnum;
-    printf("Thread starting...\n");
+    printf("%d Thread starting...\n", ((struct param*)paramsPtr)->threads_id);
     randomx_vm *myMachine = randomx_create_vm(((struct param*)paramsPtr)->flags, ((struct param*)paramsPtr)->cache, ((struct param*)paramsPtr)->dataset);
     time_t start = time(NULL);
     time_t start_total = time(NULL);
@@ -194,7 +194,7 @@ int main()
     for (long j = 0; j<THREADS_COUNT ; j++){
         parameters->threads_id = j ;
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
-        printf("threads %ld is created\n", j+1);
+        //printf("threads %ld is created\n", j+1);
     }
 
     pthread_attr_destroy(&attr);
