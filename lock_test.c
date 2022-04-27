@@ -30,6 +30,7 @@ void *thread_func_cal(void *param)
         if (lo == 0) { printf("waiting...\n"); }
         else {
         cal((void*)params);
+        printf("waiting...\n");
         }
         lo++;
     }
@@ -53,6 +54,7 @@ int main(int argc, char *argv[])
     if (pthread_create(&my_thread, NULL, thread_func_mid,NULL) != 0)
         perror("pthread_create");
 
+    sleep(1);
     // sleep 5s cal 100 lines
     pthread_mutex_unlock(&mutex[1]);
     sleep(5);
