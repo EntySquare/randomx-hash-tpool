@@ -31,6 +31,10 @@ static int validate_hash(
 }
 
 struct param {
+    int threads_id;
+};
+
+struct param1 {
     int tasks_id;
     int threads_id;
     randomx_flags flags;
@@ -39,9 +43,7 @@ struct param {
     unsigned char* input;
     int inputSize;
     unsigned char* output;
-};
-
-struct param1 *parameters = (struct param1 *) malloc(sizeof(struct param));
+} *parameters = (struct param1 *) malloc(sizeof(struct param));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
@@ -60,11 +62,11 @@ void *hash_cal(void *paramsPtr)
         pthread_mutex_lock(&mutex[tid]);
         if (lo ==0) {printf("%ld Thread is created...\n", tid);}
         else {
-            long task = ((struct param *) parameters)->tasks_id;
+            long task = ((struct param1 *) parameters)->tasks_id;
             printf("%ld Thread starting task %ld...\n", tid, task);
-            randomx_vm *myMachine = randomx_create_vm(((struct param *) parameters)->flags,
-                                                      ((struct param *) parameters)->cache,
-                                                      ((struct param *) parameters)->dataset);
+            randomx_vm *myMachine = randomx_create_vm(((struct param1 *) parameters)->flags,
+                                                      ((struct param1 *) parameters)->cache,
+                                                      ((struct param1 *) parameters)->dataset);
 
             time_t start = time(NULL);
             time_t start_total = time(NULL);
@@ -72,13 +74,13 @@ void *hash_cal(void *paramsPtr)
 
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
-                    randomx_calculate_hash(myMachine, ((struct param *) parameters)->input,
-                                           ((struct param *) parameters)->inputSize,
-                                           ((struct param *) parameters)->output);
+                    randomx_calculate_hash(myMachine, ((struct param1 *) parameters)->input,
+                                           ((struct param1 *) parameters)->inputSize,
+                                           ((struct param1 *) parameters)->output);
 
                 }
         if ((k + 1) == LIST_NUM * LENGTH_PER_LIST ){
-            unsigned char* hash = ((struct param*) parameters)->output;
+            unsigned char* hash = ((struct param1*) parameters)->output;
             for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
             { printf("%02x", hash[i] & 0xff); }
             printf("\n");
