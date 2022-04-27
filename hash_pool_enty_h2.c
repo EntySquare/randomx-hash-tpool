@@ -180,17 +180,19 @@ int main()
     pthread_t thread_id[THREADS_COUNT];
     pthread_mutex_init(&mutex, NULL);
 
-    for (long j = 0; j<THREADS_COUNT ; j++){
-        struct param *parameters = (struct param *)malloc(sizeof(struct param));
-        parameters->flags = flags_vm;
-        parameters->cache = myCache;
-        parameters->dataset = myDataset;
-        parameters->input = myInput;
-        parameters->inputSize = sizeof myInput;
-        parameters->output = hash;
-        parameters->threads_id = j ;
-        pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
-        //printf("threads %ld is created\n", j+1);
+    for (long l = 0; l<2 ; l++) {
+        for (long j = 0; j < THREADS_COUNT; j++) {
+            struct param *parameters = (struct param *) malloc(sizeof(struct param));
+            parameters->flags = flags_vm;
+            parameters->cache = myCache;
+            parameters->dataset = myDataset;
+            parameters->input = myInput;
+            parameters->inputSize = sizeof myInput;
+            parameters->output = hash;
+            parameters->threads_id = j;
+            pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
+            //printf("threads %ld is created\n", j+1);
+        }
     }
 
     for (long k = 0; k<THREADS_COUNT ; k++){
