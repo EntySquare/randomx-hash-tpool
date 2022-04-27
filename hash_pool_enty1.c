@@ -79,12 +79,12 @@ void *hash_cal(void *paramsPtr)
                                            ((struct param1 *) parameters)->output);
 
                 }
-        if ((k + 1) == LIST_NUM * LENGTH_PER_LIST ){
-            unsigned char* hash = ((struct param1*) parameters)->output;
-            for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-            { printf("%02x", hash[i] & 0xff); }
-            printf("\n");
-        }
+                if ((k + 1) == LIST_NUM ){
+                    unsigned char* hash = ((struct param1*) parameters)->output;
+                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+                    { printf("%02x", hash[i] & 0xff); }
+                    printf("\n");
+                }
 
             }
             printf("%ld Thread finish task %ld ...\n", tid, task);
