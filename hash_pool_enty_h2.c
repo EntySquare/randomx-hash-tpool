@@ -74,8 +74,8 @@ void *hash_cal(void *paramsPtr)
 //            printf("\n");
 //        }
     }
-    pthread_mutex_unlock(&mutex[tid]);
     printf("%ld Thread job is done ...\n", tid);
+    pthread_mutex_unlock(&mutex[tid]);
 
     end_total = time(NULL);
     timing = timing + difftime(end_total, start_total);
