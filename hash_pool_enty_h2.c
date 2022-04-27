@@ -56,6 +56,8 @@ void *hash_cal(void *paramsPtr)
     time_t start = time(NULL);
     time_t start_total = time(NULL);
     time_t end, end_total;
+
+    pthread_mutex_lock(&mutex);
     for (int k = 0; k < LIST_NUM * LENGTH_PER_LIST; k++) {
         randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
@@ -72,12 +74,13 @@ void *hash_cal(void *paramsPtr)
 //            printf("\n");
 //        }
     }
+    pthread_mutex_unlock(&mutex);
     printf("%ld Thread job is done ...\n", tid);
+
     end_total = time(NULL);
     timing = timing + difftime(end_total, start_total);
 
     randomx_destroy_vm(myMachine);
-
     pthread_exit( (void*) paramsPtr);
 
 }
@@ -179,8 +182,9 @@ int main()
 //    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
     pthread_t thread_id[THREADS_COUNT];
     pthread_mutex_init(&mutex, NULL);
+    int loop = 2;
 
-    for (long l = 0; l<2 ; l++) {
+    for (long l = 0; l<loop ; l++) {
         for (long j = 0; j < THREADS_COUNT; j++) {
             struct param *parameters = (struct param *) malloc(sizeof(struct param));
             parameters->flags = flags_vm;
@@ -199,7 +203,7 @@ int main()
         pthread_join(thread_id[k], NULL);
     }
 
-    printf("the parallel calc rate is %d h/s\n", (LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
+    printf("the parallel calc rate is %d h/s\n", (loop*LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
