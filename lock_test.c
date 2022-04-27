@@ -9,6 +9,7 @@
 void cal(char *argv[])
 {
    // 打印 argv 全部内容
+    printf("print cal");
 }
 
 void *thread_func_cal(void *param)

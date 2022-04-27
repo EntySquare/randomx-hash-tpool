@@ -41,7 +41,7 @@ struct param {
     unsigned char* output;
 };
 
-struct param *parameters[1];
+struct param *parameters = (struct param *) malloc(THREADS_COUNT, sizeof(struct param));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
@@ -60,11 +60,11 @@ void *hash_cal(void *paramsPtr)
         pthread_mutex_lock(&mutex[tid]);
         if (lo ==0) {printf("%ld Thread is created...\n", tid);}
         else {
-            long task = ((struct param *) parameters[tid])->tasks_id;
+            long task = ((struct param *) parameters)->tasks_id;
             printf("%ld Thread starting task %ld...\n", tid, task);
-            randomx_vm *myMachine = randomx_create_vm(((struct param *) parameters[tid])->flags,
-                                                      ((struct param *) parameters[tid])->cache,
-                                                      ((struct param *) parameters[tid])->dataset);
+            randomx_vm *myMachine = randomx_create_vm(((struct param *) parameters)->flags,
+                                                      ((struct param *) parameters)->cache,
+                                                      ((struct param *) parameters)->dataset);
 
             time_t start = time(NULL);
             time_t start_total = time(NULL);
@@ -72,13 +72,13 @@ void *hash_cal(void *paramsPtr)
 
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
-                    randomx_calculate_hash(myMachine, ((struct param *) parameters[tid])->input,
-                                           ((struct param *) parameters[tid])->inputSize,
-                                           ((struct param *) parameters[tid])->output);
+                    randomx_calculate_hash(myMachine, ((struct param *) parameters)->input,
+                                           ((struct param *) parameters)->inputSize,
+                                           ((struct param *) parameters)->output);
 
                 }
         if ((k + 1) == LIST_NUM * LENGTH_PER_LIST ){
-            unsigned char* hash = ((struct param*) parameters[tid])->output;
+            unsigned char* hash = ((struct param*) parameters)->output;
             for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
             { printf("%02x", hash[i] & 0xff); }
             printf("\n");
@@ -207,19 +207,17 @@ int main()
     }
 
     int loop = 2;
-    for(int i = 0 ; i<THREADS_COUNT ; i++){
-        struct param *parameters[i] = (struct param *) malloc(sizeof(struct param));}
     for (long l = 0; l<loop ; l++) {
         for (long j = 0; j < THREADS_COUNT; j++) {
             if (l>0) {printf("waiting to be unlocked\n");}
             pthread_mutex_lock(&loop_lock[j]);
-            parameters[j]->flags = flags_vm;
-            parameters[j]->cache = myCache;
-            parameters[j]->dataset = myDataset;
-            parameters[j]->input = myInput;
-            parameters[j]->inputSize = sizeof myInput;
-            parameters[j]->output = hash;
-            parameters[j]->tasks_id = l + 1;
+            parameters++->flags = flags_vm;
+            parameters++->cache = myCache;
+            parameters++->dataset = myDataset;
+            parameters++->input = myInput;
+            parameters++->inputSize = sizeof myInput;
+            parameters++->output = hash;
+            parameters++->tasks_id = l + 1;
             pthread_mutex_unlock(&mutex[j]);
         }
     }
