@@ -13,7 +13,7 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 64
+#define THREADS_COUNT 5
 #define LENGTH_PER_LIST 200
 #define LIST_NUM 10
 #define numWorkers 191
@@ -72,6 +72,7 @@ void *hash_cal(void *paramsPtr)
 //            printf("\n");
 //        }
     }
+    printf("%ld Thread job is done ...\n", tid);
     end_total = time(NULL);
     timing = timing + difftime(end_total, start_total);
 
@@ -177,10 +178,8 @@ int main()
 
 //    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
     pthread_t thread_id[THREADS_COUNT];
-    void *status;
-    pthread_attr_t attr;
-    pthread_attr_init(&attr);
-    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    pthread_mutex_init(&mutex, NULL);
+
     for (long j = 0; j<THREADS_COUNT ; j++){
         struct param *parameters = (struct param *)malloc(sizeof(struct param));
         parameters->flags = flags_vm;
@@ -194,10 +193,8 @@ int main()
         //printf("threads %ld is created\n", j+1);
     }
 
-    pthread_attr_destroy(&attr);
     for (long k = 0; k<THREADS_COUNT ; k++){
-        pthread_join(thread_id[k], &status);
-        //printf("threads %ld is done\n", k+1);
+        pthread_join(thread_id[k], NULL);
     }
 
     printf("the parallel calc rate is %d h/s\n", (LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
