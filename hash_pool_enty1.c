@@ -208,6 +208,7 @@ int main()
         //printf("threads %ld is created\n", j+1);
     }
 
+    sleep(2);
     int loop = 2;
     for (long l = 0; l<loop ; l++) {
         for (long j = 0; j < THREADS_COUNT; j++) {
