@@ -41,9 +41,7 @@ struct param {
     unsigned char* output;
 };
 
-//struct param *parameters[THREADS_COUNT];
-for(int i = 0 ; i<THREADS_COUNT ; i++){
-    struct param *parameters[i] = (struct param *) malloc(sizeof(struct param));}
+struct param *parameters[THREADS_COUNT];
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
@@ -209,6 +207,8 @@ int main()
     }
 
     int loop = 2;
+    for(int i = 0 ; i<THREADS_COUNT ; i++){
+        struct param *parameters[i] = (struct param *) malloc(sizeof(struct param));}
     for (long l = 0; l<loop ; l++) {
         for (long j = 0; j < THREADS_COUNT; j++) {
             if (l>0) {printf("waiting to be unlocked\n");}
