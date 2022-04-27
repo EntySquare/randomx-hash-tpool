@@ -14,8 +14,8 @@
 
 
 #define THREADS_COUNT 5
-#define LENGTH_PER_LIST 200
-#define LIST_NUM 10
+#define LENGTH_PER_LIST 1000
+#define LIST_NUM 2
 #define numWorkers 191
 
 int timing=0;
@@ -29,6 +29,7 @@ static int validate_hash(
 }
 
 struct param {
+    int tasks_id;
     int threads_id;
     randomx_flags flags;
     randomx_cache *cache;
@@ -58,21 +59,24 @@ void *hash_cal(void *paramsPtr)
     time_t start_total = time(NULL);
     time_t end, end_total;
 
-    for (int k = 0; k < LIST_NUM * LENGTH_PER_LIST; k++) {
-        randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
+    for (int k = 0; k < LIST_NUM ; k++) {
+        for (int m = 0; m < LENGTH_PER_LIST; m++) {
+            randomx_calculate_hash(myMachine, ((struct param *) paramsPtr)->input,
+                                   ((struct param *) paramsPtr)->inputSize, ((struct param *) paramsPtr)->output);
 
-//        if ((k + 1) >= LENGTH_PER_LIST && (k + 1) % LENGTH_PER_LIST == 0) {
+//        if ((m + 1) == LENGTH_PER_LIST) {
 //            end = time(NULL);
 //            printf("k + 1 is %d, calc rate is %f h/s\n", k + 1, times / difftime(end, start));
 //            start = time(NULL);
 //        }
-
+        }
 //        if ((k + 1) == LIST_NUM * LENGTH_PER_LIST ){
 //            unsigned char* hash = ((struct param*)paramsPtr)->output;
 //            for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
 //            { printf("%02x", hash[i] & 0xff); }
 //            printf("\n");
 //        }
+
     }
     printf("%ld Thread job is done ...\n", tid);
     pthread_mutex_unlock(&mutex[tid]);
@@ -195,6 +199,7 @@ int main()
             parameters->input = myInput;
             parameters->inputSize = sizeof myInput;
             parameters->output = hash;
+            parameters->taks_id = l;
             parameters->threads_id = j;
             pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
             //printf("threads %ld is created\n", j+1);
