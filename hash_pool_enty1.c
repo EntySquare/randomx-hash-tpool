@@ -30,7 +30,7 @@ static int validate_hash(
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
 
-extern struct param {
+struct param {
     int tasks_id;
     int threads_id;
     randomx_flags flags;
@@ -41,7 +41,7 @@ extern struct param {
     unsigned char* output;
 };
 
-struct param *parameters = (struct param *) malloc(sizeof(struct param));
+struct param1 *parameters = (struct param1 *) malloc(sizeof(struct param));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
