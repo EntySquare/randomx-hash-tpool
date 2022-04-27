@@ -19,7 +19,7 @@
 #define numWorkers 191
 
 int timing=0;
-pthread_mutex_t mutex ;
+pthread_mutex_t mutex[THREADS_COUNT] ;
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
@@ -50,6 +50,7 @@ void *hash_cal(void *paramsPtr)
         perror("pthread_setaffinity_np");
 
     long tid = ((struct param*)paramsPtr)->threads_id;
+    pthread_mutex_lock(&mutex[tid]);
     printf("%ld Thread starting...\n", tid);
     randomx_vm *myMachine = randomx_create_vm(((struct param*)paramsPtr)->flags, ((struct param*)paramsPtr)->cache, ((struct param*)paramsPtr)->dataset);
 
@@ -57,7 +58,6 @@ void *hash_cal(void *paramsPtr)
     time_t start_total = time(NULL);
     time_t end, end_total;
 
-    pthread_mutex_lock(&mutex);
     for (int k = 0; k < LIST_NUM * LENGTH_PER_LIST; k++) {
         randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
@@ -74,7 +74,7 @@ void *hash_cal(void *paramsPtr)
 //            printf("\n");
 //        }
     }
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutex[tid]);
     printf("%ld Thread job is done ...\n", tid);
 
     end_total = time(NULL);
@@ -181,7 +181,9 @@ int main()
 
 //    pthread_t *thread_id = (pthread_t *)malloc(thread_count*sizeof(pthread_t));
     pthread_t thread_id[THREADS_COUNT];
-    pthread_mutex_init(&mutex, NULL);
+    for (long j = 0; j < THREADS_COUNT; j++) {
+        pthread_mutex_init(&mutex[j], NULL);}
+    printf("mutex lock is initiated\n");
     int loop = 2;
 
     for (long l = 0; l<loop ; l++) {
