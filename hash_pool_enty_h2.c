@@ -50,9 +50,10 @@ void *hash_cal(void *paramsPtr)
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set),&cpu_set) < 0)
         perror("pthread_setaffinity_np");
 
+    long task = ((struct param*)paramsPtr)->tasks_id;
     long tid = ((struct param*)paramsPtr)->threads_id;
     pthread_mutex_lock(&mutex[tid]);
-    printf("%ld Thread starting...\n", tid);
+    printf("%ld Thread starting task %ld...\n", tid, task);
     randomx_vm *myMachine = randomx_create_vm(((struct param*)paramsPtr)->flags, ((struct param*)paramsPtr)->cache, ((struct param*)paramsPtr)->dataset);
 
     time_t start = time(NULL);
@@ -78,7 +79,7 @@ void *hash_cal(void *paramsPtr)
 //        }
 
     }
-    printf("%ld Thread job is done ...\n", tid);
+    printf("%ld Thread finish task %ld ...\n", tid, task);
     pthread_mutex_unlock(&mutex[tid]);
 
     end_total = time(NULL);
