@@ -5,7 +5,6 @@ LINK_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 LINK_DIRECTORIES(~/sandbox/randomx-hash-tpool)
 
 
-
 INCLUDE_DIRECTORIES(/usr/lib/x86_64-linux-gnu)
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR})
 aux_source_directory(${PROJECT_SOURCE_DIR} dir_srcs)
@@ -13,7 +12,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR} dir_srcs)
 #zby config
 INCLUDE_DIRECTORIES(/Users/terrill/clang/headers)
 
-add_executable(demo hash_pool.cpp hash_pool_ar_eh.c)
+add_executable(demo hash_pool.cpp hash_pool_lock_test.c)
 #add_executable(demo hash_pool.cpp binding.c)
 TARGET_LINK_LIBRARIES(demo pthread)
 
