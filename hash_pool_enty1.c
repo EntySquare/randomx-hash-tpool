@@ -30,7 +30,7 @@ static int validate_hash(
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
 
-struct param {
+extern struct param {
     int tasks_id;
     int threads_id;
     randomx_flags flags;
