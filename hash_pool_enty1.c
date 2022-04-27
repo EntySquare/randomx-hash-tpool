@@ -41,6 +41,8 @@ struct param {
     unsigned char* output;
 };
 
+struct param *parameters = (struct param *) malloc(sizeof(struct param));
+
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
 {
@@ -209,7 +211,6 @@ int main()
         for (long j = 0; j < THREADS_COUNT; j++) {
             if (l>0) {printf("waiting to be unlocked\n");}
             pthread_mutex_lock(&loop_lock[j]);
-            struct param *parameters = (struct param *) malloc(sizeof(struct param));
             parameters->flags = flags_vm;
             parameters->cache = myCache;
             parameters->dataset = myDataset;
