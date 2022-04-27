@@ -20,7 +20,7 @@
 #define numWorkers 191
 
 int timing=0;
-pthread_mutex_t main_loop_lock ;
+pthread_mutex_t loop_lock[THREADS_COUNT] ;
 pthread_mutex_t mutex[THREADS_COUNT] ;
 
 static int validate_hash(
@@ -41,7 +41,7 @@ struct param {
     unsigned char* output;
 };
 
-struct param *parameters[THREADS_COUNT] = (struct param *) malloc(sizeof(struct param));
+struct param *parameters[THREADS_COUNT] = (struct param *) malloc(sizeof(struct param)*THREADS_COUNT);
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
@@ -90,7 +90,7 @@ void *hash_cal(void *paramsPtr)
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
 
-            pthread_mutex_lock(&main_loop_lock);
+            pthread_mutex_lock(&loop_lock[tid]);
         }
     }
 
@@ -195,8 +195,8 @@ int main()
 
     pthread_t thread_id[THREADS_COUNT];
     for (long j = 0; j < THREADS_COUNT; j++) {
-        pthread_mutex_init(&mutex[j], NULL);}
-    pthread_mutex_init(&main_loop_lock);
+        pthread_mutex_init(&mutex[j], NULL);
+        pthread_mutex_init(&loop_lock[j], NULL);}
     printf("mutex lock is initiated\n");
 
     for (long j = 0; j < THREADS_COUNT; j++) {
@@ -210,7 +210,7 @@ int main()
     for (long l = 0; l<loop ; l++) {
         for (long j = 0; j < THREADS_COUNT; j++) {
             if l>0 {printf("waiting to be unlocked\n")};
-            pthread_mutex_lock(&main_loop_lock[j]);
+            pthread_mutex_lock(&loop_lock[j]);
             parameters[j]->flags = flags_vm;
             parameters[j]->cache = myCache;
             parameters[j]->dataset = myDataset;
