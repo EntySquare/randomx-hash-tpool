@@ -14,7 +14,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR} dir_srcs)
 INCLUDE_DIRECTORIES(/Users/terrill/clang/headers)
 
 #add_executable(demo hash_pool.cpp hash_pool_ar_eh.c)
-add_executable(demo hash_pool.cpp binding.c)
+add_executable(demo hash_pool.cpp lock_test.c)
 TARGET_LINK_LIBRARIES(demo pthread)
 
 target_link_libraries(demo librandomx.a)
