@@ -20,7 +20,7 @@
 #define numWorkers 191
 
 int timing=0;
-int loop = 2;
+int loop = 10;
 pthread_mutex_t loop_lock[THREADS_COUNT] ;
 pthread_mutex_t mutex[THREADS_COUNT] ;
 
@@ -208,8 +208,8 @@ int main()
     sleep(2);
 
     for (long l = 0; l<loop ; l++) {
+        if (l>0) {printf("waiting to be unlocked\n");}
         for (long j = 0; j < THREADS_COUNT; j++) {
-            if (l>0) {printf("waiting to be unlocked\n");}
             pthread_mutex_lock(&loop_lock[j]);
             parameters->flags = flags_vm;
             parameters->cache = myCache;
