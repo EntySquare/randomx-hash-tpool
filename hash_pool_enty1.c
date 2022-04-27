@@ -36,14 +36,13 @@ struct param {
 
 struct param1 {
     int tasks_id;
-    int threads_id;
     randomx_flags flags;
     randomx_cache *cache;
     randomx_dataset *dataset;
     unsigned char* input;
     int inputSize;
     unsigned char* output;
-} *parameters = (struct param1 *) malloc(sizeof(struct param));
+} *parameters = (struct param1 *) malloc(sizeof(struct param1));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
