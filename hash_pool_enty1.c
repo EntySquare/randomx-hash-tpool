@@ -42,7 +42,7 @@ struct param {
 };
 
 struct param *parameters[THREADS_COUNT];
-for ( i = 0 ; i<THREADS_COUNT ; i++){
+for ( int i = 0 ; i<THREADS_COUNT ; i++){
     struct param *parameters[i] = (struct param *) malloc(sizeof(struct param));}
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
@@ -211,7 +211,7 @@ int main()
     int loop = 2;
     for (long l = 0; l<loop ; l++) {
         for (long j = 0; j < THREADS_COUNT; j++) {
-            if (l>0) {printf("waiting to be unlocked\n")};
+            if (l>0) {printf("waiting to be unlocked\n");}
             pthread_mutex_lock(&loop_lock[j]);
             parameters[j]->flags = flags_vm;
             parameters[j]->cache = myCache;
