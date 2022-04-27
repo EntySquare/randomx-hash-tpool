@@ -41,7 +41,9 @@ struct param {
     unsigned char* output;
 };
 
-struct param *parameters = (struct param *) malloc(sizeof(struct param));
+struct param *parameters[THREADS_COUNT];
+for ( i = 0 ; i<THREADS_COUNT ; i++){
+    struct param *parameters[i] = (struct param *) malloc(sizeof(struct param));}
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
@@ -72,13 +74,13 @@ void *hash_cal(void *paramsPtr)
 
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
-                    randomx_calculate_hash(myMachine, ((struct param *) paramsPtr)->input,
-                                           ((struct param *) paramsPtr)->inputSize,
-                                           ((struct param *) paramsPtr)->output);
+                    randomx_calculate_hash(myMachine, ((struct param *) parameters[tid])->input,
+                                           ((struct param *) parameters[tid])->inputSize,
+                                           ((struct param *) parameters[tid])->output);
 
                 }
         if ((k + 1) == LIST_NUM * LENGTH_PER_LIST ){
-            unsigned char* hash = ((struct param*)paramsPtr)->output;
+            unsigned char* hash = ((struct param*) parameters[tid])->output;
             for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
             { printf("%02x", hash[i] & 0xff); }
             printf("\n");
