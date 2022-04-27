@@ -42,7 +42,7 @@ struct param {
 };
 
 struct param *parameters[THREADS_COUNT];
-for ( int i = 0 ; i<THREADS_COUNT ; i++){
+for(int i = 0 ; i<THREADS_COUNT ; i++){
     struct param *parameters[i] = (struct param *) malloc(sizeof(struct param));}
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
@@ -57,7 +57,7 @@ void *hash_cal(void *paramsPtr)
 
     long tid = ((struct param *) paramsPtr)->threads_id;
 
-    for (int lo = 0 ; lo < 3; lo++) {
+    for(int lo = 0 ; lo < 3; lo++) {
 
         pthread_mutex_lock(&mutex[tid]);
         if (lo ==0) {printf("%ld Thread is created...\n", tid);}
