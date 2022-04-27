@@ -11,7 +11,7 @@ void *print_msg(void *arg){
     pthread_mutex_lock(&mutex);
     for(i=0;i<15;i++){
         printf("output : %d\n",i);
-        sleep(100);
+        sleep(1);
     }
     pthread_mutex_unlock(&mutex);
 }
