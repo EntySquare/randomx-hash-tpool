@@ -16,10 +16,10 @@
 #define THREADS_COUNT 64
 #define TIMES_PER_LIST 200
 #define LIST_NUM 100
-
 #define numWorkers 191
 
 int timing=0;
+pthread_mutex_t mutex ;
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
