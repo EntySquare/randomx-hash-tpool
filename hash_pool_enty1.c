@@ -42,7 +42,7 @@ struct param1 {
     unsigned char* input;
     int inputSize;
     unsigned char* output;
-} *parameters = (struct param1 *) malloc(20);
+} *parameters = malloc(sizeof(struct param1));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
