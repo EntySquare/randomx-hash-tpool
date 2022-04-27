@@ -41,7 +41,7 @@ struct param {
     unsigned char* output;
 };
 
-struct param *parameters[THREADS_COUNT];
+//struct param *parameters[THREADS_COUNT];
 for(int i = 0 ; i<THREADS_COUNT ; i++){
     struct param *parameters[i] = (struct param *) malloc(sizeof(struct param));}
 
