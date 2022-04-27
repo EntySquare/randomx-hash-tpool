@@ -7,8 +7,8 @@
 #include <pthread.h>
 #include <math.h>
 
-pthread_mutex_t mutex[2];
-long params = 10;
+pthread_mutex_t mutex[1], main_lock;
+long params = 100;
 
 void cal(void *argv) {
     // 打印 argv 全部内容
@@ -29,8 +29,10 @@ void *thread_func_cal(void *param)
         pthread_mutex_lock(&mutex[1]);
         if (lo == 0) { printf("waiting...\n"); }
         else {
-        cal((void*)params);
-        printf("waiting...\n");
+            printf("params is %ld\n", params);
+            cal((void*)params);
+            printf("waiting...\n");
+            pthread_mutex_unlock(&main_lock);
         }
         lo++;
     }
@@ -41,8 +43,9 @@ void *thread_func_mid(void *param)
     int l1 =0 ;
     while(1)
     {
-        pthread_mutex_lock(&mutex[2]);
-
+        pthread_mutex_lock(&main_lock);
+        sleep(1);
+        pthread_mutex_unlock(&mutex[1]);
     }
 }
 
@@ -54,16 +57,12 @@ int main(int argc, char *argv[])
     if (pthread_create(&my_thread, NULL, thread_func_mid,NULL) != 0)
         perror("pthread_create");
 
-    sleep(1);
     // sleep 5s cal 100 lines
-    pthread_mutex_unlock(&mutex[1]);
     sleep(5);
     // sleep 5s cal 200 lines
-    params = params + 10;
-    pthread_mutex_unlock(&mutex[1]);
+    params = params + 100;
     sleep(5);
     // sleep 5s cal 300 lines
-    params = params + 10;
-    pthread_mutex_unlock(&mutex[1]);
+    params = params + 100;
     sleep(5);
 }
