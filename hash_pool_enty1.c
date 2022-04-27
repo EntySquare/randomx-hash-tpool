@@ -41,7 +41,8 @@ struct param {
     unsigned char* output;
 };
 
-struct param *parameters[THREADS_COUNT] = (struct param *) calloc(THREADS_COUNT, sizeof(struct param));
+struct param *parameters[1] = (struct param *) calloc(THREADS_COUNT, sizeof(struct param));
+struct param *parameters[2] = (struct param *) calloc(THREADS_COUNT, sizeof(struct param));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
