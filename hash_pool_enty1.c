@@ -41,7 +41,7 @@ struct param {
     unsigned char* output;
 };
 
-struct param *parameters[THREADS_COUNT] = (struct param *) malloc(sizeof(struct param)*THREADS_COUNT);
+struct param *parameters = (struct param *) malloc(sizeof(struct param));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
@@ -58,7 +58,7 @@ void *hash_cal(void *paramsPtr)
     for (int lo = 0 ; lo < 3; lo++) {
 
         pthread_mutex_lock(&mutex[tid]);
-        if (lo ==0) {printf("%ld Thread is created %ld...\n", tid);}
+        if (lo ==0) {printf("%ld Thread is created...\n", tid);}
         else {
             long task = ((struct param *) parameters[tid])->tasks_id;
             printf("%ld Thread starting task %ld...\n", tid, task);
@@ -209,7 +209,7 @@ int main()
     int loop = 2;
     for (long l = 0; l<loop ; l++) {
         for (long j = 0; j < THREADS_COUNT; j++) {
-            if l>0 {printf("waiting to be unlocked\n")};
+            if (l>0) {printf("waiting to be unlocked\n")};
             pthread_mutex_lock(&loop_lock[j]);
             parameters[j]->flags = flags_vm;
             parameters[j]->cache = myCache;
