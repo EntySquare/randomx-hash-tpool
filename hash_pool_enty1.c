@@ -14,12 +14,13 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 5
+#define THREADS_COUNT 10
 #define LENGTH_PER_LIST 2000
-#define LIST_NUM 3
+#define LIST_NUM 2
 #define numWorkers 191
 
 int timing=0;
+int loop = 2;
 pthread_mutex_t loop_lock[THREADS_COUNT] ;
 pthread_mutex_t mutex[THREADS_COUNT] ;
 
@@ -57,7 +58,7 @@ void *hash_cal(void *paramsPtr)
 
     long tid = ((struct param *) paramsPtr)->threads_id;
 
-    for(int lo = 0 ; lo < 3; lo++) {
+    for(int lo = 0 ; lo < loop + 1; lo++) {
 
         pthread_mutex_lock(&mutex[tid]);
         if (lo ==0) {printf("%ld Thread is created...\n", tid);}
@@ -67,26 +68,22 @@ void *hash_cal(void *paramsPtr)
             randomx_vm *myMachine = randomx_create_vm(((struct param1 *) parameters)->flags,
                                                       ((struct param1 *) parameters)->cache,
                                                       ((struct param1 *) parameters)->dataset);
-
-            time_t start = time(NULL);
             time_t start_total = time(NULL);
-            time_t end, end_total;
+            time_t end_total;
 
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
                     randomx_calculate_hash(myMachine, ((struct param1 *) parameters)->input,
                                            ((struct param1 *) parameters)->inputSize,
                                            ((struct param1 *) parameters)->output);
-
                 }
                 if ((k + 1) == LIST_NUM ){
                     unsigned char* hash = ((struct param1*) parameters)->output;
                     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
                     { printf("%02x", hash[i] & 0xff); }
-                    printf("\n");
-                }
-
+                    printf("\n");}
             }
+
             printf("%ld Thread finish task %ld ...\n", tid, task);
             end_total = time(NULL);
             timing = timing + difftime(end_total, start_total);
@@ -209,7 +206,7 @@ int main()
     }
 
     sleep(2);
-    int loop = 2;
+
     for (long l = 0; l<loop ; l++) {
         for (long j = 0; j < THREADS_COUNT; j++) {
             if (l>0) {printf("waiting to be unlocked\n");}
@@ -229,7 +226,7 @@ int main()
         pthread_join(thread_id[k], NULL);
     }
 
-    printf("the parallel calc rate is %d h/s\n", (loop*LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
+    printf("the parallel calc rate is %d h/s\n", (loop * LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
