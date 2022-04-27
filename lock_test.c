@@ -5,15 +5,21 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <math.h>
 
 pthread_mutex_t mutex[2];
+long params = 10;
 
-void cal(char *argv[]) {
+void cal(void *argv) {
     // 打印 argv 全部内容
-    for (i = 0; i < 1000000; i++) {
-        result = result + sin(i) * tan(i);
+    int times = (int)argv;
+    double result = 0.0;
+    for ( int t=0; t<times; t++) {
+        for (int i = 0; i < 1000000; i++) {
+            result = result + sin(i) * tan(i);
+        }
+       if (t+1 == times) printf("cal print, Result = %e\n", result);
     }
-    printf("cal print, Result = %e\n", result);
 }
 
 void *thread_func_cal(void *param)
@@ -23,9 +29,9 @@ void *thread_func_cal(void *param)
         pthread_mutex_lock(&mutex[1]);
         if (lo == 0) { printf("waiting...\n"); }
         else {
-        for(int t =0; t<10; t++){cal();}
+        cal((void*)params);
         }
-        lo++
+        lo++;
     }
 }
 
@@ -51,8 +57,11 @@ int main(int argc, char *argv[])
     pthread_mutex_unlock(&mutex[1]);
     sleep(5);
     // sleep 5s cal 200 lines
+    params = params + 10;
     pthread_mutex_unlock(&mutex[1]);
     sleep(5);
     // sleep 5s cal 300 lines
-
+    params = params + 10;
+    pthread_mutex_unlock(&mutex[1]);
+    sleep(5);
 }
