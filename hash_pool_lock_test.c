@@ -8,12 +8,12 @@
 pthread_mutex_t mutex ;
 void *print_msg(void *arg){
     int i=0;
-    //pthread_mutex_lock(&mutex);
+    pthread_mutex_lock(&mutex);
     for(i=0;i<15;i++){
         printf("output : %d\n",i);
         sleep(1);
     }
-    //pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutex);
 }
 int main(int argc,char** argv) {
     pthread_t id1;

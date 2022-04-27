@@ -14,8 +14,8 @@
 
 
 #define THREADS_COUNT 64
-#define TIMES_PER_LIST 200
-#define LIST_NUM 100
+#define LENGTH_PER_LIST 200
+#define LIST_NUM 10
 #define numWorkers 191
 
 int timing=0;
@@ -42,31 +42,30 @@ struct param {
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
 {
+    // binding the core
     cpu_set_t cpu_set;
     CPU_ZERO(&cpu_set);
     CPU_SET(((struct param*)paramsPtr)->threads_id, &cpu_set);
-
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set),&cpu_set) < 0)
         perror("pthread_setaffinity_np");
 
-    int times = TIMES_PER_LIST;
-    int list_len = LIST_NUM;
-    //long tid = ((struct param*)paramsPtr)->threadnum;
-    printf("%d Thread starting...\n", ((struct param*)paramsPtr)->threads_id);
+    long tid = ((struct param*)paramsPtr)->thread_id;
+    printf("%ld Thread starting...\n", tid);
     randomx_vm *myMachine = randomx_create_vm(((struct param*)paramsPtr)->flags, ((struct param*)paramsPtr)->cache, ((struct param*)paramsPtr)->dataset);
+
     time_t start = time(NULL);
     time_t start_total = time(NULL);
     time_t end, end_total;
-    for (int k = 0; k < list_len * times; k++) {
+    for (int k = 0; k < LIST_NUM * LENGTH_PER_LIST; k++) {
         randomx_calculate_hash(myMachine, ((struct param*)paramsPtr)->input, ((struct param*)paramsPtr)->inputSize, ((struct param*)paramsPtr)->output);
 
-//        if ((k + 1) >= times && (k + 1) % times == 0) {
+//        if ((k + 1) >= LENGTH_PER_LIST && (k + 1) % LENGTH_PER_LIST == 0) {
 //            end = time(NULL);
 //            printf("k + 1 is %d, calc rate is %f h/s\n", k + 1, times / difftime(end, start));
 //            start = time(NULL);
 //        }
 
-//        if ((k + 1) == list_len * times ){
+//        if ((k + 1) == LIST_NUM * LENGTH_PER_LIST ){
 //            unsigned char* hash = ((struct param*)paramsPtr)->output;
 //            for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
 //            { printf("%02x", hash[i] & 0xff); }
