@@ -49,7 +49,7 @@ void *hash_cal(void *paramsPtr)
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set),&cpu_set) < 0)
         perror("pthread_setaffinity_np");
 
-    long tid = ((struct param*)paramsPtr)->thread_id;
+    long tid = ((struct param*)paramsPtr)->threads_id;
     printf("%ld Thread starting...\n", tid);
     randomx_vm *myMachine = randomx_create_vm(((struct param*)paramsPtr)->flags, ((struct param*)paramsPtr)->cache, ((struct param*)paramsPtr)->dataset);
 
@@ -200,7 +200,7 @@ int main()
         //printf("threads %ld is done\n", k+1);
     }
 
-    printf("the parallel calc rate is %d h/s\n", (TIMES_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
+    printf("the parallel calc rate is %d h/s\n", (LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
