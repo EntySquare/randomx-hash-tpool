@@ -15,7 +15,7 @@ void cal(void *argv) {
     int times = (int)argv;
     double result = 0.0;
     for ( int t=0; t<times; t++) {
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 10000; i++) {
             result = result + sin(i) * tan(i);
         }
        if (t+1 == times) printf("cal print, Result = %e\n", result);
