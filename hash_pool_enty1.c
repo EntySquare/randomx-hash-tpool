@@ -92,7 +92,7 @@ void *hash_cal(void *paramsPtr)
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
 
-            pthread_mutex_lock(&loop_lock[tid]);
+            pthread_mutex_unlock(&loop_lock[tid]);
         }
     }
 
