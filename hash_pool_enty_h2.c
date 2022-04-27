@@ -200,7 +200,7 @@ int main()
             parameters->input = myInput;
             parameters->inputSize = sizeof myInput;
             parameters->output = hash;
-            parameters->taks_id = l;
+            parameters->tasks_id = l;
             parameters->threads_id = j;
             pthread_create(&thread_id[j], NULL, hash_cal, (void *) parameters);
             //printf("threads %ld is created\n", j+1);
