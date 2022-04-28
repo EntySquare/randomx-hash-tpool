@@ -135,7 +135,7 @@ int main()
     memcpy(chunk,wbuf,sizeof(wbuf));
     memcpy(entropy,wbuf,sizeof(wbuf));
     unsigned char hash[RANDOMX_HASH_SIZE];
-    unsigned char difficulty[] = {255,0,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
+    unsigned char difficulty[] = {0,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
 
     int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
     int len_h0 = sizeof(h0)/sizeof(char);
