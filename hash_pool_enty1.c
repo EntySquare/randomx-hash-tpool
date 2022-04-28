@@ -14,11 +14,11 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 5
+#define THREADS_COUNT 64
 #define LENGTH_PER_LIST 1000
 #define LIST_NUM 2
 #define numWorkers 191
-int loop = 5;
+int loop = 10;
 int timing=0;
 long thread_ID = 0;
 int thread_seq = 0;
