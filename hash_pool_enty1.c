@@ -114,7 +114,8 @@ void *hash_cal(void *paramsPtr)
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *fetch_eh(void *argv[])
 {
-    for (int f = 0; f++) {
+    int f = 1;
+   while(f!=0) {
     pthread_mutex_lock(&fetch_lock);
     printf("\nfetch fresh eh data\n");
     pthread_mutex_unlock(&main_lock);
