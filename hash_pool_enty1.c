@@ -14,13 +14,18 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 10
+#define THREADS_COUNT 5
 #define LENGTH_PER_LIST 2000
 #define LIST_NUM 2
 #define numWorkers 191
-
-int timing=0;
 int loop = 10;
+int timing = 0;
+long thread_ID = 0;
+int thread_seq = 0;
+int switches = 0;
+
+pthread_mutex_t main_lock ;
+pthread_mutex_t fetch_lock ;
 pthread_mutex_t loop_lock[THREADS_COUNT] ;
 pthread_mutex_t mutex[THREADS_COUNT] ;
 
@@ -31,20 +36,21 @@ static int validate_hash(
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
 
-struct param {
+struct ids {
     int threads_id;
 };
 
-struct param1 {
+struct params {
     int tasks_id;
-    randomx_flags flags;
-    randomx_cache *cache;
-    randomx_dataset *dataset;
     unsigned char* input;
     int inputSize;
     unsigned char* output;
-} parameters[7];
-//= malloc(sizeof(struct param1));
+    randomx_flags flags;
+    randomx_cache *cache;
+    randomx_dataset *dataset;
+    unsigned char* diff;
+} parameters[8];
+//= malloc(sizeof(struct params));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
@@ -52,50 +58,72 @@ void *hash_cal(void *paramsPtr)
     // binding the core
     cpu_set_t cpu_set;
     CPU_ZERO(&cpu_set);
-    CPU_SET(((struct param*)paramsPtr)->threads_id, &cpu_set);
+    CPU_SET(((struct ids * )paramsPtr)->threads_id, &cpu_set);
     if (pthread_setaffinity_np(pthread_self(), sizeof(cpu_set),&cpu_set) < 0)
         perror("pthread_setaffinity_np");
 
-    long tid = ((struct param *) paramsPtr)->threads_id;
-
+    long tid = ((struct ids *) paramsPtr)->threads_id;
     for(int lo = 0 ; lo < loop + 1; lo++) {
 
         pthread_mutex_lock(&mutex[tid]);
         if (lo ==0) {printf("%ld Thread is created...\n", tid);}
         else {
-            long task = ((struct param1 *) parameters)->tasks_id;
+            long task = ((struct params *) parameters)->tasks_id;
             printf("%ld Thread starting task %ld...\n", tid, task);
-            randomx_vm *myMachine = randomx_create_vm(((struct param1 *) parameters)->flags,
-                                                      ((struct param1 *) parameters)->cache,
-                                                      ((struct param1 *) parameters)->dataset);
+            randomx_vm *myMachine = randomx_create_vm(((struct params *) parameters)->flags,
+                                                      ((struct params *) parameters)->cache,
+                                                      ((struct params *) parameters)->dataset);
             time_t start_total = time(NULL);
             time_t end_total;
 
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
-                    randomx_calculate_hash(myMachine, ((struct param1 *) parameters)->input,
-                                           ((struct param1 *) parameters)->inputSize,
-                                           ((struct param1 *) parameters)->output);
+                    randomx_calculate_hash(myMachine, ((struct params *) parameters)->input,
+                                           ((struct params *) parameters)->inputSize,
+                                           ((struct params *) parameters)->output);
+                    validate_hash(((struct params *) parameters)->output, ((struct params*)parameters)->diff);
                 }
-                if ((k + 1) == LIST_NUM ){
-                    unsigned char* hash = ((struct param1*) parameters)->output;
-                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-                    { printf("%02x", hash[i] & 0xff); }
-                    printf("\n");}
+//                if ((k + 1) == LIST_NUM ){
+//                    unsigned char* hash = ((struct params*) parameters)->output;
+//                    if(validate_hash(hash, ((struct params*)parameters)->diff)>0)
+//                    { printf("\nsolution found\n");}
+//                    else
+//                    { printf("\nsolution unfound\n");}
+//                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+//                    { printf("%02x", hash[i] & 0xff); }
+//                    printf("\n");
+//                }
             }
-
-            printf("%ld Thread finish task %ld ...\n", tid, task);
+            printf("\n%ld Thread finish task %ld ...\n", tid, task);
             end_total = time(NULL);
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
 
-            pthread_mutex_unlock(&loop_lock[tid]);
+            if (lo != loop){
+            while(switches != thread_seq ) {}
+            thread_seq = thread_seq + 1;
+            thread_ID = tid;
+            pthread_mutex_unlock(&loop_lock[thread_seq-1]);}
         }
     }
 
     pthread_exit( (void*) paramsPtr);
 
 }
+
+//void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
+void *fetch_eh(void *argv[])
+{
+    int f = 1;
+   while(f!=0) {
+    pthread_mutex_lock(&fetch_lock);
+    printf("\nfetch fresh eh data\n");
+    sleep(1);
+    printf("fetch job is done\n");
+    pthread_mutex_unlock(&main_lock);
+    }
+}
+
 
 
 int main()
@@ -123,7 +151,7 @@ int main()
     memcpy(chunk,wbuf,sizeof(wbuf));
     memcpy(entropy,wbuf,sizeof(wbuf));
     unsigned char hash[RANDOMX_HASH_SIZE];
-    unsigned char difficulty[] = {255,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
+    unsigned char difficulty[] = {0,255,255,255,57,187,243,201,6,149,141,58,43,178,62,177,161,169,15,75,12,68,25,200,65,151,136,126,129,147,114,67};
 
     int jitEnabled=1, largePagesEnabled=1, hardwareAESEnabled=1;
     int len_h0 = sizeof(h0)/sizeof(char);
@@ -188,37 +216,42 @@ int main()
         startItem += datasetInitItemCount;
         randomx_init_dataset(myDataset,myCache,datasetInitStartItem,datasetInitItemCount);
     }
-
     randomx_release_cache(myCache);
     myCache = NULL;
+    parameters->flags = flags_vm;
+    parameters->cache = myCache;
+    parameters->dataset = myDataset;
+    parameters->diff = difficulty;
 
-    pthread_t thread_id[THREADS_COUNT];
+    pthread_t thread_id[THREADS_COUNT], fetch_thread;
     for (long j = 0; j < THREADS_COUNT; j++) {
         pthread_mutex_init(&mutex[j], NULL);
         pthread_mutex_init(&loop_lock[j], NULL);}
     printf("mutex lock is initiated\n");
 
     for (long j = 0; j < THREADS_COUNT; j++) {
-        struct param *init = (struct param *) malloc(sizeof(struct param));
+        struct ids *init = (struct ids *) malloc(sizeof(struct ids));
         init->threads_id = j;
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) init);
         //printf("threads %ld is created\n", j+1);
     }
-
-    sleep(2);
+    pthread_create(&fetch_thread, NULL, fetch_eh, NULL);
+    sleep(3);
 
     for (long l = 0; l<loop ; l++) {
-        if (l>0) {printf("waiting to be unlocked\n");}
+        thread_ID = 0; thread_seq = 0; switches = 0;
+        if (l>0) {pthread_mutex_unlock(&fetch_lock);
+            printf("main thread waiting to be unlocked\n");}
+        pthread_mutex_lock(&main_lock);
         for (long j = 0; j < THREADS_COUNT; j++) {
             pthread_mutex_lock(&loop_lock[j]);
-            parameters->flags = flags_vm;
-            parameters->cache = myCache;
-            parameters->dataset = myDataset;
             parameters->input = myInput;
             parameters->inputSize = sizeof myInput;
             parameters->output = hash;
             parameters->tasks_id = l + 1;
-            pthread_mutex_unlock(&mutex[j]);
+            if (l == 0 ) { pthread_mutex_unlock(&mutex[j]); }
+            else { pthread_mutex_unlock(&mutex[thread_ID]); }
+            switches = switches + 1;
         }
     }
 
@@ -226,7 +259,7 @@ int main()
         pthread_join(thread_id[k], NULL);
     }
 
-    printf("the parallel calc rate is %d h/s\n", (loop * LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
+    printf("\nthe parallel calc rate is %d h/s\n", (loop * LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
@@ -237,6 +270,6 @@ int main()
     else
     { printf("\nsolution unfound\n");}
 
-    printf("\ntest done\n");
+    printf("\ntest done\n\n");
 
 }
