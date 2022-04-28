@@ -14,8 +14,8 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 64
-#define LENGTH_PER_LIST 2000
+#define THREADS_COUNT 3
+#define LENGTH_PER_LIST 1000
 #define LIST_NUM 2
 #define numWorkers 191
 int loop = 10;
@@ -24,6 +24,8 @@ long thread_ID = 0;
 int thread_seq = 0;
 int switches = 0;
 
+pthread_mutex_t main_lock ;
+pthread_mutex_t fetch_lock ;
 pthread_mutex_t loop_lock[THREADS_COUNT] ;
 pthread_mutex_t mutex[THREADS_COUNT] ;
 
@@ -61,7 +63,6 @@ void *hash_cal(void *paramsPtr)
         perror("pthread_setaffinity_np");
 
     long tid = ((struct param *) paramsPtr)->threads_id;
-
     for(int lo = 0 ; lo < loop + 1; lo++) {
 
         pthread_mutex_lock(&mutex[tid]);
@@ -93,7 +94,6 @@ void *hash_cal(void *paramsPtr)
 //                    printf("\n");
 //                }
             }
-
             printf("\n%ld Thread finish task %ld ...\n", tid, task);
             end_total = time(NULL);
             timing = timing + difftime(end_total, start_total);
@@ -110,6 +110,17 @@ void *hash_cal(void *paramsPtr)
     pthread_exit( (void*) paramsPtr);
 
 }
+
+//void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
+void *fetch_eh(void *argv[])
+{
+    for (int f = 0; f++) {
+    pthread_mutex_lock(&fetch_lock);
+    printf("\nfetch fresh eh data\n");
+    pthread_mutex_unlock(&main_lock);
+    }
+}
+
 
 
 int main()
@@ -206,7 +217,7 @@ int main()
     randomx_release_cache(myCache);
     myCache = NULL;
 
-    pthread_t thread_id[THREADS_COUNT];
+    pthread_t thread_id[THREADS_COUNT], fetch_thread;
     for (long j = 0; j < THREADS_COUNT; j++) {
         pthread_mutex_init(&mutex[j], NULL);
         pthread_mutex_init(&loop_lock[j], NULL);}
@@ -219,13 +230,14 @@ int main()
         //printf("threads %ld is created\n", j+1);
     }
 
-    sleep(2);
+    pthread_create(&fetch_thread, NULL, fetch_eh, NULL);
+    sleep(3);
 
     for (long l = 0; l<loop ; l++) {
-        thread_ID = 0;
-        thread_seq = 0;
-        switches = 0;
-        if (l>0) {printf("main thread waiting to be unlocked\n");}
+        thread_ID = 0; thread_seq = 0; switches = 0;
+        pthread_mutex_lock(&main_lock);
+        if (l>0) {pthread_mutex_unlock(&fetch_lock);
+            printf("main thread waiting to be unlocked\n");}
         for (long j = 0; j < THREADS_COUNT; j++) {
             pthread_mutex_lock(&loop_lock[j]);
             parameters->flags = flags_vm;
