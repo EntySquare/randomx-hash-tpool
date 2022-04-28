@@ -117,7 +117,7 @@ void *fetch_eh(void *argv[])
     int f = 1;
    while(f!=0) {
     pthread_mutex_lock(&fetch_lock);
-    printf("\nfetch fresh eh data\n");
+    printf("\nfetch fresh eh data\n\n");
     pthread_mutex_unlock(&main_lock);
     }
 }
@@ -236,9 +236,9 @@ int main()
 
     for (long l = 0; l<loop ; l++) {
         thread_ID = 0; thread_seq = 0; switches = 0;
-        pthread_mutex_lock(&main_lock);
         if (l>0) {pthread_mutex_unlock(&fetch_lock);
             printf("main thread waiting to be unlocked\n");}
+        pthread_mutex_lock(&main_lock);
         for (long j = 0; j < THREADS_COUNT; j++) {
             pthread_mutex_lock(&loop_lock[j]);
             parameters->flags = flags_vm;
