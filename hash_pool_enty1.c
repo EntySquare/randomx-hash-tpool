@@ -14,16 +14,16 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 3
-#define LENGTH_PER_LIST 2000
+#define THREADS_COUNT 5
+#define LENGTH_PER_LIST 1000
 #define LIST_NUM 2
 #define numWorkers 191
-
+int loop = 5;
 int timing=0;
-int loop = 3;
 long thread_ID = 0;
 int thread_seq = 0;
 int switches = 0;
+
 pthread_mutex_t loop_lock[THREADS_COUNT] ;
 pthread_mutex_t mutex[THREADS_COUNT] ;
 
@@ -80,14 +80,14 @@ void *hash_cal(void *paramsPtr)
                                            ((struct param1 *) parameters)->inputSize,
                                            ((struct param1 *) parameters)->output);
                 }
-                if ((k + 1) == LIST_NUM ){
-                    unsigned char* hash = ((struct param1*) parameters)->output;
-                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-                    { printf("%02x", hash[i] & 0xff); }
-                    printf("\n");}
+//                if ((k + 1) == LIST_NUM ){
+//                    unsigned char* hash = ((struct param1*) parameters)->output;
+//                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+//                    { printf("%02x", hash[i] & 0xff); }
+//                    printf("\n");}
             }
 
-            printf("%ld Thread finish task %ld ...\n", tid, task);
+            printf("\n%ld Thread finish task %ld ...\n", tid, task);
             end_total = time(NULL);
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
