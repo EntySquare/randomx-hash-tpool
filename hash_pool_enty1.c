@@ -14,12 +14,12 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 64
+#define THREADS_COUNT 3
 #define LENGTH_PER_LIST 1000
 #define LIST_NUM 2
 #define numWorkers 191
-int loop = 10;
-int timing=0;
+int loop = 2;
+int timing = 0;
 long thread_ID = 0;
 int thread_seq = 0;
 int switches = 0;
@@ -76,20 +76,19 @@ void *hash_cal(void *paramsPtr)
 
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
-                    unsigned char* hasher = (struct param1 *) parameters)->output;
                     randomx_calculate_hash(myMachine, ((struct param1 *) parameters)->input,
                                            ((struct param1 *) parameters)->inputSize,
                                            ((struct param1 *) parameters)->output);
-                    if(validate_hash(hasher, difficulty)>0)
+                }
+                if ((k + 1) == LIST_NUM ){
+                    unsigned char hash = ((struct param1*) parameters)->output;
+                    if(validate_hash(hash, difficulty)>0)
                     { printf("\nsolution found\n");}
                     else
                     { printf("\nsolution unfound\n");}
-                }
-//                if ((k + 1) == LIST_NUM ){
-//                    unsigned char* hash = ((struct param1*) parameters)->output;
-//                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-//                    { printf("%02x", hash[i] & 0xff); }
-//                    printf("\n");}
+                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+                    { printf("%02x", hash[i] & 0xff); }
+                    printf("\n");}
             }
 
             printf("\n%ld Thread finish task %ld ...\n", tid, task);
