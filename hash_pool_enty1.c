@@ -14,7 +14,7 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 64
+#define THREADS_COUNT 32
 #define LENGTH_PER_LIST 1000
 #define LIST_NUM 2
 #define numWorkers 191
