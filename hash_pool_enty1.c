@@ -119,7 +119,7 @@ void *fetch_eh(void *argv[])
     pthread_mutex_lock(&fetch_lock);
     printf("\nfetch fresh eh data\n");
     sleep(1);
-       printf("fetch job is done\n");
+    printf("fetch job is done\n");
     pthread_mutex_unlock(&main_lock);
     }
 }
