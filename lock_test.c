@@ -68,8 +68,8 @@ int main(int argc, char *argv[]) {
 
     pthread_t my_thread;
     pthread_t my_thread2;
-    pthread_mutex_lock(&thread_mutex[1]);
-    pthread_mutex_lock(&mid_lock);
+//    pthread_mutex_lock(&thread_mutex[1]);
+//    pthread_mutex_lock(&mid_lock);
 
     if (pthread_create(&my_thread, NULL, thread_func_cal, NULL) != 0)
         perror("pthread_create");
