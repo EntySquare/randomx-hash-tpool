@@ -60,11 +60,11 @@ void *thread_func_mid(void *param) {
 }
 
 int main(int argc, char *argv[]) {
-    while(1) {
-        pthread_mutex_lock(&data_lock);
-        sleep(1);
-        printf("value = %d!\n",1);
-    }
+//    while(1) {
+//        pthread_mutex_lock(&data_lock);
+//        sleep(1);
+//        printf("value = %d!\n",1);
+//    }
 
     pthread_t my_thread;
     pthread_t my_thread2;
