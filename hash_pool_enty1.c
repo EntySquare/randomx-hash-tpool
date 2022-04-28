@@ -46,7 +46,8 @@ struct param1 {
     unsigned char* input;
     int inputSize;
     unsigned char* output;
-} parameters[7];
+    unsigned char* diff;
+} parameters[8];
 //= malloc(sizeof(struct param1));
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
@@ -82,7 +83,7 @@ void *hash_cal(void *paramsPtr)
                 }
                 if ((k + 1) == LIST_NUM ){
                     unsigned char* hash = ((struct param1*) parameters)->output;
-                    if(validate_hash(&hash, difficulty)>0)
+                    if(validate_hash(hash, ((struct param1*)parameters)->diff)>0)
                     { printf("\nsolution found\n");}
                     else
                     { printf("\nsolution unfound\n");}
@@ -231,6 +232,7 @@ int main()
             parameters->input = myInput;
             parameters->inputSize = sizeof myInput;
             parameters->output = hash;
+            parameters->diff = difficulty;
             parameters->tasks_id = l + 1;
             if (l == 0 ) { pthread_mutex_unlock(&mutex[j]); }
             else { pthread_mutex_unlock(&mutex[thread_ID]); }
