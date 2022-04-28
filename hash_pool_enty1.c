@@ -76,9 +76,14 @@ void *hash_cal(void *paramsPtr)
 
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
+                    unsigned char* hasher = (struct param1 *) parameters)->output;
                     randomx_calculate_hash(myMachine, ((struct param1 *) parameters)->input,
                                            ((struct param1 *) parameters)->inputSize,
                                            ((struct param1 *) parameters)->output);
+                    if(validate_hash(hasher, difficulty)>0)
+                    { printf("\nsolution found\n");}
+                    else
+                    { printf("\nsolution unfound\n");}
                 }
 //                if ((k + 1) == LIST_NUM ){
 //                    unsigned char* hash = ((struct param1*) parameters)->output;
