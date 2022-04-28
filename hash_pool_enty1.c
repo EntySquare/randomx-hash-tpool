@@ -92,10 +92,11 @@ void *hash_cal(void *paramsPtr)
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
 
+            if (lo != loop){
             while(switches != thread_seq ) {}
             thread_seq = thread_seq + 1;
             thread_ID = tid;
-            pthread_mutex_unlock(&loop_lock[thread_seq-1]);
+            pthread_mutex_unlock(&loop_lock[thread_seq-1]);}
         }
     }
 
