@@ -41,22 +41,40 @@ void *thread_func_mid(void *param) {
         pthread_mutex_lock(&mid_lock);
         pthread_mutex_lock(&data_lock);
         pthread_mutex_lock(&data_thread_lock);
-        params_thread[0] = params[0];
-        params_thread[1] = params[1];
-        params_thread[2] = params[2];
-        params_thread[3] = params[3];
-        params_thread[4] = params[4];
-        pthread_mutex_unlock(&data_thread_lock);
-        pthread_mutex_unlock(&data_lock);
-        pthread_mutex_unlock(&thread_mutex[1]);
+        if (params[0].n == 0){
+            pthread_mutex_unlock(&data_thread_lock);
+            pthread_mutex_unlock(&data_lock);
+        }else{
+            params_thread[0] = params[0];
+            params_thread[1] = params[1];
+            params_thread[2] = params[2];
+            params_thread[3] = params[3];
+            params_thread[4] = params[4];
+            struct param pp = {0};
+            params[0] = pp;
+            pthread_mutex_unlock(&data_thread_lock);
+            pthread_mutex_unlock(&data_lock);
+            pthread_mutex_unlock(&thread_mutex[1]);
+        }
     }
 }
 
 int main(int argc, char *argv[]) {
+    while(1) {
+        pthread_mutex_lock(&data_lock);
+        sleep(1);
+        printf("value = %d!\n",1);
+    }
+
     pthread_t my_thread;
+    pthread_t my_thread2;
+    pthread_mutex_lock(&thread_mutex[1]);
+    pthread_mutex_lock(&thread_mutex[1]);
+    pthread_mutex_lock(&mid_lock);
+    pthread_mutex_lock(&mid_lock);
     if (pthread_create(&my_thread, NULL, thread_func_cal, NULL) != 0)
         perror("pthread_create");
-    if (pthread_create(&my_thread, NULL, thread_func_mid, NULL) != 0)
+    if (pthread_create(&my_thread2, NULL, thread_func_mid, NULL) != 0)
         perror("pthread_create");
 
     // sleep 5s cal 100 lines
