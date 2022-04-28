@@ -14,11 +14,11 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 3
+#define THREADS_COUNT 64
 #define LENGTH_PER_LIST 1000
 #define LIST_NUM 2
 #define numWorkers 191
-int loop = 2;
+int loop = 10;
 int timing = 0;
 long thread_ID = 0;
 int thread_seq = 0;
@@ -81,15 +81,16 @@ void *hash_cal(void *paramsPtr)
                                            ((struct param1 *) parameters)->inputSize,
                                            ((struct param1 *) parameters)->output);
                 }
-                if ((k + 1) == LIST_NUM ){
-                    unsigned char* hash = ((struct param1*) parameters)->output;
-                    if(validate_hash(hash, ((struct param1*)parameters)->diff)>0)
-                    { printf("\nsolution found\n");}
-                    else
-                    { printf("\nsolution unfound\n");}
-                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-                    { printf("%02x", hash[i] & 0xff); }
-                    printf("\n");}
+//                if ((k + 1) == LIST_NUM ){
+//                    unsigned char* hash = ((struct param1*) parameters)->output;
+//                    if(validate_hash(hash, ((struct param1*)parameters)->diff)>0)
+//                    { printf("\nsolution found\n");}
+//                    else
+//                    { printf("\nsolution unfound\n");}
+//                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+//                    { printf("%02x", hash[i] & 0xff); }
+//                    printf("\n");
+//                }
             }
 
             printf("\n%ld Thread finish task %ld ...\n", tid, task);
