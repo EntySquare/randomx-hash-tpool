@@ -81,8 +81,8 @@ void *hash_cal(void *paramsPtr)
                                            ((struct param1 *) parameters)->output);
                 }
                 if ((k + 1) == LIST_NUM ){
-                    unsigned char hash = ((struct param1*) parameters)->output;
-                    if(validate_hash(hash, difficulty)>0)
+                    unsigned char* hash = ((struct param1*) parameters)->output;
+                    if(validate_hash(&hash, difficulty)>0)
                     { printf("\nsolution found\n");}
                     else
                     { printf("\nsolution unfound\n");}
