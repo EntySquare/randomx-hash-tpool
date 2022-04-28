@@ -217,7 +217,7 @@ int main()
         thread_ID = 0;
         thread_seq = 0;
         switches = 0;
-        if (l>0) {printf("waiting to be unlocked\n");}
+        if (l>0) {printf("main thread waiting to be unlocked\n");}
         for (long j = 0; j < THREADS_COUNT; j++) {
             pthread_mutex_lock(&loop_lock[j]);
             parameters->flags = flags_vm;
@@ -232,6 +232,8 @@ int main()
             switches = switches + 1;
         }
     }
+
+    printf("main job done\n");
 
     for (long k = 0; k<THREADS_COUNT ; k++){
         pthread_join(thread_id[k], NULL);
