@@ -80,6 +80,7 @@ void *hash_cal(void *paramsPtr)
                     randomx_calculate_hash(myMachine, ((struct param1 *) parameters)->input,
                                            ((struct param1 *) parameters)->inputSize,
                                            ((struct param1 *) parameters)->output);
+                    validate_hash(((struct param1 *) parameters)->output, ((struct param1*)parameters)->diff);
                 }
 //                if ((k + 1) == LIST_NUM ){
 //                    unsigned char* hash = ((struct param1*) parameters)->output;
@@ -241,13 +242,11 @@ int main()
         }
     }
 
-    printf("main job done\n");
-
     for (long k = 0; k<THREADS_COUNT ; k++){
         pthread_join(thread_id[k], NULL);
     }
 
-    printf("the parallel calc rate is %d h/s\n", (loop * LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
+    printf("\nthe parallel calc rate is %d h/s\n", (loop * LENGTH_PER_LIST * LIST_NUM * THREADS_COUNT / timing));
 
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
