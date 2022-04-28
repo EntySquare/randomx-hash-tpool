@@ -14,13 +14,16 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 10
+#define THREADS_COUNT 3
 #define LENGTH_PER_LIST 2000
 #define LIST_NUM 2
 #define numWorkers 191
 
 int timing=0;
-int loop = 10;
+int loop = 3;
+long thread_ID = 0;
+int thread_seq = 0;
+int switches = 0;
 pthread_mutex_t loop_lock[THREADS_COUNT] ;
 pthread_mutex_t mutex[THREADS_COUNT] ;
 
@@ -89,7 +92,10 @@ void *hash_cal(void *paramsPtr)
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
 
-            pthread_mutex_unlock(&loop_lock[tid]);
+            while(switches != thread_seq ) {}
+            thread_seq = thread_seq + 1;
+            thread_ID = tid;
+            pthread_mutex_unlock(&loop_lock[thread_seq-1]);
         }
     }
 
@@ -208,6 +214,9 @@ int main()
     sleep(2);
 
     for (long l = 0; l<loop ; l++) {
+        thread_ID = 0;
+        thread_seq = 0;
+        switches = 0;
         if (l>0) {printf("waiting to be unlocked\n");}
         for (long j = 0; j < THREADS_COUNT; j++) {
             pthread_mutex_lock(&loop_lock[j]);
@@ -218,7 +227,9 @@ int main()
             parameters->inputSize = sizeof myInput;
             parameters->output = hash;
             parameters->tasks_id = l + 1;
-            pthread_mutex_unlock(&mutex[j]);
+            if (l == 0 ) { pthread_mutex_unlock(&mutex[j]); }
+            else { pthread_mutex_unlock(&mutex[thread_ID]); }
+            switches = switches + 1;
         }
     }
 
