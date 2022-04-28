@@ -20,6 +20,9 @@ struct param params_thread[5];
 
 void cal() {
     for (int t = 0; t < 5; t++) {
+        if (params_thread[t].n == 0){
+            printf("cal print, skip \n");
+        }
         printf("cal print, Result = %d \n", params_thread[t].n);
     }
 }
