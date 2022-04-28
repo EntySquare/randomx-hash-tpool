@@ -257,6 +257,6 @@ int main()
     else
     { printf("\nsolution unfound\n");}
 
-    printf("\ntest done\n");
+    printf("\ntest done\n\n");
 
 }
