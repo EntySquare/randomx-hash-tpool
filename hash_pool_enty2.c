@@ -208,8 +208,8 @@ int main()
     pthread_t thread_id[THREADS_COUNT], fetch_thread;
     for (long j = 0; j < THREADS_COUNT; j++) {
         pthread_mutex_init(&thread_lock[j], NULL);}
-    pthread_mutex_init(main_lock, NULL);
-    pthread_mutex_init(ID_lock, NULL);
+    pthread_mutex_init(&main_lock, NULL);
+    pthread_mutex_init(&ID_lock, NULL);
     printf("mutex lock is initiated\n");
 
     for (long j = 0; j < THREADS_COUNT; j++) {
