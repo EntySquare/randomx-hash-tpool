@@ -105,6 +105,7 @@ void *hash_cal(void *paramsPtr)
         pthread_mutex_lock(&ID_lock);
         thread_ID = tid;
         pthread_mutex_unlock(&main_lock);
+        lo ++;
     }
 
     pthread_exit( (void*) paramsPtr);
@@ -245,11 +246,6 @@ int main()
 //    randomx_calculate_hash(myMachine, &myInput, sizeof myInput, hash);
 //    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
 //        printf("%02x", hash[i] & 0xff);
-
-    if(validate_hash(hash, difficulty)>0)
-    { printf("\nsolution found\n");}
-    else
-    { printf("\nsolution unfound\n");}
 
     printf("\ntest done\n\n");
 
