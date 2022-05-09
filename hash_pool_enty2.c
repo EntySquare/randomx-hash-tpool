@@ -13,7 +13,7 @@
 #include <time.h>
 #include <pthread.h>
 
-
+#define CHUNK_ENTROPY_SIZE (25*1)
 #define THREADS_COUNT 3
 #define LENGTH_PER_LIST 1000
 #define LIST_NUM 1
@@ -172,16 +172,15 @@ int main()
 
     // read chunk
     FILE *chunk_file = NULL;
-    int length = 10;
-    unsigned char chunk_data[10] = {0};
+    unsigned char chunk_data[CHUNK_ENTROPY_SIZE] = {0};
     chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
     int offset = 2;
     fseek(chunk_file, offset, SEEK_SET);  //locate at offset
     int nLen = ftell(chunk_file);   //get the whole length of the file
     printf("chunk file length is %d\n", nLen);
-    int nRead = length ;
+    int nRead = CHUNK_ENTROPY_SIZE ;
     fread(chunk_data, 1, nRead , chunk_file);
-    for(int j=0; j<length; j++){
+    for(int j=0; j<CHUNK_ENTROPY_SIZE; j++){
     printf( "%d,", chunk_data[j]);}
     printf( "\n");
     //memset( chunk_data, 0x0, sizeof(chunk_data) );
