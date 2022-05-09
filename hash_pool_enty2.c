@@ -216,6 +216,7 @@ int main()
     for (long j = 0; j < THREADS_COUNT; j++) {
         pthread_mutex_init(&thread_lock[j], NULL);}
     pthread_mutex_init(&main_lock, NULL);
+    pthread_mutex_lock(&main_lock);
     pthread_mutex_init(&ID_lock, NULL);
     printf("mutex lock is initiated\n");
 
@@ -228,8 +229,8 @@ int main()
     sleep(1);
 
     int l = 0 ;
-    pthread_mutex_lock(&main_lock);
-    while (l<loop){
+    int loop_test = loop * THREADS_COUNT;
+    while ( l < loop_test ){
         printf("main thread waiting to be unlocked\n");
         pthread_mutex_lock(&main_lock);
         parameters->input = myInput;
