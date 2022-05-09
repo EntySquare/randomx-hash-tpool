@@ -76,9 +76,6 @@ void *hash_cal(void *paramsPtr)
         time_t end_total;
         for (int k = 0; k < LIST_NUM; k++) {
             for (int m = 0; m < LENGTH_PER_LIST; m++) {
-                unsigned char hashes[RANDOMX_HASH_SIZE];
-                unsigned char hashPtr[RANDOMX_HASH_SIZE];
-                unsigned char entropy[RANDOMX_ENTROPY_SIZE];
                 // read chunk
                 // cal hash
                 randomx_calculate_hash(myMachine, ((struct params *) parameters)->input,
