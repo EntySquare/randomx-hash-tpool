@@ -76,15 +76,10 @@ void *hash_cal(void *paramsPtr)
         time_t end_total;
         for (int k = 0; k < LIST_NUM; k++) {
             for (int m = 0; m < LENGTH_PER_LIST; m++) {
+                unsigned char hashes[RANDOMX_HASH_SIZE];
+                unsigned char hashPtr[RANDOMX_HASH_SIZE];
+                unsigned char entropy[RANDOMX_ENTROPY_SIZE];
                 // read chunk
-                FILE *chunk_file = NULL;
-                unsigned char chunk_data[1024*256] = {0};
-                int nHadRead = 0;
-                chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
-                fseek(chunk_file, 0, SEEK_END);  //定位到文件尾
-                int nLen = ftell(chunk_file);   //获取当前位置，即文件长度
-                fseek(chunk_file, 0, SEEK_SET);   //重新定位到文件开头，准备开始读
-
                 // cal hash
                 randomx_calculate_hash(myMachine, ((struct params *) parameters)->input,
                                        ((struct params *) parameters)->inputSize,
@@ -189,6 +184,21 @@ int main()
     randomx_cache *myCache = randomx_alloc_cache(flags_fast);
     randomx_init_cache(myCache, &myKey, sizeof myKey);
     randomx_dataset *myDataset = randomx_alloc_dataset(flags_fast);
+
+    // read chunk
+    FILE *chunk_file = NULL;
+    unsigned char chunk_data[10] = {0};
+    int nHadRead = 0;
+    chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
+    fseek(chunk_file, 0, SEEK_END);  //定位到文件尾
+    int nLen = ftell(chunk_file);   //获取当前位置，即文件长度
+    printf("chunk file length is %d", nLen);
+        int nRead = 10 ;
+        int nTmp = fread(chunk_data, 1, nRead , chunk_file);
+        printf( "%s", chunk_data );
+        memset( chunk_data, 0x0, sizeof(chunk_data) );
+    fclose(chunk_file);
+
 
     unsigned long startItem = 0;
     unsigned long itemsPerThread = randomx_dataset_item_count() / numWorkers;
