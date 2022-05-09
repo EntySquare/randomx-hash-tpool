@@ -62,48 +62,48 @@ void *hash_cal(void *paramsPtr)
     long tid = ((struct ids *) paramsPtr)->threads_id;
     printf("%ld Thread is created...\n", tid);
     pthread_mutex_lock(&thread_lock[tid]);
+    pthread_mutex_lock(&ID_lock);
+    thread_ID = tid;
+    pthread_mutex_unlock(&main_lock);
 
     for(int lo = 0 ; lo < loop + 1; lo++) {
         pthread_mutex_lock(&thread_lock[tid]);
-        if (lo ==0) {printf("%ld Thread is created...\n", tid);}
-        else {
-            printf("%ld Thread starting task %d...\n", tid, lo);
-            randomx_vm *myMachine = randomx_create_vm(((struct params *) parameters)->flags,
-                                                      ((struct params *) parameters)->cache,
-                                                      ((struct params *) parameters)->dataset);
-            time_t start_total = time(NULL);
-            time_t end_total;
-            for (int k = 0; k < LIST_NUM; k++) {
-                for (int m = 0; m < LENGTH_PER_LIST; m++) {
-                    // read chunk
-                    FILE *chunk_file = NULL;
-                    unsigned char chunk_data[1024*256] = {0};
-                    int nHadRead = 0;
-                    chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
-                    fseek(chunk_file, 0, SEEK_END);  //定位到文件尾
-                    int nLen = ftell(chunk_file);   //获取当前位置，即文件长度
-                    fseek(chunk_file, 0, SEEK_SET);   //重新定位到文件开头，准备开始读
+        printf("%ld Thread starting task %d...\n", tid, lo);
+        randomx_vm *myMachine = randomx_create_vm(((struct params *) parameters)->flags,
+                                                  ((struct params *) parameters)->cache,
+                                                  ((struct params *) parameters)->dataset);
+        time_t start_total = time(NULL);
+        time_t end_total;
+        for (int k = 0; k < LIST_NUM; k++) {
+            for (int m = 0; m < LENGTH_PER_LIST; m++) {
+                // read chunk
+                FILE *chunk_file = NULL;
+                unsigned char chunk_data[1024*256] = {0};
+                int nHadRead = 0;
+                chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
+                fseek(chunk_file, 0, SEEK_END);  //定位到文件尾
+                int nLen = ftell(chunk_file);   //获取当前位置，即文件长度
+                fseek(chunk_file, 0, SEEK_SET);   //重新定位到文件开头，准备开始读
 
-                    // cal hash
-                    randomx_calculate_hash(myMachine, ((struct params *) parameters)->input,
-                                           ((struct params *) parameters)->inputSize,
-                                           ((struct params *) parameters)->output);
-                    // validate
-                    validate_hash(((struct params *) parameters)->output, ((struct params*)parameters)->diff);
-                }
-                if ((k + 1) == LIST_NUM ){
-                    unsigned char* hash = ((struct params*) parameters)->output;
-                    printf("\n");
-                    for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
-                    { printf("%02x", hash[i] & 0xff); }
-                    printf("\n");
-                }
+                // cal hash
+                randomx_calculate_hash(myMachine, ((struct params *) parameters)->input,
+                                       ((struct params *) parameters)->inputSize,
+                                       ((struct params *) parameters)->output);
+                // validate
+                validate_hash(((struct params *) parameters)->output, ((struct params*)parameters)->diff);
             }
-            printf("\n%ld Thread finish task %d ...\n", tid, lo);
-            end_total = time(NULL);
-            timing = timing + difftime(end_total, start_total);
-            randomx_destroy_vm(myMachine);
+            if ((k + 1) == LIST_NUM ){
+                unsigned char* hash = ((struct params*) parameters)->output;
+                printf("\n");
+                for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
+                { printf("%02x", hash[i] & 0xff); }
+                printf("\n");
+            }
         }
+        printf("\n%ld Thread finish task %d ...\n", tid, lo);
+        end_total = time(NULL);
+        timing = timing + difftime(end_total, start_total);
+        randomx_destroy_vm(myMachine);
         pthread_mutex_lock(&ID_lock);
         thread_ID = tid;
         pthread_mutex_unlock(&main_lock);
