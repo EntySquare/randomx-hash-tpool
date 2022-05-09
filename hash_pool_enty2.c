@@ -226,8 +226,9 @@ int main()
     sleep(3);
 
     int l = 0 ;
+    pthread_mutex_lock(&main_lock);
     while (l<loop){
-        if (l>0) {printf("main thread waiting to be unlocked\n");}
+        printf("main thread waiting to be unlocked\n");
         pthread_mutex_lock(&main_lock);
         parameters->input = myInput;
         parameters->inputSize = sizeof myInput;
