@@ -173,7 +173,7 @@ int main()
     // read chunk
     FILE *chunk_file = NULL;
     int length = 10;
-    unsigned char chunk_data[length] = {0};
+    unsigned char chunk_data[10] = {0};
     chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
     int offset = 0;
     fseek(chunk_file, offset, SEEK_SET);  //定位到文件尾
