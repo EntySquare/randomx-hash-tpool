@@ -105,7 +105,6 @@ void *hash_cal(void *paramsPtr)
         pthread_mutex_lock(&ID_lock);
         thread_ID = tid;
         pthread_mutex_unlock(&main_lock);
-        lo ++;
     }
 
     pthread_exit( (void*) paramsPtr);
@@ -235,6 +234,7 @@ int main()
         parameters->output = hash;
         pthread_mutex_unlock(&thread_lock[thread_ID]);
         pthread_mutex_unlock(&ID_lock);
+        l++;
     }
 
     for (long k = 0; k<THREADS_COUNT ; k++){
