@@ -18,7 +18,7 @@
 #define LENGTH_PER_LIST 1000
 #define LIST_NUM 1
 #define numWorkers 191
-int loop = 10;
+int loop = 5;
 int timing = 0;
 long thread_ID = 0;
 
@@ -74,6 +74,14 @@ void *hash_cal(void *paramsPtr)
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
                     // read chunk
+                    FILE *chunk_file = NULL;
+                    unsigned char chunk_data[1024*256] = {0};
+                    int nHadRead = 0;
+                    chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
+                    fseek(chunk_file, 0, SEEK_END);  //定位到文件尾
+                    int nLen = ftell(chunk_file);   //获取当前位置，即文件长度
+                    fseek(chunk_file, 0, SEEK_SET);   //重新定位到文件开头，准备开始读
+
                     // cal hash
                     randomx_calculate_hash(myMachine, ((struct params *) parameters)->input,
                                            ((struct params *) parameters)->inputSize,
