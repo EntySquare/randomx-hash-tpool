@@ -180,7 +180,7 @@ int main()
     printf("chunk file length is %d\n", nLen);
     int nRead = CHUNK_ENTROPY_SIZE ;
     fread(chunk_data, 1, nRead , chunk_file);
-    for(int j=0; j<20; j++){
+    for(int j=0; j<CHUNK_ENTROPY_SIZE; j++){
     printf( "%d,", chunk_data[j]);}
     printf( "\n");
     //memset( chunk_data, 0x0, sizeof(chunk_data) );
