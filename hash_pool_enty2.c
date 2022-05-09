@@ -14,7 +14,7 @@
 #include <pthread.h>
 
 
-#define THREADS_COUNT 30
+#define THREADS_COUNT 3
 #define LENGTH_PER_LIST 1000
 #define LIST_NUM 1
 #define numWorkers 191
@@ -25,9 +25,9 @@ int thread_seq = 0;
 int switches = 0;
 
 pthread_mutex_t main_lock ;
-pthread_mutex_t fetch_lock ;
+pthread_mutex_t ID_lock ;
 pthread_mutex_t loop_lock[THREADS_COUNT] ;
-pthread_mutex_t mutex[THREADS_COUNT] ;
+pthread_mutex_t thread_lock[THREADS_COUNT] ;
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
@@ -64,8 +64,7 @@ void *hash_cal(void *paramsPtr)
 
     long tid = ((struct ids *) paramsPtr)->threads_id;
     for(int lo = 0 ; lo < loop + 1; lo++) {
-
-        pthread_mutex_lock(&mutex[tid]);
+        pthread_mutex_lock(&thread_lock[tid]);
         if (lo ==0) {printf("%ld Thread is created...\n", tid);}
         else {
             long task = ((struct params *) parameters)->tasks_id;
@@ -75,20 +74,18 @@ void *hash_cal(void *paramsPtr)
                                                       ((struct params *) parameters)->dataset);
             time_t start_total = time(NULL);
             time_t end_total;
-
             for (int k = 0; k < LIST_NUM; k++) {
                 for (int m = 0; m < LENGTH_PER_LIST; m++) {
+                    // read chunk
+                    // cal hash
                     randomx_calculate_hash(myMachine, ((struct params *) parameters)->input,
                                            ((struct params *) parameters)->inputSize,
                                            ((struct params *) parameters)->output);
+                    // validate
                     validate_hash(((struct params *) parameters)->output, ((struct params*)parameters)->diff);
                 }
                 if ((k + 1) == LIST_NUM ){
                     unsigned char* hash = ((struct params*) parameters)->output;
-                    if(validate_hash(hash, ((struct params*)parameters)->diff)>0)
-                    { printf("\nsolution found\n");}
-                    else
-                    { printf("\nsolution unfound\n");}
                     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
                     { printf("%02x", hash[i] & 0xff); }
                     printf("\n");
@@ -99,11 +96,9 @@ void *hash_cal(void *paramsPtr)
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
 
-            if (lo != loop){
-                while(switches != thread_seq ) {}
-                thread_seq = thread_seq + 1;
-                thread_ID = tid;
-                pthread_mutex_unlock(&loop_lock[thread_seq-1]);}
+            pthread_mutex_lock(&ID_lock);
+            thread_ID = tid;
+            pthread_mutex_unlock(&main_lock);
         }
     }
 
@@ -212,8 +207,9 @@ int main()
 
     pthread_t thread_id[THREADS_COUNT], fetch_thread;
     for (long j = 0; j < THREADS_COUNT; j++) {
-        pthread_mutex_init(&mutex[j], NULL);
-        pthread_mutex_init(&loop_lock[j], NULL);}
+        pthread_mutex_init(&thread_lock[j], NULL);}
+    pthread_mutex_init(main_lock, NULL);
+    pthread_mutex_init(ID_lock, NULL);
     printf("mutex lock is initiated\n");
 
     for (long j = 0; j < THREADS_COUNT; j++) {
@@ -225,9 +221,8 @@ int main()
     sleep(3);
 
     for (long l = 0; l<loop ; l++) {
-        thread_ID = 0; thread_seq = 0; switches = 0;
-        if (l>0) {pthread_mutex_unlock(&fetch_lock);
-            printf("main thread waiting to be unlocked\n");}
+        thread_ID = 0; thread_seq = 0;
+        if (l>0) {printf("main thread waiting to be unlocked\n");}
         pthread_mutex_lock(&main_lock);
         for (long j = 0; j < THREADS_COUNT; j++) {
             pthread_mutex_lock(&loop_lock[j]);
@@ -235,9 +230,9 @@ int main()
             parameters->inputSize = sizeof myInput;
             parameters->output = hash;
             parameters->tasks_id = l + 1;
-            if (l == 0 ) { pthread_mutex_unlock(&mutex[j]); }
-            else { pthread_mutex_unlock(&mutex[thread_ID]); }
-            switches = switches + 1;
+            if (l == 0 ) { pthread_mutex_unlock(&thread_lock[j]); }
+            else { pthread_mutex_unlock(&thread_lock[thread_ID]); }
+            pthread_mutex_unlock(&ID_lock);
         }
     }
 
