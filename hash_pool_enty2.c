@@ -66,9 +66,9 @@ void *hash_cal(void *paramsPtr)
     thread_ID = tid;
     pthread_mutex_unlock(&main_lock);
 
-    for(int lo = 0 ; lo < loop + 1; lo++) {
+    for(int lo = 0 ; lo < loop; lo++) {
         pthread_mutex_lock(&thread_lock[tid]);
-        printf("%ld Thread starting task %d...\n", tid, lo);
+        printf("%ld Thread starting task %d...\n", tid, lo+1);
         randomx_vm *myMachine = randomx_create_vm(((struct params *) parameters)->flags,
                                                   ((struct params *) parameters)->cache,
                                                   ((struct params *) parameters)->dataset);
@@ -100,7 +100,7 @@ void *hash_cal(void *paramsPtr)
                 printf("\n");
             }
         }
-        printf("\n%ld Thread finish task %d ...\n", tid, lo);
+        printf("\n%ld Thread finish task %d ...\n", tid, lo+1);
         end_total = time(NULL);
         timing = timing + difftime(end_total, start_total);
         randomx_destroy_vm(myMachine);
