@@ -77,6 +77,19 @@ void *hash_cal(void *paramsPtr)
         for (int k = 0; k < LIST_NUM; k++) {
             for (int m = 0; m < LENGTH_PER_LIST; m++) {
                 // read chunk
+                FILE *chunk_file = NULL;
+                unsigned char chunk_data[CHUNK_ENTROPY_SIZE] = {0};
+                chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
+                int offset = 10;
+                fseek(chunk_file, offset+3, SEEK_SET);  //locate at offset
+                int nLen = ftell(chunk_file);   //get the whole length of the file
+                printf("chunk file length is %d\n", nLen);
+                int nRead = CHUNK_ENTROPY_SIZE ;
+                fread(chunk_data, 1, nRead , chunk_file);
+//                for(int j=0; j<20; j++){
+//                    printf( "%d,", chunk_data[j]);}
+//                printf( "\n");
+                fclose(chunk_file);
                 // cal hash
                 randomx_calculate_hash(myMachine, ((struct params *) parameters)->input,
                                        ((struct params *) parameters)->inputSize,
@@ -169,22 +182,6 @@ int main()
     //unsigned char preimage[LIST_NUM * LENGTH_PER_LIST][] =
     int lem = sizeof(myInput);
     printf("myinput data size is %d\n", lem);
-
-    // read chunk
-    FILE *chunk_file = NULL;
-    unsigned char chunk_data[CHUNK_ENTROPY_SIZE] = {0};
-    chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
-    int offset = 10;
-    fseek(chunk_file, offset+3, SEEK_SET);  //locate at offset
-    int nLen = ftell(chunk_file);   //get the whole length of the file
-    printf("chunk file length is %d\n", nLen);
-    int nRead = CHUNK_ENTROPY_SIZE ;
-    fread(chunk_data, 1, nRead , chunk_file);
-    for(int j=0; j<20; j++){
-    printf( "%d,", chunk_data[j]);}
-    printf( "\n");
-    fclose(chunk_file);
-
 
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
