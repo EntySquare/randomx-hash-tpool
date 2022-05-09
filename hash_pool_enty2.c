@@ -13,7 +13,7 @@
 #include <time.h>
 #include <pthread.h>
 
-#define CHUNK_ENTROPY_SIZE (25*1)
+#define CHUNK_ENTROPY_SIZE (256*1024)
 #define THREADS_COUNT 3
 #define LENGTH_PER_LIST 1000
 #define LIST_NUM 1
@@ -180,7 +180,7 @@ int main()
     printf("chunk file length is %d\n", nLen);
     int nRead = CHUNK_ENTROPY_SIZE ;
     fread(chunk_data, 1, nRead , chunk_file);
-    for(int j=0; j<CHUNK_ENTROPY_SIZE; j++){
+    for(int j=0; j<20; j++){
     printf( "%d,", chunk_data[j]);}
     printf( "\n");
     //memset( chunk_data, 0x0, sizeof(chunk_data) );
