@@ -81,7 +81,7 @@ void *hash_cal(void *paramsPtr)
                 unsigned char chunk_data[CHUNK_ENTROPY_SIZE] = {0};
                 chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
                 int offset = 10;
-                fseek(chunk_file, offset+3, SEEK_SET);  //locate at offset
+                fseek(chunk_file, 0, SEEK_SET);  //locate at offset
                 int nLen = ftell(chunk_file);   //get the whole length of the file
                 printf("chunk file length is %d\n", nLen);
                 int nRead = CHUNK_ENTROPY_SIZE ;
