@@ -2,7 +2,7 @@
 // Created by luo2 on 2022/5/9.
 //
 
-
+#define _GNU_SOURCE
 #include <sched.h>
 #include "randomx.h"
 #include <stdio.h>
