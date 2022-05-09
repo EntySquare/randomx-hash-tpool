@@ -95,11 +95,10 @@ void *hash_cal(void *paramsPtr)
             end_total = time(NULL);
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
-
-            pthread_mutex_lock(&ID_lock);
-            thread_ID = tid;
-            pthread_mutex_unlock(&main_lock);
         }
+        pthread_mutex_lock(&ID_lock);
+        thread_ID = tid;
+        pthread_mutex_unlock(&main_lock);
     }
 
     pthread_exit( (void*) paramsPtr);
