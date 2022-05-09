@@ -182,7 +182,7 @@ int main()
     int nRead = length ;
     fread(chunk_data, 1, nRead , chunk_file);
     for(int j=0; j<length; j++){
-    printf( "%d", chunk_data);}
+    printf( "%d", chunk_data[j]);}
     //memset( chunk_data, 0x0, sizeof(chunk_data) );
     fclose(chunk_file);
 
