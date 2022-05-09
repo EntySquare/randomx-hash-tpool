@@ -60,6 +60,8 @@ void *hash_cal(void *paramsPtr)
         perror("pthread_setaffinity_np");
 
     long tid = ((struct ids *) paramsPtr)->threads_id;
+    printf("%ld Thread is created...\n", tid);
+    pthread_mutex_lock(&thread_lock[tid]);
 
     for(int lo = 0 ; lo < loop + 1; lo++) {
         pthread_mutex_lock(&thread_lock[tid]);
@@ -223,7 +225,7 @@ int main()
         pthread_create(&thread_id[j], NULL, hash_cal, (void *) init);
         //printf("threads %ld is created\n", j+1);
     }
-    sleep(3);
+    sleep(1);
 
     int l = 0 ;
     pthread_mutex_lock(&main_lock);
