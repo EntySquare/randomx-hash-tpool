@@ -13,7 +13,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR} dir_srcs)
 #zby config
 INCLUDE_DIRECTORIES(/Users/terrill/clang/headers)
 
-add_executable(demo hash_pool.cpp hash_pool_enty1.c)
+add_executable(demo hash_pool.cpp hash_pool_enty2.c)
 #add_executable(demo hash_pool.cpp lock_test.c)
 TARGET_LINK_LIBRARIES(demo pthread)
 
