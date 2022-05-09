@@ -172,15 +172,17 @@ int main()
 
     // read chunk
     FILE *chunk_file = NULL;
-    unsigned char chunk_data[10] = {0};
-    int nHadRead = 0;
+    int length = 10;
+    unsigned char chunk_data[length] = {0};
     chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
-    fseek(chunk_file, 0, SEEK_SET);  //定位到文件尾
+    int offset = 0;
+    fseek(chunk_file, offset, SEEK_SET);  //定位到文件尾
     int nLen = ftell(chunk_file);   //获取当前位置，即文件长度
     printf("chunk file length is %d\n", nLen);
-    int nRead = 10 ;
+    int nRead = length ;
     fread(chunk_data, 1, nRead , chunk_file);
-    printf( "%s\n", chunk_data );
+    for(int j=0; j<length; j++){
+    printf( "%d", chunk_data);}
     //memset( chunk_data, 0x0, sizeof(chunk_data) );
     fclose(chunk_file);
 
