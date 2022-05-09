@@ -21,8 +21,6 @@
 int loop = 10;
 int timing = 0;
 long thread_ID = 0;
-int thread_seq = 0;
-int switches = 0;
 
 pthread_mutex_t main_lock ;
 pthread_mutex_t ID_lock ;
@@ -63,6 +61,7 @@ void *hash_cal(void *paramsPtr)
         perror("pthread_setaffinity_np");
 
     long tid = ((struct ids *) paramsPtr)->threads_id;
+
     for(int lo = 0 ; lo < loop + 1; lo++) {
         pthread_mutex_lock(&thread_lock[tid]);
         if (lo ==0) {printf("%ld Thread is created...\n", tid);}
@@ -86,6 +85,7 @@ void *hash_cal(void *paramsPtr)
                 }
                 if ((k + 1) == LIST_NUM ){
                     unsigned char* hash = ((struct params*) parameters)->output;
+                    printf("\n");
                     for (unsigned i = 0; i < RANDOMX_HASH_SIZE; ++i)
                     { printf("%02x", hash[i] & 0xff); }
                     printf("\n");
@@ -220,20 +220,16 @@ int main()
     }
     sleep(3);
 
-    for (long l = 0; l<loop ; l++) {
-        thread_ID = 0; thread_seq = 0;
+    int l = 0 ;
+    while (l<loop){
         if (l>0) {printf("main thread waiting to be unlocked\n");}
         pthread_mutex_lock(&main_lock);
-        for (long j = 0; j < THREADS_COUNT; j++) {
-            pthread_mutex_lock(&loop_lock[j]);
-            parameters->input = myInput;
-            parameters->inputSize = sizeof myInput;
-            parameters->output = hash;
-            parameters->tasks_id = l + 1;
-            if (l == 0 ) { pthread_mutex_unlock(&thread_lock[j]); }
-            else { pthread_mutex_unlock(&thread_lock[thread_ID]); }
-            pthread_mutex_unlock(&ID_lock);
-        }
+        parameters->input = myInput;
+        parameters->inputSize = sizeof myInput;
+        parameters->output = hash;
+        parameters->tasks_id = l + 1;
+        pthread_mutex_unlock(&thread_lock[thread_ID]);
+        pthread_mutex_unlock(&ID_lock);
     }
 
     for (long k = 0; k<THREADS_COUNT ; k++){
