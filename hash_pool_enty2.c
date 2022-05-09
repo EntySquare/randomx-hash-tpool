@@ -229,7 +229,7 @@ int main()
     sleep(1);
 
     int l = 0 ;
-    int loop_test = loop * THREADS_COUNT;
+    int loop_test = (loop + 1) * THREADS_COUNT;
     while ( l < loop_test ){
         printf("main thread waiting to be unlocked\n");
         pthread_mutex_lock(&main_lock);
