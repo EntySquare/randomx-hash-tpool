@@ -175,9 +175,9 @@ int main()
     int length = 10;
     unsigned char chunk_data[10] = {0};
     chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
-    int offset = 0;
-    fseek(chunk_file, offset, SEEK_SET);  //定位到文件尾
-    int nLen = ftell(chunk_file);   //获取当前位置，即文件长度
+    int offset = 2;
+    fseek(chunk_file, offset, SEEK_SET);  //locate at offset
+    int nLen = ftell(chunk_file);   //get the whole length of the file
     printf("chunk file length is %d\n", nLen);
     int nRead = length ;
     fread(chunk_data, 1, nRead , chunk_file);
