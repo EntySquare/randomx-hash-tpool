@@ -39,7 +39,6 @@ struct ids {
 };
 
 struct params {
-    int tasks_id;
     unsigned char* input;
     int inputSize;
     unsigned char* output;
@@ -66,8 +65,7 @@ void *hash_cal(void *paramsPtr)
         pthread_mutex_lock(&thread_lock[tid]);
         if (lo ==0) {printf("%ld Thread is created...\n", tid);}
         else {
-            long task = ((struct params *) parameters)->tasks_id;
-            printf("%ld Thread starting task %ld...\n", tid, task);
+            printf("%ld Thread starting task %d...\n", tid, lo);
             randomx_vm *myMachine = randomx_create_vm(((struct params *) parameters)->flags,
                                                       ((struct params *) parameters)->cache,
                                                       ((struct params *) parameters)->dataset);
@@ -91,7 +89,7 @@ void *hash_cal(void *paramsPtr)
                     printf("\n");
                 }
             }
-            printf("\n%ld Thread finish task %ld ...\n", tid, task);
+            printf("\n%ld Thread finish task %d ...\n", tid, lo);
             end_total = time(NULL);
             timing = timing + difftime(end_total, start_total);
             randomx_destroy_vm(myMachine);
@@ -226,7 +224,6 @@ int main()
         parameters->input = myInput;
         parameters->inputSize = sizeof myInput;
         parameters->output = hash;
-        parameters->tasks_id = l + 1;
         pthread_mutex_unlock(&thread_lock[thread_ID]);
         pthread_mutex_unlock(&ID_lock);
     }
