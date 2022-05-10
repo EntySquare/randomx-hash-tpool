@@ -171,7 +171,7 @@ int main()
 
     // read chunk
     FILE *chunk_file = NULL;
-    unsigned char chunk_data[CHUNK_ENTROPY_SIZE];
+    unsigned char *chunk_data;//[CHUNK_ENTROPY_SIZE];
     chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
     int offset = 10;
 //                fseek(chunk_file, 0, SEEK_END);  //locate at offset
