@@ -171,7 +171,7 @@ int main()
 
     // read chunk
     FILE *chunk_file = NULL;
-    unsigned char *chunk_data;//[CHUNK_ENTROPY_SIZE];
+    unsigned char chunk_data[CHUNK_ENTROPY_SIZE];
     chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
     int offset = 10;
 //                fseek(chunk_file, 0, SEEK_END);  //locate at offset
@@ -179,7 +179,7 @@ int main()
 //                printf("chunk file length is %d\n", nLen);
     fseek(chunk_file, offset+3, SEEK_SET);  //locate at offset
     int nRead = CHUNK_ENTROPY_SIZE ;
-    fread(&chunk_data, 1, nRead , chunk_file);
+    fread(chunk_data, 1, nRead , chunk_file);
                 for(int j=0; j<20; j++){
                     printf( "%d,", chunk_data[j]);}
                 printf( "\n");
