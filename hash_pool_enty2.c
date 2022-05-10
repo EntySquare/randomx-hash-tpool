@@ -179,7 +179,7 @@ int main()
 //                printf("chunk file length is %d\n", nLen);
     fseek(chunk_file, offset+3, SEEK_SET);  //locate at offset
     int nRead = CHUNK_ENTROPY_SIZE ;
-    fread(chunk_data, 1, nRead , chunk_file);
+    fread(&chunk_data, 1, nRead , chunk_file);
                 for(int j=0; j<20; j++){
                     printf( "%d,", chunk_data[j]);}
                 printf( "\n");
