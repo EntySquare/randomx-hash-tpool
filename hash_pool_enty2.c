@@ -173,7 +173,7 @@ int main()
     FILE *chunk_file = NULL;
     unsigned char chunk_data[CHUNK_ENTROPY_SIZE];
     chunk_file = fopen( "/ardir/ar_chunk_storage1/10028580864000", "r+");
-    int offset = 2097176000 + 1 ;
+    int offset = 2097176000 + 0 ;
     fseek(chunk_file, 0, SEEK_END);  //locate at offset
     int nLen = ftell(chunk_file);   //get the whole length of the file
     printf("chunk file length is %d\n", nLen);
