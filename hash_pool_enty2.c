@@ -192,7 +192,7 @@ int main()
     printf("%s\n", FilePath[1]);
 
     // binary test
-    char* data[2]={{1,2,3}, {4,5,6}};
+    char data[2][3]={{1,2,3}, {4,5,6}};
     char size[2][1]={3, 4};
     char* fetch_data[2];
     char fetch_size[2][1];
