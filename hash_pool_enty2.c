@@ -193,10 +193,14 @@ int main()
 
     // binary test
     char data[2][3]={{1,2,3}, {4,5,6}};
-    char fetch[2][3];
-    memcpy(fetch[1], data[1], 3);
-    for(int i =0 ; i<3; i++) printf("%d,\n", fetch[1][i]);
-
+    char size[2][1]={3, 4};
+    char fetch_data[2][3];
+    char fetch_size[2][1];
+    memcpy(fetch_data[1], data[1], 3);
+    memcpy(fetch_size[1], size[1], 1);
+    for(int i =0 ; i<3; i++) printf("%d,", fetch_data[1][i]);
+    printf("\n");
+    printf("size is %d \n", fetch_size[1][0]);
 
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
