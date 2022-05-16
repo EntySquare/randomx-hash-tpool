@@ -186,7 +186,7 @@ int main()
     fclose(chunk_file);
 
     // string test
-    char input[2][]={"/ardir/chunk1", "/ardir/chunk2" };
+    char input[2][]={{"/ardir/chunk1"}, {"/ardir/chunk2"} };
     char* FilePath[2];
     strcpy(FilePath, input);
     printf("%s\n", FilePath[1]);
