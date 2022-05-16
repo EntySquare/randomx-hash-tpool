@@ -188,7 +188,7 @@ int main()
     // string test
     char input[]=["/ardir/chunk1", "/ardir/chunk2" ];
     char* FilePath[2];
-    strcpy(FilePath, input);
+    strcpy(FilePath[1], input);
     printf("%s\n", FilePath[1]);
 
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
