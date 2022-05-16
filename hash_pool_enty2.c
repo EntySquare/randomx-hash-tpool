@@ -186,9 +186,9 @@ int main()
     fclose(chunk_file);
 
     // string test
-    char input[2][]={{"/ardir/chunk1"}, {"/ardir/chunk2"} };
-    char* FilePath[2];
-    strcpy(FilePath, input);
+    char input[2][20]={"/ardir/chunk1", "/ardir/chunk2" };
+    char FilePath[2][20];
+    strcpy(FilePath[1], input[1]);
     printf("%s\n", FilePath[1]);
 
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
