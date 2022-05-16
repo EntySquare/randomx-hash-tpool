@@ -192,7 +192,7 @@ int main()
     printf("%s\n", FilePath[1]);
 
     // binary test
-    char data[2][]={{1,2,3}, {4,5,6}};
+    char data[2][3]={{1,2,3}, {4,5,6}};
     char* fetch[2];
     memcpy(fetch[1], data[1]);
     for(int i =0 ; i<3; i++) printf("%d,\n", fetch[1][i]);
