@@ -191,6 +191,13 @@ int main()
     strcpy(FilePath[1], input[3]);
     printf("%s\n", FilePath[1]);
 
+    // binary test
+    char data[2][]={{1,2,3}, {4,5,6}};
+    char* fetch[2];
+    memcpy(fetch[1], data[1]);
+    for(int i =0 ; i<3; i++) printf("%d,\n", fetch[1][i]);
+
+
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
     flags_vm |= RANDOMX_FLAG_JIT;
