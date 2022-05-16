@@ -197,7 +197,7 @@ int main()
     char fetch_data[2][4];
     long fetch_size[2];
     memcpy(fetch_data[1], data[1], 4);
-    memcpy(fetch_size, size, 2);
+    memcpy(&fetch_size[1], &size[1], 1);
     for(int i =0 ; i<3; i++) printf("%d,", fetch_data[1][i]);
     printf("\n");
     printf("size is %ld \n", fetch_size[1]);
