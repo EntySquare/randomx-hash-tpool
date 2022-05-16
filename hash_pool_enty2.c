@@ -189,7 +189,7 @@ int main()
     char input[]={"/ardir/chunk1" };
     char FilePath[4];
     strcpy(FilePath, input);
-    printf("%s\n", FilePath[0]);
+    printf("%s\n", FilePath);
 
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
