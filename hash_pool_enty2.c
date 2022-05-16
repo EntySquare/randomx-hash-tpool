@@ -185,6 +185,11 @@ int main()
                 printf( "\n");
     fclose(chunk_file);
 
+    // string test
+    char input[]={"/ardir/chunk1", "/ardir/chunk2", "/ardir/chunk3", "/ardir/chunk4" };
+    char FilePath[4];
+    strcpy(FilePath, input);
+    printf("%s\n", FilePath[0]);
 
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
