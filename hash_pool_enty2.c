@@ -192,12 +192,12 @@ int main()
     printf("%s\n", FilePath[1]);
 
     // binary test
-    char data[2][3]={{1,2,3}, {4,5,6}};
-    char size[2]={3, 4};
+    char data[4][4]={{1,2,3}, {4,5,6}, {0,11,13,6}, {9,7,6,0}};
+    char size[4]={3, 4, 5, 6};
     char fetch_data[2][4];
-    long fetch_size[2];
-    memcpy(fetch_data[1], data[1], 4);
-    memcpy(&fetch_size[1], &size[1], 1);
+    long fetch_size[4];
+    memcpy(fetch_data[1], data[3], 4);
+    memcpy(&fetch_size[3], &size[3], 1);
     for(int i =0 ; i<3; i++) printf("%d,", fetch_data[1][i]);
     printf("\n");
     printf("size is %ld \n", fetch_size[1]);
