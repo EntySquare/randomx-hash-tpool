@@ -120,7 +120,7 @@ void *cal_test(void *paramsPtr) {
         pthread_cond_wait(&cond_lock, &cal_lock);
         printf("\ncal start...\n");
         double result = 0.0;
-        for (i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             result = result + sin(i) * tan(i);
         }
         printf("\ncal done..., Result = %e\n", result);
