@@ -231,12 +231,11 @@ int main()
     // condition lock
     pthread_mutex_init(&cal_lock, NULL);
     pthread_cond_init(&cond_lock, NULL);
-
     pthread_t cal_id;
     pthread_create(&cal_id, NULL, cal_test, NULL);
     int loop = 1;
     while(loop <= 3){
-    pthread_cond_broadcast(&cond_lock);
+    pthread_cond_signal(&cond_lock);
     loop ++;
     }
 
