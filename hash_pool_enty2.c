@@ -26,6 +26,10 @@ pthread_mutex_t main_lock ;
 pthread_mutex_t ID_lock ;
 pthread_mutex_t loop_lock[THREADS_COUNT] ;
 pthread_mutex_t thread_lock[THREADS_COUNT] ;
+// test lock
+pthread_mutex_t cal_lock ;
+pthread_cond_t cond_lock ;
+
 
 static int validate_hash(
         unsigned char hash[RANDOMX_HASH_SIZE],
@@ -33,6 +37,7 @@ static int validate_hash(
 {
     return memcmp(hash, difficulty, RANDOMX_HASH_SIZE);
 }
+
 
 struct ids {
     int threads_id;
@@ -48,6 +53,8 @@ struct params {
     unsigned char* diff;
 } parameters[8];
 //= malloc(sizeof(struct params));
+
+
 
 //void hash_cal(randomx_vm *machine, const void *input, size_t inputSize, void *output)
 void *hash_cal(void *paramsPtr)
@@ -105,7 +112,26 @@ void *hash_cal(void *paramsPtr)
 }
 
 
+void *cal_test(void *paramsPtr) {
+    int cal_loop = 1;
+    while(cal_loop <=3) {
+        printf("\nwaiting...\n");
+        pthread_mutex_lock(&cal_lock);
+        pthread_cond_wait(&cond_lock, &cal_lock);
+        printf("\ncal start...\n");
+        double result = 0.0;
+        for (i = 0; i < 1000000; i++) {
+            result = result + sin(i) * tan(i);
+        }
+        printf("\ncal done..., Result = %e\n", result);
+        pthread_mutex_unlock(&cal_lock);
+        cal_loop++;
+    }
+    pthread_exit((void*) paramsPtr);
+}
 
+
+// main
 int main()
 {
     FILE *fp;
@@ -202,6 +228,20 @@ int main()
     printf("\n");
     printf("size is %ld \n", fetch_size[1]);
 
+    // condition lock
+    pthread_mutex_init(&cal_lock, NULL);
+    pthread_cond_init(&con_lock, NULL);
+
+    pthread_t cal_id;
+    pthread_create(&cal_id, NULL, cal_test, NULL);
+    int loop = 1;
+    while(loop <= 3){
+    pthread_cond_broadcast(&cond_lock);
+    loop ++;
+    }
+
+
+    // init dataset
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
     flags_vm |= RANDOMX_FLAG_HARD_AES;
     flags_vm |= RANDOMX_FLAG_JIT;
