@@ -239,7 +239,7 @@ int main()
         unsigned char EndIntervalStart[2];
         fseek(chunk_storage_file, i, SEEK_SET);  // read from position
         fread(EndIntervalStart, 1, 1, chunk_storage_file);
-        if (EndIntervalStart[0] >= byte && EndIntervalStart[1] =< byte)
+        if (EndIntervalStart[0] >= byte && EndIntervalStart[1] <= byte)
             printf("IntervalStart is %ld\n", EndIntervalStart[1]);
         break;
     }
