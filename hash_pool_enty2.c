@@ -235,13 +235,13 @@ int main()
     printf("\nenty_ar_chunk_storage is open\n");
     fseek(chunk_storage_file, 0, SEEK_END);
     long nLen1 = ftell(chunk_storage_file);
-    for(long i = 0 ; i < nLen1; i++) {
+    for(long i = 0 ; i < nLen1 ; i++) {
         unsigned char EndIntervalStart[2];
         fseek(chunk_storage_file, i, SEEK_SET);  // read from position
         fread(EndIntervalStart, 1, 1, chunk_storage_file);
-        if (EndIntervalStart[0] >= byte && EndIntervalStart[1] <= byte)
+        if (EndIntervalStart[0] >= byte && EndIntervalStart[1] <= byte){
             printf("IntervalStart is %ld\n", EndIntervalStart[1]);
-        break;
+        break;}
     }
     printf("intervalstart is found\n");
 
