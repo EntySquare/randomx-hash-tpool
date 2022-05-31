@@ -234,8 +234,8 @@ int main()
     chunk_storage_file = fopen("/ardir/enty_ar_chunk_storage.dat", "r+");
     printf("\nenty_ar_chunk_storage is open\n");
     fseek(chunk_storage_file, 0, SEEK_END);
-    long nLen = ftell(chunk_storage_file);
-    for(int i=0 ; i<nLen; i++) {
+    long nLen1 = ftell(chunk_storage_file);
+    for(int i=0 ; i<nLen1; i++) {
         unsigned char EndIntervalStart[2];
         fseek(chunk_storage_file, i, SEEK_SET);  // read from position
         fread(EndIntervalStart, 1, 1, chunk_storage_file);
