@@ -228,6 +228,23 @@ int main()
     printf("\n");
     printf("size is %ld \n", fetch_size[1]);
 
+    //end intervalstart test
+    long byte = 200447320910;
+    FILE *chunk_storage_file = NULL;
+    chunk_storage_file = fopen("/ardir/enty_ar_chunk_storage.dat", "r+");
+    printf("\nenty_ar_chunk_storage is open\n");
+    fseek(chunk_storage_file, 0, SEEK_END);
+    long nLen = ftell(chunk_storage_file);
+    for(int i=0 ; i<nLen; i++) {
+        unsigned char EndIntervalStart[2];
+        fseek(chunk_storage_file, i, SEEK_SET);  // read from position
+        fread(EndIntervalStart, 1, 1, chunk_storage_file);
+        if (EndIntervalStart[0] >= byte && EndIntervalStart[1] =< byte)
+            printf("IntervalStart is %ld\n", EndIntervalStart[1]);
+        break;
+    }
+    printf("intervalstart is found\n");
+
     // condition lock
     pthread_mutex_init(&cal_lock, NULL);
     pthread_cond_init(&cond_lock, NULL);
@@ -238,7 +255,6 @@ int main()
     pthread_cond_signal(&cond_lock);
     loop ++;
     }
-
 
     // init dataset
     randomx_flags flags_vm = RANDOMX_FLAG_FULL_MEM;
